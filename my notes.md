@@ -3,6 +3,13 @@
     Wrap code and infrastructure toghether so that wherever it runs it runs the same way.
 
 
+# Reasons NOT to run a database in a container
+
+    - Security patches?
+    - What happens to storage when container is takendown
+    - Scaling?
+
+
 # Deployment
 
 https://www.youtube.com/watch?v=xTwM-g40vd0
