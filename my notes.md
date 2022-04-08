@@ -10,6 +10,10 @@
     - Scaling?
 
 
+# Environmental variables 
+    - https://our.umbraco.com/packages/developer-tools/cultivenvironmentinspect/
+        - Show environmetal variables for all environments. Useful in containers
+
 # Deployment
 
 https://www.youtube.com/watch?v=xTwM-g40vd0
