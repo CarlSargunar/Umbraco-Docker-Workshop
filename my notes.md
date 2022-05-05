@@ -30,6 +30,8 @@ https://www.youtube.com/watch?v=xTwM-g40vd0
     
 # v10
 
+https://umbraco.com/blog/umbraco-10-release-candidate/
+
 https://twitter.com/BjarkeBerg/status/1502705208203358209
 
 $ dotnet nuget add source https://myget.org/F/umbraconightly/api/v3/index.json --name umbraconightly
