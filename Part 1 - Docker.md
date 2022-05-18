@@ -45,10 +45,31 @@ Run the website
 
     dotnet run --project UmbDock
 
+## Create Network
+
+Create the bridge network 
+
+    docker network create -d bridge umbNet    
+
 ## Build the docker image
+
+For the website
 
     docker build --tag=umbdock .\UmbDock
 
+For the database
+
+    docker build --tag=umbdata .\UmbData    
+
+## Run the containers
+
+Website
+
+    docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
+
+Data
+
+    docker run --name umbdata -p 1400:1433 --volume sqlserver:/var/opt/sqlserver --network=umbNet -d umbdata
 
 ## Cleanup
 
