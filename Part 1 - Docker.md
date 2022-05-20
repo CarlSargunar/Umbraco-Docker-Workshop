@@ -33,6 +33,10 @@ Start an Umbraco Site
 
     dotnet new Umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True"
 
+Add project to the solution
+
+    dotnet sln add UmbDock
+
 Add a project for us to try
 
     dotnet add UmbDock package Clean
@@ -70,6 +74,16 @@ Website
 Data
 
     docker run --name umbdata -p 1400:1433 --volume sqlserver:/var/opt/sqlserver --network=umbNet -d umbdata
+
+## Class Library
+
+Start a new class library project.
+
+    dotnet new classlib -n UmbLib
+    dotnet sln add UmbLib
+    dotnet add UmbLib package Umbraco.Cms.Core
+    dotnet add UmbLib package Umbraco.Cms.Infrastructure
+
 
 ## Cleanup
 
