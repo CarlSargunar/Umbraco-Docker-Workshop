@@ -30,7 +30,8 @@ https://www.youtube.com/watch?v=xTwM-g40vd0
     
 # v10
 
-https://umbraco.com/blog/umbraco-10-release-candidate/
+- https://umbraco.com/blog/umbraco-10-release-candidate/
+    - https://umbraco.com/blog/umbraco-product-update-may-11-2022/
 
 https://twitter.com/BjarkeBerg/status/1502705208203358209
 
