@@ -84,6 +84,11 @@ Start a new class library project.
     dotnet add UmbLib package Umbraco.Cms.Core
     dotnet add UmbLib package Umbraco.Cms.Infrastructure
 
+## Add a reference
+
+    dotnet add .\UmbDock\ reference .\UmbLib\
+
+
 
 ## Cleanup
 
