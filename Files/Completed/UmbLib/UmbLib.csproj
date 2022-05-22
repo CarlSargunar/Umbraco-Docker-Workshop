@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cms.Core" Version="9.5.0" />
-    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="9.5.0" />
+    <Compile Remove="Controllers\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <None Remove="Controllers\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="Umbraco.Cms.Core" Version="9.5.0" />
+    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="9.5.0" />
   </ItemGroup>
 
 </Project>
