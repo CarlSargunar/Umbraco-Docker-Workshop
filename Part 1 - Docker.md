@@ -89,6 +89,10 @@ Start a new class library project.
     dotnet add .\UmbDock\ reference .\UmbLib\
 
 
+## File Types
+
+Remember, Linux files need
+
 
 ## Cleanup
 

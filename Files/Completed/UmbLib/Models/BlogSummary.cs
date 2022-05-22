@@ -13,5 +13,7 @@ namespace UmbLib.Models
         public string Title { get; set; }
         public string Summary { get; set; }
         public int AuthorId { get; set; }
+        public string AuthorName { get; set; }
+        public string ImageURL { get; set; }
     }
 }

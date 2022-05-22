@@ -43,7 +43,10 @@ namespace UmbDock.Controllers
                             Name = article.Name,
                             PublishDate = article.UpdateDate,
                             Title = article.Name + "ABC",
-                            Summary = article.Name + "XXX"
+                            Summary = article.Name + "XXX",
+                            AuthorId = article.CreatorId,
+                            AuthorName = "",
+                            ImageURL = ""
                         };
                         blogSummaries.Add(blog);
                     }
