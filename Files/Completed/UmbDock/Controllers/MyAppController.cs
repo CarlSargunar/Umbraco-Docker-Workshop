@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using UmbDock.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Web;
@@ -25,6 +26,8 @@ namespace UmbDock.Controllers
         public IEnumerable<BlogSummary> GetBlogSummaries()
         {
             // Routes to /Umbraco/Api/MyApp/GetBlogSummaries
+            // In a container, it runs from http://localhost:8000/Umbraco/Api/MyApp/GetBlogSummaries
+
             var blogSummaries = new List<BlogSummary>();
 
             using (var contextReference = _contextFactory.EnsureUmbracoContext())

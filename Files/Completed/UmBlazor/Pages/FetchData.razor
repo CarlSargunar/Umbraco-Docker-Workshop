@@ -1,13 +1,15 @@
 ﻿@page "/fetchdata"
+@using UmBlazor.Models
+@using System.Diagnostics
 @inject HttpClient Http
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Umbraco Blog Summary</PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>Blog Summaries</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>These are the currently published blogs on the site!</p>
 
-@if (forecasts == null)
+@if (_blogSummaries == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -17,19 +19,19 @@ else
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
+                <th>Title</th>
+                <th>Author</th>
                 <th>Summary</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
+        <tbody>     
+            @foreach (var summary in _blogSummaries)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@summary.PublishDate.ToShortDateString()</td>
+                    <td>@summary.Title</td>
+                    <td>@summary.AuthorName</td>
+                    <td>@summary.Summary</td>
                 </tr>
             }
         </tbody>
@@ -37,21 +39,22 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private BlogSummary[]? _blogSummaries;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        try
+        {
+            _blogSummaries = await Http.GetFromJsonAsync<BlogSummary[]>("http://localhost:8000/Umbraco/Api/MyApp/GetBlogSummaries");
+            foreach (var s in _blogSummaries)
+            {
+                var x = s.Name;
+            }
+        }
+        catch (Exception ex)
+        {
+            var s = ex.Message;
+        }
     }
 
-    public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
 }

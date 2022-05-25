@@ -11,8 +11,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.5" PrivateAssets="all" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\UmbLib\UmbLib.csproj" />
-  </ItemGroup>
-
 </Project>
