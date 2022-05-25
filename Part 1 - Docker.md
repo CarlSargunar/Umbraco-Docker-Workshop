@@ -73,26 +73,14 @@ Website
 
 Data
 
-    docker run --name umbdata -p 1400:1433 --volume sqlserver:/var/opt/sqlserver --network=umbNet -d umbdata
+    docker run --name umbdata -p 1433:1433 --volume sqlserver:/var/opt/sqlserver --network=umbNet -d umbdata
 
-## Class Library
 
-Start a new class library project.
-
-    dotnet new classlib -n UmbLib
-    dotnet sln add UmbLib
-    dotnet add UmbLib package Umbraco.Cms.Core
-    dotnet add UmbLib package Umbraco.Cms.Infrastructure
-
-## Add a reference
-
-    dotnet add .\UmbDock\ reference .\UmbLib\
 
 
 ## File Types
 
-Remember, Linux files need
-
+Remember, Linux line endings need -> Lf NOT CrLf
 
 ## Cleanup
 
