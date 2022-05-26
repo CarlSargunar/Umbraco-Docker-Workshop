@@ -18,6 +18,8 @@ Check the version of the SDK you have installed using the following
     dotnet sdk check
 
 
+# Creating the Umbraco containers
+
 ## Installing Umbraco Template and start Website
 
 Run the following to install the template
@@ -75,8 +77,15 @@ Data
 
     docker run --name umbdata -p 1433:1433 --volume sqlserver:/var/opt/sqlserver --network=umbNet -d umbdata
 
+# Add the Blazor Container
 
+## Build Image
 
+    docker build --tag=umblazor .\UmBlazor    
+
+## Run the Container
+
+    docker run --name umblazor -p 8001:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umblazor
 
 ## File Types
 

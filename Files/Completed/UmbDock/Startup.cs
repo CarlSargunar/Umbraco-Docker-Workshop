@@ -39,7 +39,7 @@ namespace UmbDock
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(policy =>
+            services.AddCors(policy => 
             {
                 policy.AddPolicy("CorsPolicy", opt => opt
                     .AllowAnyOrigin()
