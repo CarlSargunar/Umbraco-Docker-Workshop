@@ -47,8 +47,7 @@ namespace UmbDock
                     .AllowAnyMethod());
             });
 
-           
-            services.AddHttpClient();
+            // Bit of a mix - this also adds HTTP in the program.cs
 
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()

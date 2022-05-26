@@ -9,6 +9,7 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common.Controllers;
+using Umbraco.Extensions;
 
 namespace UmbDock.Controllers
 {
@@ -40,14 +41,19 @@ namespace UmbDock.Controllers
                     var articles = blogArticles.Children;
                     foreach (var article in articles)
                     {
+                        if (article == null)
+                        {
+                            continue;
+                        }
+
                         var blog = new BlogSummary()
                         {
                             Name = article.Name,
                             PublishDate = article.UpdateDate,
-                            Title = article.Name + "ABC",
-                            Summary = article.Name + "XXX",
+                            Title = article.Value<string>("title"),
+                            Summary = article.Value<string>("subTitle"), //change the model name
                             AuthorId = article.CreatorId,
-                            AuthorName = "",
+                            AuthorName = article.Value<string>("authorName"),
                             ImageURL = ""
                         };
                         blogSummaries.Add(blog);
