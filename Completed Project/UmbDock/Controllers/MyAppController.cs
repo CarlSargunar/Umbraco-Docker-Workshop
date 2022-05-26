@@ -56,6 +56,7 @@ namespace UmbDock.Controllers
                             AuthorName = article.Value<string>("authorName"),
                             ImageURL = ""
                         };
+
                         blogSummaries.Add(blog);
                     }
                 }

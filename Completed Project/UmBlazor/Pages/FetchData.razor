@@ -24,12 +24,13 @@ else
                 <th>Summary</th>
             </tr>
         </thead>
-        <tbody>     
+        <tbody>
             @foreach (var summary in _blogSummaries)
             {
+                var displayTitle = string.IsNullOrEmpty(summary.Title) ? summary.Name : summary.Title;
                 <tr>
                     <td>@summary.PublishDate.ToShortDateString()</td>
-                    <td>@summary.Title</td>
+                    <td>@displayTitle</td>
                     <td>@summary.AuthorName</td>
                     <td>@summary.Summary</td>
                 </tr>
