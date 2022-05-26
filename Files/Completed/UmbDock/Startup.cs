@@ -13,6 +13,7 @@ namespace UmbDock
     {
         private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _config;
+        readonly string CustomAllowedOrigins = "_customAllowedOrigins";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Startup" /> class.
@@ -38,6 +39,17 @@ namespace UmbDock
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+           
+            services.AddHttpClient();
+
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
                 .AddWebsite()
@@ -56,6 +68,8 @@ namespace UmbDock
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseUmbraco()
                 .WithMiddleware(u =>

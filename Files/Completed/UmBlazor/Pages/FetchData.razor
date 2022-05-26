@@ -45,7 +45,7 @@ else
     {
         try
         {
-            _blogSummaries = await Http.GetFromJsonAsync<BlogSummary[]>("http://localhost:8000/Umbraco/Api/MyApp/GetBlogSummaries");
+            _blogSummaries = await Http.GetFromJsonAsync<BlogSummary[]>("http://localhost:43173/umbraco/api/myapp/getblogSummaries");
             foreach (var s in _blogSummaries)
             {
                 var x = s.Name;
