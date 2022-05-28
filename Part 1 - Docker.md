@@ -73,6 +73,8 @@ Website
 
     docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
 
+    docker run --name umbdock2 -p 8002:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
+
 Data
 
     docker run --name umbdata -p 1433:1433 --volume sqlserver:/var/opt/sqlserver --network=umbNet -d umbdata
