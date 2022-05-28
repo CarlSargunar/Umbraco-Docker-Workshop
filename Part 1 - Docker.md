@@ -43,9 +43,17 @@ Add a project for us to try
 
     dotnet add UmbDock package Clean
 
+or
+
+    dotnet add UmbDock package Simple
+
 Trust the dev certs
 
     dotnet dev-certs https --trust
+
+Clear your local nuget cache
+
+    dotnet nuget locals all --clear
 
 Run the website
 
