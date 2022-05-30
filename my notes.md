@@ -8,6 +8,8 @@
     - Security patches?
     - What happens to storage when container is takendown
     - Scaling?
+    - Better option - use PaS databases, SQL azure for example
+
 
 
 # Environmental variables 
