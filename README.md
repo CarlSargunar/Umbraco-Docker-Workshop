@@ -12,4 +12,10 @@ Submission document - https://docs.google.com/document/d/1zsgeeElycp6ONaqJnGONJw
 
 Slides - https://docs.google.com/presentation/d/1MYf3CkzKYx-vZS0ntKIbNPejYVDbU2iPQit1OTzsoUM/
 
+### Sign ups : 
+
+Online - https://docs.google.com/spreadsheets/d/1bduq_39gUr3AZ-xQXOxsPzerVHlZigG597G_RC68NBA/edit#gid=290821255
+In Person - https://docs.google.com/spreadsheets/d/1AY29Tdpyfl0kQVNeuTHdiDXRRlUOdfJHVb1lqsNfauE/edit#gid=862746466
+
+
 
