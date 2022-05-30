@@ -24,7 +24,7 @@ Check the version of the SDK you have installed using the following
 
 Run the following to install the template
 
-    dotnet new -i Umbraco.Templates::10.0.0-rc2
+    dotnet new -i Umbraco.Templates::10.0.0-rc4
 
 Set the SDK Version being used and Create solution/project. This will create a global file with the current latest version of the SDK
 
@@ -45,7 +45,7 @@ Add a project for us to try
 
 or
 
-    dotnet add UmbDock package Simple
+    dotnet add UmbDock package Portfolio
 
 Trust the dev certs
 
