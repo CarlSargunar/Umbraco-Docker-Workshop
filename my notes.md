@@ -33,6 +33,10 @@ https://www.youtube.com/watch?v=xTwM-g40vd0
 - https://umbraco.com/blog/umbraco-10-release-candidate/
     - https://umbraco.com/blog/umbraco-product-update-may-11-2022/
 
+$ dotnet nuget add source https://myget.org/F/umbraconightly/api/v3/index.json --name umbraconightly
+$ dotnet new -i Umbraco.Templates::10.0.0-rc4
+$ dotnet new umbraco --name {{project name}}
+
 https://twitter.com/BjarkeBerg/status/1502705208203358209
 
 $ dotnet nuget add source https://myget.org/F/umbraconightly/api/v3/index.json --name umbraconightly

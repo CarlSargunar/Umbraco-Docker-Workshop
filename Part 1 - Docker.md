@@ -43,9 +43,17 @@ Add a project for us to try
 
     dotnet add UmbDock package Clean
 
+or
+
+    dotnet add UmbDock package Simple
+
 Trust the dev certs
 
     dotnet dev-certs https --trust
+
+Clear your local nuget cache
+
+    dotnet nuget locals all --clear
 
 Run the website
 
@@ -72,6 +80,8 @@ For the database
 Website
 
     docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
+
+    docker run --name umbdock2 -p 8002:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
 
 Data
 
