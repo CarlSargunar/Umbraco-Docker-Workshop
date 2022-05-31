@@ -67,6 +67,8 @@ Create the bridge network
 
 ## Build the docker image
 
+First copy the Docker files.
+
 For the website
 
     docker build --tag=umbdock .\UmbDock
