@@ -68,7 +68,7 @@ services:
     ports:
       - "5082:80"
     depends_on:
-      - umbdata
+      - umbweb-2
     networks:
       - umbnet    
 
