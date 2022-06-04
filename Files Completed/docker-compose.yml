@@ -15,7 +15,6 @@ services:
 
   # This is the web container. It exposes the port 80, and stored media and Umbraco logs on
   # a volume so they are accessable outside the container.
-  # It 
   umbweb:
     build:
       context: ./UmbDock
@@ -37,7 +36,6 @@ services:
 
   # This is the 2nd web container. It exposes the port 80, and stored media and Umbraco logs on
   # a volume so they are accessable outside the container.
-  # It 
   umbweb-2:
     build:
       context: ./UmbDock
@@ -58,23 +56,17 @@ services:
       - umbnet        
 
 
-  # This is the 2nd web container. It exposes the port 80, and stored media and Umbraco logs on
-  # a volume so they are accessable outside the container.
-  # It 
+  # This is the blazor container. It exposes the port 80 and accesses the umbweb-2 container
+  # to load the blog summary content.
   umblazor:
     build:
       context: ./UmBlazor
       dockerfile: Dockerfile
-    volumes:
-      - media:/app/wwwroot/media
-      - logs:/app/umbraco/Logs
     restart: always
     environment:
      - ASPNETCORE_ENVIRONMENT=Production
-    # This is the external port the website will be visible from : http://localhost:5081/
-    # The Umbraco URL is : http://localhost:5081/umbraco
     ports:
-      - "5081:80"
+      - "5082:80"
     depends_on:
       - umbdata
     networks:
