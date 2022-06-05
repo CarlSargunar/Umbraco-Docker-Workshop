@@ -11,14 +11,9 @@ In order to run this application you will need the following installed on your m
 - .NET SDK version 6
     - https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
-## SDK
+For the full list of prerequisites, please see the [prerequisites](Prerequisites.md) document.
 
-Check the version of the SDK you have installed using the following
-
-    dotnet sdk check
-
-
-# Creating the Umbraco containers
+# 1. Creating the a basic Umbraco Site
 
 ## Installing Umbraco Template and start Website
 

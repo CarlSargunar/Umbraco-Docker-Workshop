@@ -12,6 +12,17 @@ To attend this workshop you will need the following:
 
 This guide is primarily focused on Windows and Mac development, but will work for Linux just as well. 
 
+## SDK
+
+Check the version of the SDK you have installed using the following
+
+    dotnet sdk check
+
+This workshop will require version 6.0 of the SDK, preferrably the latest version available - at the time of writing this is version 6.0.300.
+
+![sdk-check](/media/1_sdk_check.png)
+
+
 ## Test your Docker installation
 
 It's important that your docker installation is working before you attend the workshop. To test that you can run the following command on your terminal.
