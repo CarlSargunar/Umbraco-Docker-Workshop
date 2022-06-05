@@ -2,7 +2,6 @@ FROM mcr.microsoft.com/azure-sql-edge:1.0.4
 
 ENV ACCEPT_EULA=Y
 ENV SA_PASSWORD=SQL_password123
-ENV MSSQL_PID=Express
 
 USER root
  

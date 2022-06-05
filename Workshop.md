@@ -103,6 +103,8 @@ In that file we will define the image we will use, and the ports we will use.
     ENTRYPOINT [ "/bin/bash", "startup.sh" ]
     CMD [ "/opt/mssql/bin/sqlservr" ]    
 
+*Note : We are use Azure SQL Edge here as a database container in case there is anyone using a Macbook with an M1 chip as these run on the Arm architecture.*
+
 Once the Dockerfiles is created, we also need to copy the Umbraco database to the UmbData folder. There are 2 files that need to be copied into the root of the UmbData folder.
 
 - /UmbDock/umbraco/Data/Umbraco.mdf
