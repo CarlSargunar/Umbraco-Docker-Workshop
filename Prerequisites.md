@@ -7,18 +7,17 @@ To attend this workshop you will need the following:
     - Enough free space to store container images and instances. Recommended to have at least 15Gb of available space. Database containers particularly can sometimes be quite large.
 - A working Docker engine installation. 
     - For Windows or Mac, the best way to do this is using [Docker Desktop](https://docs.docker.com/get-docker/).
-    - For linux there are installations which are distro specific available [here](https://docs.docker.com/engine/install/).
-        - On Linux you will also need to setup docker-compose - instructions available [here](https://docs.docker.com/compose/install/).
+    - For linux there are installations which are distro specific available [here](https://docs.docker.com/desktop/linux/install/).
 
 This guide is primarily focused on Windows and Mac development, but will work for Linux just as well. 
 
 ## SDK
 
-Check the version of the SDK you have installed using the following
+Check the version of the .NET SDK you have installed using the following command:
 
     dotnet sdk check
 
-This workshop will require version 6.0 of the SDK, preferrably the latest version available - at the time of writing this is version 6.0.300.
+This workshop will require version 6.0 of the SDK, preferrably the latest version available - at the time of writing this is version 6.0.300, but a minimum of version 6.0.203. If you need to download the SDK, you can do so from [https://dotnet.microsoft.com/en-us/download/visual-studio-sdks](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks).
 
 ![sdk-check](/media/1_sdk_check.png)
 

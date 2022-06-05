@@ -17,7 +17,7 @@ For the full list of prerequisites, please see the [prerequisites](Prerequisites
 
 ## Installing Umbraco Template and start Website
 
-Run the following to install the template
+Run the following to install the umbraco template.
 
     dotnet new -i Umbraco.Templates::10.0.0-rc4
 
