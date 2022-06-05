@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2019-GDR1-ubuntu-16.04
+FROM mcr.microsoft.com/azure-sql-edge:1.0.4
 
 ENV ACCEPT_EULA=Y
 ENV SA_PASSWORD=SQL_password123

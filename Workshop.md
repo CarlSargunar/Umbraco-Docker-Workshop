@@ -15,6 +15,8 @@ For the full list of prerequisites, please see the [prerequisites](Prerequisites
 
 # 1. Creating the a basic Umbraco Site
 
+For all instructions, it is assumed you will be working in the root folder of this project. It's recommended the first step is to fork this repository so you can have your own copy of it and then clone it onto your machine. If you don't have a github account, you can download a zip of this repository and extract it to your machine.
+
 ## Installing Umbraco Template and start Website
 
 Run the following to install the umbraco template.
@@ -54,7 +56,25 @@ This should, if there are no errors, start up the kestrel server and serve the s
 
 If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running.
 
-## 2. Create the Database Container
+# 2. Create the Database Container
+
+Slides - Before we start the next stages we will look at the following concepts
+
+- What is a container?
+    - Virtual machine vs Docker container
+    - Components of a container
+    - Docker container vs. Docker image
+    - Describe Dockerfile
+
+### 2.1 Create a container for the database server
+
+Here we will create a container for the database and run the site against this database. Create a folder called UmbDock in the root folder of this project. 
+
+Create a blank file in the UmbDock folder called Dockerfile. This will define the database container, and also describe the configuration we will use with that database container. 
+
+*Note : the case of the file is important - it needs to be called Dockerfile with no extension*
+
+In that file we will define the image 
 
 ## Create Network
 
