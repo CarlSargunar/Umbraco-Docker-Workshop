@@ -74,7 +74,69 @@ Create a blank file in the UmbDock folder called Dockerfile. This will define th
 
 *Note : the case of the file is important - it needs to be called Dockerfile with no extension*
 
-In that file we will define the image 
+In that file we will define the image we will use, and the ports we will use.
+
+    FROM mcr.microsoft.com/azure-sql-edge:1.0.4
+
+    ENV ACCEPT_EULA=Y
+    ENV SA_PASSWORD=SQL_password123
+    ENV MSSQL_PID=Express
+
+    USER root
+    
+    RUN mkdir /var/opt/sqlserver
+    
+    RUN chown mssql /var/opt/sqlserver
+    
+    ENV MSSQL_BACKUP_DIR="/var/opt/sqlserver"
+    ENV MSSQL_DATA_DIR="/var/opt/sqlserver"
+    ENV MSSQL_LOG_DIR="/var/opt/sqlserver"
+
+    EXPOSE 1433/tcp
+
+    COPY setup.sql /
+    COPY startup.sh /
+
+    COPY Umbraco.mdf /var/opt/sqlserver
+    COPY Umbraco_log.ldf /var/opt/sqlserver
+
+    ENTRYPOINT [ "/bin/bash", "startup.sh" ]
+    CMD [ "/opt/mssql/bin/sqlservr" ]    
+
+Once the Dockerfiles is created, we also need to copy the Umbraco database to the UmbData folder. There are 2 files that need to be copied into the root of the UmbData folder.
+
+- /UmbDock/umbraco/Data/Umbraco.mdf
+- /UmbDock/umbraco/Data/Umbraco_log.ldf
+
+There are 2 other files created in this repository which we need to copy into the UmbData folder.
+
+- /Files/UmbData/setup.sql
+- /Files/UmbData/startup.sh
+
+Finally edit the appsettings.Development.json file to set the connection string to the database.
+
+    "ConnectionStrings": {
+        "umbracoDbDSN": "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;", "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
+    },    
+
+*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container.*
+
+## 2.2 Build the database image and run the database container
+
+Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
+
+Once this is done, build the database image.
+
+    docker build --tag=umbdata .\UmbData    
+
+And run it
+
+    docker run --name umbdata -p 1433:1433 --volume sqlserver:/var/opt/sqlserver -d umbdata
+
+This should give you a container ID. You can check which containers are running by running the following command.
+
+    docker ps
+
 
 ## Create Network
 
