@@ -3,6 +3,7 @@ services:
   # This is the database container. The exposed volume means that the SQL DATA and LOG files
   # are stored off the container, in case the container is restarted.
   umbdata:
+    container_name: umbdata
     build:
       context: ./Umbdata
     ports:
@@ -15,7 +16,8 @@ services:
 
   # This is the web container. It exposes the port 80, and stored media and Umbraco logs on
   # a volume so they are accessable outside the container.
-  umbweb:
+  umbweb_backend:
+    container_name: umbweb_backend
     build:
       context: ./UmbDock
     volumes:
@@ -36,7 +38,8 @@ services:
 
   # This is the 2nd web container. It exposes the port 80, and stored media and Umbraco logs on
   # a volume so they are accessable outside the container.
-  umbweb-2:
+  umbweb_frontend:
+    container_name: umbweb_frontend
     build:
       context: ./UmbDock
       dockerfile: Dockerfile
@@ -56,9 +59,10 @@ services:
       - umbnet        
 
 
-  # This is the blazor container. It exposes the port 80 and accesses the umbweb-2 container
+  # This is the blazor container. It exposes the port 80 and accesses the umbweb_frontend container
   # to load the blog summary content.
   umblazor:
+    container_name: umblazor
     build:
       context: ./UmBlazor
       dockerfile: Dockerfile
@@ -68,7 +72,7 @@ services:
     ports:
       - "5082:80"
     depends_on:
-      - umbweb-2
+      - umbweb_frontend
     networks:
       - umbnet    
 

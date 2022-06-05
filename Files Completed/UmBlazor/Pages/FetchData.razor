@@ -13,8 +13,9 @@
 
 @if (_blogSummaries == null)
 {
+    string umbracoURL = Configuration["UmbracoURL"];
     <p>
-        <em>Loading blog pages from @Configuration["UmbracoURL"] ...</em>
+        <em>Loading blog pages from @umbracoURL ...</em>
     </p>
 }
 else
@@ -50,7 +51,7 @@ else
     {
         try
         {
-            _blogSummaries = await Http.GetFromJsonAsync<BlogSummary[]>(@Configuration["UmbracoURL"]);
+            _blogSummaries = await Http.GetFromJsonAsync<BlogSummary[]>(Configuration["UmbracoURL"]);
         }
         catch (Exception ex)
         {
