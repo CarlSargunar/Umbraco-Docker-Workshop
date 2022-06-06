@@ -139,6 +139,23 @@ This should give you a container ID. You can check which containers are running 
     docker ps
 
 
+## 3 Create the Umbraco Site container
+
+## 3.X Set up a network
+
+## 4 Running a load balanced site
+
+## 5 Creating a Blazor app and querying the API
+
+## 6 Tying it all together with a Docker compose file
+
+
+
+
+
+
+
+
 ## Create Network
 
 Create the bridge network 
