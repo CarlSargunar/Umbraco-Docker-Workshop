@@ -114,17 +114,18 @@ There are 2 other files created in this repository which we need to copy into th
 - /Files/UmbData/setup.sql
 - /Files/UmbData/startup.sh
 
-Finally edit the appsettings.Development.json file to set the connection string to the database.
+Finally,in the UmbDock projet edit the appsettings.Development.json file so that the Umbraco site can connet to the database in the container rather than the local file version.
 
     "ConnectionStrings": {
         "umbracoDbDSN": "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;", "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
-    },    
+    }    
 
-*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container.*
 
 ## 2.2 Build the database image and run the database container
 
 Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
+
+*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container.*
 
 Once this is done, build the database image.
 
@@ -139,42 +140,89 @@ This should give you a container ID. You can check which containers are running 
     docker ps
 
 
-## 3 Create the Umbraco Site container
+## 3 Running the Umbraco Site in a container
 
-## 3.X Set up a network
+Now that the Umbraco site is running through Kestrel but conneting to the database server in the container, we need to create a container for the Umbraco site. 
 
-## 4 Running a load balanced site
+## 3.1 Create the Umbraco Site container
 
-## 5 Creating a Blazor app and querying the API
+In the Umbraco UmbDock project we will be creating a Dockerfile to define how it will be hosted. 
 
-## 6 Tying it all together with a Docker compose file
+    # Use the SDK image to build and publish the website
+    FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+    WORKDIR /src
+    COPY ["UmbDock.csproj", "."]
+    RUN dotnet restore "UmbDock.csproj"
+    COPY . .
+    RUN dotnet publish "UmbDock.csproj" -c Release -o /app/publish
 
+    # Copy the published output to the final running image
+    FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final 
+    WORKDIR /app
+    COPY --from=build /app/publish .
+    ENTRYPOINT ["dotnet", "UmbDock.dll"]
 
+This Dockerfile starts with a build image which contains the SDK to actually compile the project, and one with ASP.NET runtimes to actuall host the running application. From the above Dockerfile we can see the stages of the build process.
 
+- Starting on the main image, we will use the SDK image to compile the project.
+- Copy the working project folder to the build image
+- Run the restore command to download the dependencies
+- Compile and publish the output of the project
+- Switch to the hosting image and copy the published output to the final image
+- Set the entrypoint to the binary output of the main project
 
+## 3.2 Building the Umbraco Site image, setting a network and running it
 
+Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. Create a copy of the appsettings.Development.json called appsettings.Staging.json
 
+    "ConnectionStrings": {
+        "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
+    }
 
-
-## Create Network
-
-Create the bridge network 
-
-    docker network create -d bridge umbNet    
-
-## Build the docker image
-
-First copy the Docker files.
-
-For the website
+Finally we can compile a docker image for the Umbraco site.
 
     docker build --tag=umbdock .\UmbDock
 
-For the database
+This will download the required components and compile a final image ready to run the site in a container, and may take some time. However before we are able to run both the site and the database container, we need to set up the network. 
 
-    docker build --tag=umbdata .\UmbData    
+## 4 Docker Networks and Volumes
 
-## Run the containers
+Slides - Before we start the next stages we will look at the following concepts
+
+    - Container Networking
+        - Bridge Network
+        - Custom bridge Network
+        - Host Network
+        - Others
+            - Overlay
+            - Macvlan
+            - Ipvlan
+    - Container volumes
+        - Volumes
+        - Bind mounts
+        - tmpfs mounts
+
+## 4.1 Creating the network for our containers
+
+To let the website and database containers communicate with each other, we need to define a custom bridge network between the two of them. 
+
+    docker network create -d bridge umbNet    
+
+We then need to run the database and website containers attached to this network. Since the database container is already running, we can issue the following command to attach the container to the network.
+
+    docker network connect umbNet umbdata
+
+We can then run the website container.
+
+    docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
+
+
+
+
+
+
+
+
 
 Website
 
