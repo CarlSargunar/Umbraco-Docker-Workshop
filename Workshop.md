@@ -80,7 +80,6 @@ In that file we will define the image we will use, and the ports we will use.
 
     ENV ACCEPT_EULA=Y
     ENV SA_PASSWORD=SQL_password123
-    ENV MSSQL_PID=Express
 
     USER root
     
