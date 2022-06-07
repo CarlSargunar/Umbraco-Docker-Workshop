@@ -212,15 +212,15 @@ We then need to run the database and website containers attached to this network
 
     docker network connect umbNet umbdata
 
-We can then run the website container.
+We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
 
     docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
 
+In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
 
+Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
 
-
-
-
+Todo : Web staging config file - check
 
 
 
