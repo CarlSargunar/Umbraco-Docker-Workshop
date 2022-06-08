@@ -19,3 +19,9 @@ In Person - https://docs.google.com/spreadsheets/d/1AY29Tdpyfl0kQVNeuTHdiDXRRlUO
 
 
 
+### CLI 
+
+- https://github.com/umbraco/Umbraco-CMS/pull/12407
+
+
+
