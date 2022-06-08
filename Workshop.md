@@ -34,6 +34,8 @@ Create a new Umbraco site using the following command. This will define the name
 
     dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True"
 
+TODO: Paul Seal's tool
+
 Add project to the solution.
 
     dotnet sln add UmbDock
@@ -124,6 +126,8 @@ Finally,in the UmbDock projet edit the appsettings.Development.json file so that
     "ConnectionStrings": {
         "umbracoDbDSN": "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;", "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
     }    
+
+Todo : correct DNS
 
 
 ## 2.2 Build the database image and run the database container
