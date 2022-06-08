@@ -38,6 +38,11 @@ Add project to the solution.
 
     dotnet sln add UmbDock
 
+### Starting on a non-windows dev box
+
+If you are doing this workshop on a non-windows box, the order in which we need to go through is slightly differert, since the SQL LocalDB database isn't supported outside windows. Please raise your hand and get in touch with me if that is the case, and I can go through what you need.
+
+
 ## 1.2 Install a template site for the exercise. 
 
 This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
@@ -173,7 +178,7 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 
 ## 3.2 Building the Umbraco Site image, setting a network and running it
 
-Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. Create a copy of the appsettings.Development.json called appsettings.Staging.json
+Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. Create a copy of the appsettings.Development.json called appsettings.Staging.json, and in that file ensure the connectionstring is set-up to connect to umbdata as a container name.
 
     "ConnectionStrings": {
         "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
@@ -212,14 +217,15 @@ We then need to run the database and website containers attached to this network
 
     docker network connect umbNet umbdata
 
-We can then run the website container.
+We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
 
     docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
 
+In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
 
+One other thing we can see is the Environment variable we are passing the container with the -e flag, which sets our AspNetCore Environment to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database.
 
-
-
+Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
 
 
 
