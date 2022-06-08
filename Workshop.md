@@ -38,6 +38,11 @@ Add project to the solution.
 
     dotnet sln add UmbDock
 
+### Starting on a non-windows dev box
+
+If you are doing this workshop on a non-windows box, the order in which we need to go through is slightly differert, since the SQL LocalDB database isn't supported outside windows. Please raise your hand and get in touch with me if that is the case, and I can go through what you need.
+
+
 ## 1.2 Install a template site for the exercise. 
 
 This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
