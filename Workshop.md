@@ -2,16 +2,15 @@
 
 ## Prerequisites
 
-In order to run this application you will need the following installed on your machine.
+In order to participate in this workshop you will need to ensure you have the full list of prerequisites, please see the [prerequisites](Prerequisites.md) document for details.
 
-- Visual Studio Code
-    - There's a useful docker extension for Visual studio code : [https://code.visualstudio.com/docs/containers/overview](https://code.visualstudio.com/docs/containers/overview)
-- Docker Desktop 
-    - Windows subsystem for Linux (only required in Windows obviously)	
-- .NET SDK version 6
-    - https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
-For the full list of prerequisites, please see the [prerequisites](Prerequisites.md) document.
+### Starting on a non-windows dev box
+
+TODO : Mac instructions
+
+If you are doing this workshop on a non-windows box, the order in which we need to go through is slightly differert, since the SQL LocalDB database isn't supported outside windows. Please raise your hand and get in touch with me if that is the case, and I can go through what you need.
+
 
 # 1. Creating the a basic Umbraco Site
 
@@ -26,24 +25,14 @@ Run the following to install the umbraco template.
 Set the SDK Version being used and Create solution/project. This will create a global file with the current latest version of the SDK, and a blank solution which you can use with Visual Studio if you prefer to use that.
 
     dotnet new globaljson --sdk-version 6.0 --force 
-    dotnet new sln --name UmbDock
 
 ## 1.1 Start a new blank Umbraco Site
 
 Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
 
-    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True"
+    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True" --development-database-type LocalDB
 
-TODO: Paul Seal's tool
-
-Add project to the solution.
-
-    dotnet sln add UmbDock
-
-### Starting on a non-windows dev box
-
-If you are doing this workshop on a non-windows box, the order in which we need to go through is slightly differert, since the SQL LocalDB database isn't supported outside windows. Please raise your hand and get in touch with me if that is the case, and I can go through what you need.
-
+There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
 
 ## 1.2 Install a template site for the exercise. 
 
