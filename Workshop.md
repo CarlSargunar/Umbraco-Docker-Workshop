@@ -123,7 +123,7 @@ Todo : correct DNS
 
 Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
 
-*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container.*
+*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container, or the container will not be able to start. *
 
 Once this is done, build the database image.
 
