@@ -243,6 +243,12 @@ Data
 
     docker run --name umblazor -p 8001:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umblazor
 
+## Docker compose
+
+docker compose build
+docker compose up
+docker compose down
+
 ## File Types
 
 Remember, Linux line endings need -> Lf NOT CrLf
