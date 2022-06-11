@@ -5,10 +5,6 @@ ENV SA_PASSWORD=SQL_password123
 
 USER root
  
-RUN mkdir /var/opt/sqlserver
- 
-RUN chown mssql /var/opt/sqlserver
- 
 ENV MSSQL_BACKUP_DIR="/var/opt/mssql"
 ENV MSSQL_DATA_DIR="/var/opt/mssql/data"
 ENV MSSQL_LOG_DIR="/var/opt/mssql/log"

@@ -4,6 +4,7 @@
 
 In order to participate in this workshop you will need to ensure you have the full list of prerequisites, please see the [prerequisites](Prerequisites.md) document for details.
 
+
 # Slides : What is a container?
 
 Before we start the next stages we will look at the following concepts. The link to the slides used throughout this presentation is https://docs.google.com/presentation/d/1MYf3CkzKYx-vZS0ntKIbNPejYVDbU2iPQit1OTzsoUM/
@@ -17,8 +18,9 @@ Before we start the next stages we will look at the following concepts. The link
 
 # Exercise 1 - Create a Database Container
 
+For all instructions, it is assumed you will be working in the root folder of this project. There is a folder called 'Files' which contains the files used in this workshop to save you typing them out manually.
 
-For all instructions, it is assumed you will be working in the root folder of this project. It's recommended the first step is to fork this repository on Github so you can have your own copy of it and then clone it onto your machine. If you don't have a github account, you can download a zip of this repository and extract it to your machine.
+It's recommended the first step is to fork this repository on Github so you can have your own copy of it and then clone it onto your machine. If you don't have a github account, you can download a zip of this repository and extract it to your machine.
 
 ### 1.1 Create a container for the database server
 
@@ -30,8 +32,6 @@ Create a blank file in the UmbDock folder called Dockerfile. This will define th
 
 In that file we will define the image we will use, and the ports we will use.
 
-todo : Update this
-
     FROM mcr.microsoft.com/azure-sql-edge:1.0.4
 
     ENV ACCEPT_EULA=Y
@@ -39,24 +39,17 @@ todo : Update this
 
     USER root
     
-    RUN mkdir /var/opt/sqlserver
-    
-    RUN chown mssql /var/opt/sqlserver
-    
-    ENV MSSQL_BACKUP_DIR="/var/opt/sqlserver"
-    ENV MSSQL_DATA_DIR="/var/opt/sqlserver"
-    ENV MSSQL_LOG_DIR="/var/opt/sqlserver"
+    ENV MSSQL_BACKUP_DIR="/var/opt/mssql"
+    ENV MSSQL_DATA_DIR="/var/opt/mssql/data"
+    ENV MSSQL_LOG_DIR="/var/opt/mssql/log"
 
     EXPOSE 1433/tcp
 
     COPY setup.sql /
     COPY startup.sh /
 
-    COPY Umbraco.mdf /var/opt/sqlserver
-    COPY Umbraco_log.ldf /var/opt/sqlserver
-
     ENTRYPOINT [ "/bin/bash", "startup.sh" ]
-    CMD [ "/opt/mssql/bin/sqlservr" ]    
+    CMD [ "/opt/mssql/bin/sqlservr" ]   
 
 *Note : We are use Azure SQL Edge here as a database container in case there is anyone using a Macbook with an M1 chip as these run on the Arm architecture.*
 
@@ -67,9 +60,29 @@ There are 2 other files created in this repository which we need to copy into th
 
 These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use.
 
+## 2.2 Build the database image and run the database container
+
+Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
+
+*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container, or the container will not be able to start. *
+
+Once this is done, build the database image.
+
+    docker build --tag=umbdata ./UmbData    
+
+And run it
+
+    docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
+
+This should give you a container ID. You can check which containers are running by running the following command.
+
+    docker ps
+
+
 
 # 2. Creating the a basic Umbraco Site
 
+Now that we have a database container running, we are going to create our Umbraco website. We will creae it first as as a normal website running on the file system, and not in a container. 
 
 ## Installing Umbraco Template and start Website
 
@@ -85,13 +98,11 @@ Set the SDK Version being used and Create solution/project. This will create a g
 
 Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
 
-    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True" --development-database-type LocalDB
-
-On Mac
-
     dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" --development-database-type LocalDB
 
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
+
+Once the site is installed, we need to edit the file appsettings.Development.json. There may be a connectionstring configured in this file, but we need to remove it, and use the connectionstring from the base appsettings.json file. 
 
 ## 1.2 Install a template site for the exercise. 
 
@@ -108,31 +119,6 @@ This should, if there are no errors, start up the kestrel server and serve the s
 ![2_run_site](media/2_run_site.png)
 
 If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running.
-
-# 2. Create the Database Container
-
-
-## 2.2 Build the database image and run the database container
-
-Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
-
-*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container, or the container will not be able to start. *
-
-Once this is done, build the database image.
-
-    docker build --tag=umbdata .\UmbData    
-
-On Mac
-
-    docker build --tag=umbdata ./UmbData    
-
-And run it
-
-    docker run --name umbdata -p 1433:1433 --volume sqlserver:/var/opt/sqlserver -d umbdata
-
-This should give you a container ID. You can check which containers are running by running the following command.
-
-    docker ps
 
 
 ## 3 Running the Umbraco Site in a container
