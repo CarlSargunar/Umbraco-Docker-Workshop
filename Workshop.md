@@ -22,7 +22,7 @@ For all instructions, it is assumed you will be working in the root folder of th
 
 It's recommended the first step is to fork this repository on Github so you can have your own copy of it and then clone it onto your machine. If you don't have a github account, you can download a zip of this repository and extract it to your machine.
 
-### 1.1 Create a container for the database server
+## 1.1 Create a container for the database server
 
 Here we will create a container for the database and run the site against this database. Create a folder called UmbDock in the root folder of this project. 
 
@@ -60,31 +60,31 @@ There are 2 other files created in this repository which we need to copy into th
 
 These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use.
 
-### 1.2 Windows vs Linux Line Endings
+## 1.2 Windows vs Linux Line Endings
 
 Historically windows terminates line-endings in file with a carriage return and line feed (CRLF), while Linux uses a single line feed (LF) - and if you want to learn about the history of why then check out this awesome video from Scott Hanselman : [https://www.youtube.com/watch?v=TtiBhktB4Qg](https://www.youtube.com/watch?v=TtiBhktB4Qg)
 
 To that end, we need to make sure all our files related to this and any containers are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF).
 
-## 2.2 Build the database image and run the database container
+## 1.3 Build the database image and run the database container
 
 Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
 
-*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container, or the container will not be able to start. *
 
 Once this is done, build the database image.
 
     docker build --tag=umbdata ./UmbData    
 
-And run it
+And run it with the following command. 
+
+*Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container, or the container will not be able to start.*
+
 
     docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
 
-This should give you a container ID. You can check which containers are running by running the following command.
+This should give you a container ID back if the container was started successfully. 
 
-    docker ps
-
-## 2.3 Creating the network for our containers
+## 1.4 Creating the network for our containers
 
 To let the website and database containers communicate with each other, we need to define a custom bridge network between the two of them. 
 
@@ -118,8 +118,6 @@ Create a new Umbraco site using the following command. This will define the name
 
     dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" 
 
-There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
-
 ## 2.2 Install a template site for the exercise. 
 
 This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
@@ -136,11 +134,18 @@ This should, if there are no errors, start up the kestrel server and serve the s
 
 If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running.
 
+  <ItemGroup>
+    <Content Include="wwwroot\media\**" />
+  </ItemGroup>
+
+
 
 
 ## 3 Running the Umbraco Site in a container
 
 Now that the Umbraco site is running through Kestrel but conneting to the database server in the container, we need to create a container for the Umbraco site. 
+
+If the site is still running, stop it by running by pressing Ctrl + c in the terminal window. 
 
 ## 3.1 Create the Umbraco Site container
 
@@ -193,6 +198,7 @@ We can then run the website container. Notice in the command below there is an a
 
     docker run --name umbdock -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
 
+TODO : volumes
 
     docker run --name umbdock -p 8000:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
 
@@ -220,6 +226,18 @@ Before we move to the next steps we will recap in more detail some of the steps 
         - tmpfs mounts
 
 
+# 4 Adding an API to the site
+
+Now that there is a site and database running, we will add a simple REST API which will return a jason feed of the blog posts, which will be used in a later part of this workshop.
+
+## 4.1 Creating the API controller
+
+To save typing the code for the API is already created in the the /Files/UmbDock folder. 
+
+1. Copy the 
+
+
+
 # Add the Blazor Container
 
 ## Build Image
@@ -235,6 +253,14 @@ Before we move to the next steps we will recap in more detail some of the steps 
 docker compose build
 docker compose up
 docker compose down
+
+# References
+
+## Umbraco
+
+There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
+
+
 
 ## File Types
 
