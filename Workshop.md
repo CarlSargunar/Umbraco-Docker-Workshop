@@ -240,8 +240,62 @@ Now that there is a site and database running, we will add a simple REST API whi
 
 To save typing the code for the API is already created in the the /Files/UmbDock folder. 
 
-1. Copy the 
+1. Copy the following whole folders from the /Files/UmbDock folder to the /UmbDock folder.
+    - /Files/UmbDock/Controllers
+    - /Files/UmbDock/Models
 
+2. Amend the /UmbDock/Startup.cs file so the ConfigureServices method resembles the following:
+    
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddCors(policy => 
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+            // Bit of a mix - this also adds HTTP in the program.cs
+
+            services.AddUmbraco(_env, _config)
+                .AddBackOffice()
+                .AddWebsite()
+                .AddComposers()
+                .Build();
+        }  
+
+3. Amend the /UmbDock/Startup.cs file so the Configure method resembles the following:
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseCors("CorsPolicy");
+
+            app.UseUmbraco()
+                .WithMiddleware(u =>
+                {
+                    u.UseBackOffice();
+                    u.UseWebsite();
+                })
+                .WithEndpoints(u =>
+                {
+                    u.UseInstallerEndpoints();
+                    u.UseBackOfficeEndpoints();
+                    u.UseWebsiteEndpoints();
+                });
+        }
+        
+
+## 4.2 Rebuild the container and test the API
+
+With those changes in there, you can re-build the UmbDock container with the following command:
+
+    docker build --tag=umbdock ./UmbDock
 
 
 # Add the Blazor Container
