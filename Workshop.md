@@ -206,6 +206,14 @@ One other thing we can see is the Environment variable we are passing the contai
 
 Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
 
+    docker ps
+
+![Running Containers](media/3_DockerPS.png)
+
+You can also see the status of running containers and logs by running the Docker Desktop application.
+
+
+
 # Slides - Networks and Volumes
 
 Before we move to the next steps we will recap in more detail some of the steps we went through to get our site and database container up and running
