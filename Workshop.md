@@ -42,7 +42,7 @@ This workshop will be using the Clean starter kit for Umbraco. This is a great s
 
 At this point you can choose to continue in either Visual Studio or VS Code. 
 
-Run the website by issueing the following command.
+Run the website by issuing the following command.
 
     dotnet run --project UmbDock
 
