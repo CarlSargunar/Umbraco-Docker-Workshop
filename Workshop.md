@@ -60,6 +60,12 @@ There are 2 other files created in this repository which we need to copy into th
 
 These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use.
 
+### 1.2 Windows vs Linux Line Endings
+
+Historically windows terminates line-endings in file with a carriage return and line feed (CRLF), while Linux uses a single line feed (LF) - and if you want to learn about the history of why then check out this awesome video from Scott Hanselman : [https://www.youtube.com/watch?v=TtiBhktB4Qg](https://www.youtube.com/watch?v=TtiBhktB4Qg)
+
+To that end, we need to make sure all our files related to this and any containers are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF).
+
 ## 2.2 Build the database image and run the database container
 
 Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
@@ -79,8 +85,6 @@ This should give you a container ID. You can check which containers are running 
     docker ps
 
 ## 2.3 Creating the network for our containers
-
-
 
 To let the website and database containers communicate with each other, we need to define a custom bridge network between the two of them. 
 
