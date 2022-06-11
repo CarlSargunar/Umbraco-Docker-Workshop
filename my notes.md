@@ -2,7 +2,6 @@
 
     Wrap code and infrastructure toghether so that wherever it runs it runs the same way.
 
-
 # Reasons NOT to run a database in a container
 
     - Security patches?
@@ -40,16 +39,3 @@ $ dotnet new -i Umbraco.Templates::10.0.0-rc4
 $ dotnet new umbraco --name {{project name}}
 
 https://twitter.com/BjarkeBerg/status/1502705208203358209
-
-$ dotnet nuget add source https://myget.org/F/umbraconightly/api/v3/index.json --name umbraconightly
- $ dotnet new -i Umbraco.Templates::10.0.0-preview20220311.86365
- $ dotnet new umbraco --name {{project name}}
-
-## Blazor
-
-- https://github.com/cornehoskam/Umbraco9-Blazor-Starterkit
-- 
-
-# v10 Nightly
-
-https://our.umbraco.com/Documentation/Fundamentals/Setup/Install/installing-nightly-builds

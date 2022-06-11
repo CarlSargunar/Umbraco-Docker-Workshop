@@ -5,56 +5,10 @@
 In order to participate in this workshop you will need to ensure you have the full list of prerequisites, please see the [prerequisites](Prerequisites.md) document for details.
 
 
-### Starting on a non-windows dev box
+# Slides : What is a container?
 
-TODO : Mac instructions
+Before we start the next stages we will look at the following concepts. The link to the slides used throughout this presentation is https://docs.google.com/presentation/d/1MYf3CkzKYx-vZS0ntKIbNPejYVDbU2iPQit1OTzsoUM/
 
-If you are doing this workshop on a non-windows box, the order in which we need to go through is slightly differert, since the SQL LocalDB database isn't supported outside windows. Please raise your hand and get in touch with me if that is the case, and I can go through what you need.
-
-
-# 1. Creating the a basic Umbraco Site
-
-For all instructions, it is assumed you will be working in the root folder of this project. It's recommended the first step is to fork this repository so you can have your own copy of it and then clone it onto your machine. If you don't have a github account, you can download a zip of this repository and extract it to your machine.
-
-## Installing Umbraco Template and start Website
-
-Run the following to install the umbraco template.
-
-    dotnet new -i Umbraco.Templates::10.0.0-rc4
-
-Set the SDK Version being used and Create solution/project. This will create a global file with the current latest version of the SDK, and a blank solution which you can use with Visual Studio if you prefer to use that.
-
-    dotnet new globaljson --sdk-version 6.0 --force 
-
-## 1.1 Start a new blank Umbraco Site
-
-Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
-
-    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True" --development-database-type LocalDB
-
-There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
-
-## 1.2 Install a template site for the exercise. 
-
-This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
-
-    dotnet add UmbDock package Clean
-
-At this point you can choose to continue in either Visual Studio or VS Code. 
-
-Run the website by issuing the following command.
-
-    dotnet run --project UmbDock
-
-This should, if there are no errors, start up the kestrel server and serve the site for you to browse.
-
-![2_run_site](media/2_run_site.png)
-
-If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running.
-
-# 2. Create the Database Container
-
-Slides - Before we start the next stages we will look at the following concepts
 
 - What is a container?
     - Virtual machine vs Docker container
@@ -62,7 +16,13 @@ Slides - Before we start the next stages we will look at the following concepts
     - Docker container vs. Docker image
     - Describe Dockerfile
 
-### 2.1 Create a container for the database server
+# Exercise 1 - Create a Database Container
+
+For all instructions, it is assumed you will be working in the root folder of this project. There is a folder called 'Files' which contains the files used in this workshop to save you typing them out manually.
+
+It's recommended the first step is to fork this repository on Github so you can have your own copy of it and then clone it onto your machine. If you don't have a github account, you can download a zip of this repository and extract it to your machine.
+
+### 1.1 Create a container for the database server
 
 Here we will create a container for the database and run the site against this database. Create a folder called UmbDock in the root folder of this project. 
 
@@ -79,45 +39,26 @@ In that file we will define the image we will use, and the ports we will use.
 
     USER root
     
-    RUN mkdir /var/opt/sqlserver
-    
-    RUN chown mssql /var/opt/sqlserver
-    
-    ENV MSSQL_BACKUP_DIR="/var/opt/sqlserver"
-    ENV MSSQL_DATA_DIR="/var/opt/sqlserver"
-    ENV MSSQL_LOG_DIR="/var/opt/sqlserver"
+    ENV MSSQL_BACKUP_DIR="/var/opt/mssql"
+    ENV MSSQL_DATA_DIR="/var/opt/mssql/data"
+    ENV MSSQL_LOG_DIR="/var/opt/mssql/log"
 
     EXPOSE 1433/tcp
 
     COPY setup.sql /
     COPY startup.sh /
 
-    COPY Umbraco.mdf /var/opt/sqlserver
-    COPY Umbraco_log.ldf /var/opt/sqlserver
-
     ENTRYPOINT [ "/bin/bash", "startup.sh" ]
-    CMD [ "/opt/mssql/bin/sqlservr" ]    
+    CMD [ "/opt/mssql/bin/sqlservr" ]   
 
 *Note : We are use Azure SQL Edge here as a database container in case there is anyone using a Macbook with an M1 chip as these run on the Arm architecture.*
-
-Once the Dockerfiles is created, we also need to copy the Umbraco database to the UmbData folder. There are 2 files that need to be copied into the root of the UmbData folder.
-
-- /UmbDock/umbraco/Data/Umbraco.mdf
-- /UmbDock/umbraco/Data/Umbraco_log.ldf
 
 There are 2 other files created in this repository which we need to copy into the UmbData folder.
 
 - /Files/UmbData/setup.sql
 - /Files/UmbData/startup.sh
 
-Finally,in the UmbDock projet edit the appsettings.Development.json file so that the Umbraco site can connet to the database in the container rather than the local file version.
-
-    "ConnectionStrings": {
-        "umbracoDbDSN": "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;", "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
-    }    
-
-Todo : correct DNS
-
+These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use.
 
 ## 2.2 Build the database image and run the database container
 
@@ -127,15 +68,70 @@ Before you run the database container, make sure the rest of the files have the 
 
 Once this is done, build the database image.
 
-    docker build --tag=umbdata .\UmbData    
+    docker build --tag=umbdata ./UmbData    
 
 And run it
 
-    docker run --name umbdata -p 1433:1433 --volume sqlserver:/var/opt/sqlserver -d umbdata
+    docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
 
 This should give you a container ID. You can check which containers are running by running the following command.
 
     docker ps
+
+## 2.3 Creating the network for our containers
+
+
+
+To let the website and database containers communicate with each other, we need to define a custom bridge network between the two of them. 
+
+    docker network create -d bridge umbNet    
+
+We then need to run the database and website containers attached to this network. Since the database container is already running, we can issue the following command to attach the container to the network.
+
+    docker network connect umbNet umbdata
+
+You can inspect the network by running the following command.
+
+    docker network inspect umbNet
+
+# 2. Creating the a basic Umbraco Site
+
+Now that we have a database container running, we are going to create our Umbraco website. We will creae it first as as a normal website running on the file system, and not in a container. 
+
+## Installing Umbraco Template and start Website
+
+Run the following to install the umbraco template.
+
+    dotnet new -i Umbraco.Templates::10.0.0-rc5
+
+Set the SDK Version being used and Create solution/project. This will create a global file with the current latest version of the SDK, and a blank solution which you can use with Visual Studio if you prefer to use that.
+
+    dotnet new globaljson --sdk-version 6.0 --force 
+
+## 2.1 Start a new blank Umbraco Site
+
+Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
+
+    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" 
+
+There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
+
+## 2.2 Install a template site for the exercise. 
+
+This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
+
+    dotnet add UmbDock package Clean
+
+Run the website by issueing the following command.
+
+    dotnet run --project UmbDock
+
+This should, if there are no errors, start up the kestrel server and serve the site for you to browse.
+
+![2_run_site](media/2_run_site.png)
+
+If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running.
+
 
 
 ## 3 Running the Umbraco Site in a container
@@ -179,13 +175,32 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
 
 Finally we can compile a docker image for the Umbraco site.
 
-    docker build --tag=umbdock .\UmbDock
+    docker build --tag=umbdock ./UmbDock
 
 This will download the required components and compile a final image ready to run the site in a container, and may take some time. However before we are able to run both the site and the database container, we need to set up the network. 
 
-## 4 Docker Networks and Volumes
+At this point we can see all the images we have created by using the following command
 
-Slides - Before we start the next stages we will look at the following concepts
+    docker images
+
+## 3.3 Running the website container in the same network
+
+We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
+
+    docker run --name umbdock -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
+
+
+    docker run --name umbdock -p 8000:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
+
+In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
+
+One other thing we can see is the Environment variable we are passing the container with the -e flag, which sets our AspNetCore Environment to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database.
+
+Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
+
+# Slides - Networks and Volumes
+
+Before we move to the next steps we will recap in more detail some of the steps we went through to get our site and database container up and running
 
     - Container Networking
         - Bridge Network
@@ -200,38 +215,6 @@ Slides - Before we start the next stages we will look at the following concepts
         - Bind mounts
         - tmpfs mounts
 
-## 4.1 Creating the network for our containers
-
-To let the website and database containers communicate with each other, we need to define a custom bridge network between the two of them. 
-
-    docker network create -d bridge umbNet    
-
-We then need to run the database and website containers attached to this network. Since the database container is already running, we can issue the following command to attach the container to the network.
-
-    docker network connect umbNet umbdata
-
-We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
-
-    docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
-
-In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
-
-One other thing we can see is the Environment variable we are passing the container with the -e flag, which sets our AspNetCore Environment to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database.
-
-Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
-
-
-
-
-Website
-
-    docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
-
-    docker run --name umbdock2 -p 8002:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
-
-Data
-
-    docker run --name umbdata -p 1433:1433 --volume sqlserver:/var/opt/sqlserver --network=umbNet -d umbdata
 
 # Add the Blazor Container
 
@@ -254,10 +237,6 @@ docker compose down
 Remember, Linux line endings need -> Lf NOT CrLf
 
 ## Cleanup
-
-If you want to remove the RC1 template and revert to the older version
-
-    dotnet new -u Umbraco.Templates
 
 ## Troubleshooting 
 
