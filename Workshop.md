@@ -98,11 +98,9 @@ Set the SDK Version being used and Create solution/project. This will create a g
 
 Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
 
-    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" --development-database-type LocalDB
+    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" 
 
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
-
-Once the site is installed, we need to edit the file appsettings.Development.json. There may be a connectionstring configured in this file, but we need to remove it, and use the connectionstring from the base appsettings.json file. 
 
 ## 1.2 Install a template site for the exercise. 
 
