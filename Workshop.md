@@ -7,7 +7,7 @@ In order to participate in this workshop you will need to ensure you have the fu
 
 ### Starting on a non-windows dev box
 
-TODO : Mac instructions
+TODO : Mac instructions. Change all back slashes to forward slashes.
 
 If you are doing this workshop on a non-windows box, the order in which we need to go through is slightly differert, since the SQL LocalDB database isn't supported outside windows. Please raise your hand and get in touch with me if that is the case, and I can go through what you need.
 
@@ -20,7 +20,7 @@ For all instructions, it is assumed you will be working in the root folder of th
 
 Run the following to install the umbraco template.
 
-    dotnet new -i Umbraco.Templates::10.0.0-rc4
+    dotnet new -i Umbraco.Templates::10.0.0-rc5
 
 Set the SDK Version being used and Create solution/project. This will create a global file with the current latest version of the SDK, and a blank solution which you can use with Visual Studio if you prefer to use that.
 
@@ -32,6 +32,10 @@ Create a new Umbraco site using the following command. This will define the name
 
     dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True" --development-database-type LocalDB
 
+On Mac
+
+    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" --development-database-type LocalDB
+
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
 
 ## 1.2 Install a template site for the exercise. 
@@ -39,8 +43,6 @@ There is a great tool to help you configure the the unattended installation opti
 This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
 
     dotnet add UmbDock package Clean
-
-At this point you can choose to continue in either Visual Studio or VS Code. 
 
 Run the website by issueing the following command.
 
@@ -71,6 +73,8 @@ Create a blank file in the UmbDock folder called Dockerfile. This will define th
 *Note : the case of the file is important - it needs to be called Dockerfile with no extension*
 
 In that file we will define the image we will use, and the ports we will use.
+
+todo : Update this
 
     FROM mcr.microsoft.com/azure-sql-edge:1.0.4
 
@@ -128,6 +132,10 @@ Before you run the database container, make sure the rest of the files have the 
 Once this is done, build the database image.
 
     docker build --tag=umbdata .\UmbData    
+
+On Mac
+
+    docker build --tag=umbdata ./UmbData    
 
 And run it
 

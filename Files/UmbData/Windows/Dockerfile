@@ -9,17 +9,17 @@ RUN mkdir /var/opt/sqlserver
  
 RUN chown mssql /var/opt/sqlserver
  
-ENV MSSQL_BACKUP_DIR="/var/opt/sqlserver"
-ENV MSSQL_DATA_DIR="/var/opt/sqlserver"
-ENV MSSQL_LOG_DIR="/var/opt/sqlserver"
+ENV MSSQL_BACKUP_DIR="/var/opt/mssql"
+ENV MSSQL_DATA_DIR="/var/opt/mssql/data"
+ENV MSSQL_LOG_DIR="/var/opt/mssql/log"
 
 EXPOSE 1433/tcp
 
 COPY setup.sql /
 COPY startup.sh /
 
-COPY Umbraco.mdf /var/opt/sqlserver
-COPY Umbraco_log.ldf /var/opt/sqlserver
+COPY Umbraco.mdf /var/opt/mssql
+COPY Umbraco_log.ldf /var/opt/mssql
 
 ENTRYPOINT [ "/bin/bash", "startup.sh" ]
 CMD [ "/opt/mssql/bin/sqlservr" ]
