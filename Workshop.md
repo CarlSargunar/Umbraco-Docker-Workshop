@@ -134,13 +134,6 @@ This should, if there are no errors, start up the kestrel server and serve the s
 
 If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running.
 
-  <ItemGroup>
-    <Content Include="wwwroot\media\**" />
-  </ItemGroup>
-
-
-
-
 ## 3 Running the Umbraco Site in a container
 
 Now that the Umbraco site is running through Kestrel but conneting to the database server in the container, we need to create a container for the Umbraco site. 
@@ -167,14 +160,23 @@ In the Umbraco UmbDock project we will be creating a Dockerfile to define how it
 
 This Dockerfile starts with a build image which contains the SDK to actually compile the project, and one with ASP.NET runtimes to actuall host the running application. From the above Dockerfile we can see the stages of the build process.
 
-- Starting on the main image, we will use the SDK image to compile the project.
-- Copy the working project folder to the build image
-- Run the restore command to download the dependencies
-- Compile and publish the output of the project
-- Switch to the hosting image and copy the published output to the final image
-- Set the entrypoint to the binary output of the main project
+1. Starting on the main image, we will use the SDK image to compile the project.
+2. Copy the working project folder to the build image
+3. Run the restore command to download the dependencies
+4. Compile and publish the output of the project
+5. Switch to the hosting image and copy the published output to the final image
+6. Set the entrypoint to the binary output of the main project
 
-## 3.2 Building the Umbraco Site image, setting a network and running it
+## 3.2 Modify the project to include Media
+
+In order to include the media files which came with the template, in VS Code you need to add the following to the UmbDock.csproj project file.
+
+    <ItemGroup>
+        <Content Include="wwwroot\media\**" />
+    </ItemGroup>
+
+
+## 3.3 Building the Umbraco Site image, setting a network and running it
 
 Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. Create a copy of the appsettings.Development.json called appsettings.Staging.json, and in that file ensure the connectionstring is set-up to connect to umbdata as a container name.
 
@@ -192,15 +194,11 @@ At this point we can see all the images we have created by using the following c
 
     docker images
 
-## 3.3 Running the website container in the same network
+## 3.4 Running the website container in the same network
 
 We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
 
     docker run --name umbdock -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
-
-TODO : volumes
-
-    docker run --name umbdock -p 8000:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
 
 In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
 
