@@ -78,7 +78,21 @@ This should give you a container ID. You can check which containers are running 
 
     docker ps
 
+## 2.3 Creating the network for our containers
 
+
+
+To let the website and database containers communicate with each other, we need to define a custom bridge network between the two of them. 
+
+    docker network create -d bridge umbNet    
+
+We then need to run the database and website containers attached to this network. Since the database container is already running, we can issue the following command to attach the container to the network.
+
+    docker network connect umbNet umbdata
+
+You can inspect the network by running the following command.
+
+    docker network inspect umbNet
 
 # 2. Creating the a basic Umbraco Site
 
@@ -94,7 +108,7 @@ Set the SDK Version being used and Create solution/project. This will create a g
 
     dotnet new globaljson --sdk-version 6.0 --force 
 
-## 1.1 Start a new blank Umbraco Site
+## 2.1 Start a new blank Umbraco Site
 
 Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
 
@@ -102,7 +116,7 @@ Create a new Umbraco site using the following command. This will define the name
 
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
 
-## 1.2 Install a template site for the exercise. 
+## 2.2 Install a template site for the exercise. 
 
 This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
 
@@ -117,6 +131,7 @@ This should, if there are no errors, start up the kestrel server and serve the s
 ![2_run_site](media/2_run_site.png)
 
 If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running.
+
 
 
 ## 3 Running the Umbraco Site in a container
@@ -160,13 +175,29 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
 
 Finally we can compile a docker image for the Umbraco site.
 
-    docker build --tag=umbdock .\UmbDock
+    docker build --tag=umbdock ./UmbDock
 
 This will download the required components and compile a final image ready to run the site in a container, and may take some time. However before we are able to run both the site and the database container, we need to set up the network. 
 
-## 4 Docker Networks and Volumes
+At this point we can see all the images we have created by using the following command
 
-Slides - Before we start the next stages we will look at the following concepts
+    docker images
+
+## 3.3 Running the website container in the same network
+
+We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
+
+    docker run --name umbdock -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
+
+In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
+
+One other thing we can see is the Environment variable we are passing the container with the -e flag, which sets our AspNetCore Environment to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database.
+
+Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
+
+# Slides - Networks and Volumes
+
+Before we move to the next steps we will recap in more detail some of the steps we went through to get our site and database container up and running
 
     - Container Networking
         - Bridge Network
@@ -181,38 +212,6 @@ Slides - Before we start the next stages we will look at the following concepts
         - Bind mounts
         - tmpfs mounts
 
-## 4.1 Creating the network for our containers
-
-To let the website and database containers communicate with each other, we need to define a custom bridge network between the two of them. 
-
-    docker network create -d bridge umbNet    
-
-We then need to run the database and website containers attached to this network. Since the database container is already running, we can issue the following command to attach the container to the network.
-
-    docker network connect umbNet umbdata
-
-We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
-
-    docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
-
-In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
-
-One other thing we can see is the Environment variable we are passing the container with the -e flag, which sets our AspNetCore Environment to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database.
-
-Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
-
-
-
-
-Website
-
-    docker run --name umbdock -p 8000:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
-
-    docker run --name umbdock2 -p 8002:80 -v media:/app/wwwroot/media -v logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
-
-Data
-
-    docker run --name umbdata -p 1433:1433 --volume sqlserver:/var/opt/sqlserver --network=umbNet -d umbdata
 
 # Add the Blazor Container
 
@@ -235,10 +234,6 @@ docker compose down
 Remember, Linux line endings need -> Lf NOT CrLf
 
 ## Cleanup
-
-If you want to remove the RC1 template and revert to the older version
-
-    dotnet new -u Umbraco.Templates
 
 ## Troubleshooting 
 
