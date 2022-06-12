@@ -66,6 +66,14 @@ Historically windows terminates line-endings in file with a carriage return and 
 
 To that end, we need to make sure all our files related to this and any containers are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF).
 
+If you are using VS Code, this can be done using the option as shown below.
+
+![image](https://user-images.githubusercontent.com/3941753/173228662-dbb2e7fc-8f12-46ac-b334-2be10bff14a9.png)
+
+If you are using Visual Studio, use the **File->Advanced Save Options** to determine the line endings.
+![image](https://user-images.githubusercontent.com/3941753/173228709-e010dd10-2dad-4af2-953c-05466eccfa10.png)
+
+
 ## 1.3 Build the database image and run the database container
 
 Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
