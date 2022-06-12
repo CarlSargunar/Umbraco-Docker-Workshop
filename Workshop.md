@@ -65,16 +65,15 @@ In that file we will define the image we will use, and the ports we will use.
 
 There are 2 other files created in this repository which we need to copy into the UmbData folder.
 
-- /Files/UmbData/setup.sql
-- /Files/UmbData/startup.sh
+- /Files/UmbData/setup.sql to /UmbData/setup.sql
+- /Files/UmbData/startup.sh to /UmbData/startup.sh
 
 These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use.
 
+
 ## 1.2 Windows vs Linux Line Endings
 
-Historically windows terminates line-endings in file with a carriage return and line feed (CRLF), while Linux uses a single line feed (LF) - and if you want to learn about the history of why then check out this awesome video from Scott Hanselman : [https://www.youtube.com/watch?v=TtiBhktB4Qg](https://www.youtube.com/watch?v=TtiBhktB4Qg)
-
-To that end, we need to make sure all our files related to this and any containers are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF).
+Once all 3 files are in the UmbData folder, make sure they all have the correct Line Endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF).
 
 In VS Code, this can be done using the option as shown below.
 
@@ -82,10 +81,12 @@ In VS Code, this can be done using the option as shown below.
 
 If it shows CRLF, click on the label and at the top you can change it to LF.
 
+Historically windows terminates line-endings in file with a carriage return and line feed (CRLF), while Linux uses a single line feed (LF) - and if you want to learn about the history of why then check out this awesome video from Scott Hanselman : [https://www.youtube.com/watch?v=TtiBhktB4Qg](https://www.youtube.com/watch?v=TtiBhktB4Qg)
+
+
 ## 1.3 Build the database image and run the database container
 
 Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
-
 
 Once this is done, build the database image.
 
@@ -252,7 +253,6 @@ Before we move to the next steps we will recap in more detail some of the steps 
     - Bind mounts
     - tmpfs mounts
 
-
 # 4 Adding an API to the site
 
 Now that there is a site and database running, we will add a simple REST API which will return a jason feed of the blog posts, which will be used in a later part of this workshop.
@@ -276,8 +276,6 @@ To save typing the code for the API is already created in the the /Files/UmbWeb 
                     .AllowAnyHeader()
                     .AllowAnyMethod());
             });
-
-            // Bit of a mix - this also adds HTTP in the program.cs
 
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
@@ -427,9 +425,7 @@ Slides
 
 ## 6.1 Create the Docker Compose file
 
-TODO : Expand on this. 
-
-For now :
+To prepare the application for deployment with Docker compose, copy the following files into your project:
 
 - Copy /Files/docker-compose.yml to /docker-compose.yml
 - Copy /UmbWeb/appsettings.Staging.json to /UmbWeb/appsettings.Production.json
@@ -441,7 +437,7 @@ Todo : What's a better way to to Appsettings in Blazor?
 
 Finally before we run, we need to delete all existing containers. Run the following command in your terminal:
 
-    docker rm -f umblazor UmbWeb UmbWeb2 umbdata
+    docker rm -f umblazor umbweb umbweb2 umbdata
 
 Verify that none are running by looking at the Docker Desktop app. Once confirming all running containers have been deleted, we can run the Docker Compose file
 
@@ -468,13 +464,6 @@ To stop the containers, run the following command:
 ## Umbraco
 
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
-
-
-## File Types
-
-Remember, Linux line endings need -> Lf NOT CrLf
-
-## Cleanup
 
 ## Troubleshooting 
 
