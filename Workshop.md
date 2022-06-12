@@ -212,24 +212,22 @@ Once the container is running, if you run a docker ps command, you'll see both t
 
 You can also see the status of running containers and logs by running the Docker Desktop application.
 
-
-
 # Slides - Networks and Volumes
 
 Before we move to the next steps we will recap in more detail some of the steps we went through to get our site and database container up and running
 
-    - Container Networking
-        - Bridge Network
-        - Custom bridge Network
-        - Host Network
-        - Others
-            - Overlay
-            - Macvlan
-            - Ipvlan
-    - Container volumes
-        - Volumes
-        - Bind mounts
-        - tmpfs mounts
+- Container Networking
+    - Bridge Network
+    - Custom bridge Network
+    - Host Network
+    - Others
+        - Overlay
+        - Macvlan
+        - Ipvlan
+- Container volumes
+    - Volumes
+    - Bind mounts
+    - tmpfs mounts
 
 
 # 4 Adding an API to the site
@@ -241,8 +239,8 @@ Now that there is a site and database running, we will add a simple REST API whi
 To save typing the code for the API is already created in the the /Files/UmbDock folder. 
 
 1. Copy the following whole folders from the /Files/UmbDock folder to the /UmbDock folder.
-    - /Files/UmbDock/Controllers
-    - /Files/UmbDock/Models
+    - /Files/UmbDock/Controllers to /UmbDock/Controllers
+    - /Files/UmbDock/Models to /UmbDock/Models
 
 2. Amend the /UmbDock/Startup.cs file so the ConfigureServices method resembles the following:
     
@@ -291,14 +289,73 @@ To save typing the code for the API is already created in the the /Files/UmbDock
         }
         
 
-## 4.2 Rebuild the container and test the API
+## 4.2 Rebuild the image and test the API
 
-With those changes in there, you can re-build the UmbDock container with the following command:
+With those changes in there, you can re-build the UmbDock image with the following command:
 
     docker build --tag=umbdock ./UmbDock
 
+We need to delete the existing running container before we can start the updated container, as docker will only allow once container with the same name at the same time. Run the following command in your terminal.
 
-# Add the Blazor Container
+    docker rm -f umbdock
+
+We can then re-start the UmbDock container with the following command:
+
+    docker run --name umbdock -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock    
+
+Once the container is running again we can check the API is working by browsing to the following URL:
+
+    http://localhost:8000/Umbraco/Api/MyApp/GetBlogSummaries
+
+This should return a JSON collection of Post Summaries in a collection, which we will use with the Blazor App.
+
+
+## 4.3 Running a 2nd instance of the website container
+
+While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment.
+
+    docker run --name umbdock2 -p 8001:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock 
+
+You can browse this container by visiting the following URL:
+
+    http://localhost:8001/
+
+# 5 Add the Blazor Container
+
+We will now create a final container which will be used to run a blazor app, connect to the Blog summary API and show a summary of posts.
+
+## 5.1 Create the Blazor App and show the blog summaries
+
+Start a new Blazor WASM project by running the following:
+
+    dotnet new blazorwasm --name UmBlazor
+
+Copy the following whole folders from the /Files/UmbDock folder to the /UmbDock folder.
+
+- /Files/UmBlazor/Models to /UmBlazor/Models
+- /Files/UmBlazor/Pages/FetchData.razor to /UmBlazor/Pages/FetchData.razor
+
+Test that the application works by running the following command in your terminal:
+
+    dotnet run --project UmBlazor
+    
+Ignoring any warnings, you should be able to browse the WASM site using the relevant output URL
+
+![Blazor App](media/5_BlazorWasm.png)
+
+In my case I can use https://localhost:7025. This will bring up a site, and the Fetch Data page should show the blog summaries from the Umbraco site.
+
+![Blazor Fetch Data](media/5_BlazorWasm2.png)
+
+## 5.2 Create the Blazor Container
+
+To run the Blazor WASM app in a container, it's a little different to running an Umbraco website. The Umbraco site needs to run Kestrel as a webserver, but Blazor WASM just needs to serve files. As such it will use nginx to serve these pages on the container. 
+
+I've created the Dockerfile and nginx configuration file, these need to be copied to the project folder
+
+- /Files/UmBlazor/Dockerfile to /UmBlazor/Dockerfile
+- /Files/UmBlazor/nginx.conf to /UmBlazor/nginx.conf
+
 
 ## Build Image
 
@@ -307,6 +364,7 @@ With those changes in there, you can re-build the UmbDock container with the fol
 ## Run the Container
 
     docker run --name umblazor -p 8001:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umblazor
+
 
 ## Docker compose
 
