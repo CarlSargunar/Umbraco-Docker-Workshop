@@ -16,9 +16,17 @@ Before we start the next stages we will look at the following concepts. The link
     - Docker container vs. Docker image
     - Describe Dockerfile
 
-# Exercise 1 - Create a Database Container
+# Tools and Set-up
+
+During this workshop it is recommended that you use Visual Studio Code to run the workshop, and that you have the Auto-save feature enabled. 
+
+To do this, go to the **File** menu, and select **Autosave**.
 
 For all instructions, it is assumed you will be working in the root folder of this project. There is a folder called 'Files' which contains the files used in this workshop to save you typing them out manually.
+
+Where commands are executed, you should be using the built in terminal from VS Code, and not the command line. To open the terminal, select **View**, then **Terminal**.
+
+# Exercise 1 - Create a Database Container
 
 It's recommended the first step is to fork this repository on Github so you can have your own copy of it and then clone it onto your machine. If you don't have a github account, you can download a zip of this repository and extract it to your machine.
 
