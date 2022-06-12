@@ -411,11 +411,7 @@ Now the site could be browsed using the containter using the url
 
     http://localhost:8002/
 
-# 6 Docker compose
-
-So far we have created all our containers manually but Docker, including all networks, volumes, ports. This could be scripted with a batch, but there's a cool tool called Docker Compose, which is a simple way to create and manage containers.
-
-Slides 
+# Slides 
 
 - Docker Compose
     - Services
@@ -423,9 +419,15 @@ Slides
     - Volumes
     - Ports
 
+# 6 Docker compose
+
+So far we have created all our containers manually which is fine, but very slow, and prone to error. 
+
+Docker compose is a tool for defining and running multi-contianer applications including all networks, volumes, ports, environmental variables etc with a single commmand. Docker compose isn't a deployment tool - it's designed for testing multi-container applications.
+
 ## 6.1 Create the Docker Compose file
 
-To prepare the application for deployment with Docker compose, copy the following files into your project:
+I've prepared a single docker compose file to complete this application To prepare the application for deployment with Docker compose, copy the following files into your project: 
 
 - Copy /Files/docker-compose.yml to /docker-compose.yml
 - Copy /UmbWeb/appsettings.Staging.json to /UmbWeb/appsettings.Production.json
@@ -439,7 +441,7 @@ Finally before we run, we need to delete all existing containers. Run the follow
 
     docker rm -f umblazor umbweb umbweb2 umbdata
 
-Verify that none are running by looking at the Docker Desktop app. Once confirming all running containers have been deleted, we can run the Docker Compose file
+Verify that none are running by looking at the Docker Desktop app, or by running the 'docker ps' command. Once all running containers have been deleted, we can run the Docker Compose file.
 
 We first build the relevant images using the following command:
 
@@ -447,7 +449,7 @@ We first build the relevant images using the following command:
 
 That step isn't necessary, but it's good to have the images built before we run the containers. It also allows us to run all containers with the following command. 
 
-    docker compose up
+    docker compose up -d
 
 Once these are up, we can browse the umbraco websites using the following URLs
 
