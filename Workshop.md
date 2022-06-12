@@ -24,9 +24,9 @@ It's recommended the first step is to fork this repository on Github so you can 
 
 ## 1.1 Create a container for the database server
 
-Here we will create a container for the database and run the site against this database. Create a folder called UmbDock in the root folder of this project. 
+Here we will create a container for the database and run the site against this database. Create a folder called UmbData in the root folder of this project. 
 
-Create a blank file in the UmbDock folder called Dockerfile. This will define the database container, and also describe the configuration we will use with that database container. 
+Create a blank file in the UmbData folder called Dockerfile. This will define the database container, and also describe the configuration we will use with that database container. 
 
 *Note : the case of the file is important - it needs to be called Dockerfile with no extension*
 
