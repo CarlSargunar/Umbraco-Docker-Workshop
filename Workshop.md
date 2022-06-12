@@ -55,7 +55,7 @@ This will folder and the associated Dockerfile will define the database containe
 
 *Note : the case of the file is important - it needs to be called Dockerfile with no extension*
 
-**Action:** Paste the contents of this section into the Dockerfile. In that file we will define the image we will use, and the ports we will use.
+**Action:** Paste the contents below in that file, and make sure the line endings are **LF**.
 
     FROM mcr.microsoft.com/azure-sql-edge:1.0.4
 
@@ -193,7 +193,7 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
 
 ## 3.1 Create the Umbraco Site container
 
-In the Umbraco UmbWeb project we will be creating a Dockerfile to define how it will be hosted. 
+**Action:** In the Umbraco UmbWeb project create a Dockerfile to define the components of the Umbraco container. Paste the contents below in that file, and make sure the line endings are **LF**. 
 
     # Use the SDK image to build and publish the website
     FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
