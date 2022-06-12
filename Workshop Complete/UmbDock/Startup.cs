@@ -1,4 +1,4 @@
-namespace UmbDock
+namespace UmbWeb
 {
     public class Startup
     {

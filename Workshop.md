@@ -120,17 +120,17 @@ Set the SDK Version being used and Create solution/project. This will create a g
 
 Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
 
-    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" 
+    dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" 
 
 ## 2.2 Install a template site for the exercise. 
 
 This workshop will use the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
 
-    dotnet add UmbDock package Clean
+    dotnet add UmbWeb package Clean
 
 Run the website by issueing the following command.
 
-    dotnet run --project UmbDock
+    dotnet run --project UmbWeb
 
 This should, if there are no errors, start up the kestrel server and serve the site for you to browse.
 
@@ -146,21 +146,21 @@ If the site is still running, stop it by running by pressing Ctrl + c in the ter
 
 ## 3.1 Create the Umbraco Site container
 
-In the Umbraco UmbDock project we will be creating a Dockerfile to define how it will be hosted. 
+In the Umbraco UmbWeb project we will be creating a Dockerfile to define how it will be hosted. 
 
     # Use the SDK image to build and publish the website
     FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
     WORKDIR /src
-    COPY ["UmbDock.csproj", "."]
-    RUN dotnet restore "UmbDock.csproj"
+    COPY ["UmbWeb.csproj", "."]
+    RUN dotnet restore "UmbWeb.csproj"
     COPY . .
-    RUN dotnet publish "UmbDock.csproj" -c Release -o /app/publish
+    RUN dotnet publish "UmbWeb.csproj" -c Release -o /app/publish
 
     # Copy the published output to the final running image
     FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final 
     WORKDIR /app
     COPY --from=build /app/publish .
-    ENTRYPOINT ["dotnet", "UmbDock.dll"]
+    ENTRYPOINT ["dotnet", "UmbWeb.dll"]
 
 This Dockerfile starts with a build image which contains the SDK to actually compile the project, and one with ASP.NET runtimes to actuall host the running application. From the above Dockerfile we can see the stages of the build process.
 
@@ -173,7 +173,7 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 
 ## 3.2 Modify the project to include Media
 
-In order to include the media files which came with the template, in VS Code you need to add the following to the UmbDock.csproj project file.
+In order to include the media files which came with the template, in VS Code you need to add the following to the UmbWeb.csproj project file.
 
     <ItemGroup>
         <Content Include="wwwroot\media\**" />
@@ -190,7 +190,7 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
 
 Finally we can compile a docker image for the Umbraco site.
 
-    docker build --tag=umbdock ./UmbDock
+    docker build --tag=UmbWeb ./UmbWeb
 
 This will download the required components and compile a final image ready to run the site in a container, and may take some time. However before we are able to run both the site and the database container, we need to set up the network. 
 
@@ -202,7 +202,7 @@ At this point we can see all the images we have created by using the following c
 
 We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
 
-    docker run --name umbdock -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock
+    docker run --name UmbWeb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d UmbWeb
 
 In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
 
@@ -240,13 +240,13 @@ Now that there is a site and database running, we will add a simple REST API whi
 
 ## 4.1 Creating the API controller
 
-To save typing the code for the API is already created in the the /Files/UmbDock folder. 
+To save typing the code for the API is already created in the the /Files/UmbWeb folder. 
 
-1. Copy the following whole folders from the /Files/UmbDock folder to the /UmbDock folder.
-    - /Files/UmbDock/Controllers to /UmbDock/Controllers
-    - /Files/UmbDock/Models to /UmbDock/Models
+1. Copy the following whole folders from the /Files/UmbWeb folder to the /UmbWeb folder.
+    - /Files/UmbWeb/Controllers to /UmbWeb/Controllers
+    - /Files/UmbWeb/Models to /UmbWeb/Models
 
-2. Amend the /UmbDock/Startup.cs file so the ConfigureServices method resembles the following:
+2. Amend the /UmbWeb/Startup.cs file so the ConfigureServices method resembles the following:
     
         public void ConfigureServices(IServiceCollection services)
         {
@@ -267,7 +267,7 @@ To save typing the code for the API is already created in the the /Files/UmbDock
                 .Build();
         }  
 
-3. Amend the /UmbDock/Startup.cs file so the Configure method resembles the following:
+3. Amend the /UmbWeb/Startup.cs file so the Configure method resembles the following:
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -295,17 +295,17 @@ To save typing the code for the API is already created in the the /Files/UmbDock
 
 ## 4.2 Rebuild the image and test the API
 
-With those changes in there, you can re-build the UmbDock image with the following command:
+With those changes in there, you can re-build the UmbWeb image with the following command:
 
-    docker build --tag=umbdock ./UmbDock
+    docker build --tag=UmbWeb ./UmbWeb
 
 We need to delete the existing running container before we can start the updated container, as docker will only allow once container with the same name at the same time. Run the following command in your terminal.
 
-    docker rm -f umbdock
+    docker rm -f UmbWeb
 
-We can then re-start the UmbDock container with the following command:
+We can then re-start the UmbWeb container with the following command:
 
-    docker run --name umbdock -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock    
+    docker run --name UmbWeb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d UmbWeb    
 
 Once the container is running again we can check the API is working by browsing to the following URL:
 
@@ -318,7 +318,7 @@ This should return a JSON collection of Post Summaries in a collection, which we
 
 While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment.
 
-    docker run --name umbdock2 -p 8001:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbdock 
+    docker run --name UmbWeb2 -p 8001:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d UmbWeb 
 
 You can browse this container by visiting the following URL:
 
@@ -334,7 +334,7 @@ Start a new Blazor WASM project by running the following:
 
     dotnet new blazorwasm --name UmBlazor
 
-Copy the following whole folders from the /Files/UmbDock folder to the /UmbDock folder.
+Copy the following whole folders from the /Files/UmbWeb folder to the /UmbWeb folder.
 
 - /Files/UmBlazor/Models to /UmBlazor/Models
 - /Files/UmBlazor/Pages/FetchData.razor to /UmBlazor/Pages/FetchData.razor
@@ -413,7 +413,7 @@ TODO : Expand on this.
 For now :
 
 - Copy /Files/docker-compose.yml to /docker-compose.yml
-- Copy /UmbDock/appsettings.Staging.json to /UmbDock/appsettings.Production.json
+- Copy /UmbWeb/appsettings.Staging.json to /UmbWeb/appsettings.Production.json
 - Copy /UmBlazor/wwwroot/appsettings.Production.json to /UmBlazor/wwwroot/appsettings.Production.json
 
 Todo : What's a better way to to Appsettings in Blazor?
@@ -422,7 +422,7 @@ Todo : What's a better way to to Appsettings in Blazor?
 
 Finally before we run, we need to delete all existing containers. Run the following command in your terminal:
 
-    docker rm -f umblazor umbdock umbdock2 umbdata
+    docker rm -f umblazor UmbWeb UmbWeb2 umbdata
 
 Verify that none are running by looking at the Docker Desktop app. Once confirming all running containers have been deleted, we can run the Docker Compose file
 
