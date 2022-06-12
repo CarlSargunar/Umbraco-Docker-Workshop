@@ -1,13 +1,4 @@
 
-
-    /// <summary>
-    /// Configures the services.
-    /// </summary>
-    /// <param name="services">The services.</param>
-    /// <remarks>
-    /// This method gets called by the runtime. Use this method to add services to the container.
-    /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940.
-    /// </remarks>
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddCors(policy => 
@@ -27,11 +18,6 @@
             .Build();
     }
 
-    /// <summary>
-    /// Configures the application.
-    /// </summary>
-    /// <param name="app">The application builder.</param>
-    /// <param name="env">The web hosting environment.</param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())

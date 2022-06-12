@@ -80,6 +80,8 @@ In VS Code, this can be done using the option as shown below.
 
 ![image](media/6_VSCodeLineEndings.png)
 
+If it shows CRLF, click on the label and at the top you can change it to LF.
+
 ## 1.3 Build the database image and run the database container
 
 Before you run the database container, make sure the rest of the files have the the right file endings. These files all need to have the Linux line ending (\n) and not the Windows line ending (\r\n). 
@@ -92,7 +94,6 @@ Once this is done, build the database image.
 And run it with the following command. 
 
 *Note : If you are running a local SQL Server on your machine, you will need to stop that server before you can run the database container, or the container will not be able to start.*
-
 
     docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
 
@@ -111,6 +112,10 @@ We then need to run the database and website containers attached to this network
 You can inspect the network by running the following command.
 
     docker network inspect umbNet
+
+Todo : Image
+
+Todo : connect to local DB with SQL Management Studio 
 
 # 2. Creating the a basic Umbraco Site
 
@@ -181,7 +186,7 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 5. Switch to the hosting image and copy the published output to the final image
 6. Set the entrypoint to the binary output of the main project
 
-## 3.2 Modify the project to include Media
+## 3.2 Modify the UmbWeb.csproj project file to include Media
 
 In order to include the media files which came with the template, in VS Code you need to add the following to the UmbWeb.csproj project file.
 
@@ -200,7 +205,7 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
 
 Finally we can compile a docker image for the Umbraco site.
 
-    docker build --tag=UmbWeb ./UmbWeb
+    docker build --tag=umbweb ./UmbWeb
 
 This will download the required components and compile a final image ready to run the site in a container, and may take some time. However before we are able to run both the site and the database container, we need to set up the network. 
 
@@ -212,11 +217,15 @@ At this point we can see all the images we have created by using the following c
 
 We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
 
-    docker run --name UmbWeb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d UmbWeb
+    docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
 
 In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
 
 One other thing we can see is the Environment variable we are passing the container with the -e flag, which sets our AspNetCore Environment to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database.
+
+You can now see the website running by visiting:
+    
+    http://localhost:8000
 
 Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
 
@@ -307,15 +316,15 @@ To save typing the code for the API is already created in the the /Files/UmbWeb 
 
 With those changes in there, you can re-build the UmbWeb image with the following command:
 
-    docker build --tag=UmbWeb ./UmbWeb
+    docker build --tag=umbweb ./UmbWeb
 
 We need to delete the existing running container before we can start the updated container, as docker will only allow once container with the same name at the same time. Run the following command in your terminal.
 
-    docker rm -f UmbWeb
+    docker rm -f umbweb
 
 We can then re-start the UmbWeb container with the following command:
 
-    docker run --name UmbWeb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d UmbWeb    
+    docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb    
 
 Once the container is running again we can check the API is working by browsing to the following URL:
 
@@ -328,7 +337,7 @@ This should return a JSON collection of Post Summaries in a collection, which we
 
 While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment.
 
-    docker run --name UmbWeb2 -p 8001:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d UmbWeb 
+    docker run --name umbweb2 -p 8001:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb 
 
 You can browse this container by visiting the following URL:
 
