@@ -355,6 +355,7 @@ I've created the Dockerfile and nginx configuration file, these need to be copie
 
 - /Files/UmBlazor/Dockerfile to /UmBlazor/Dockerfile
 - /Files/UmBlazor/nginx.conf to /UmBlazor/nginx.conf
+- /Files/UmBlazor/wwwroot/appsettings.json to /UmBlazor/wwwroot/appsettings.json
 
 Looking at the contents of the Dockerfile : 
 
@@ -389,19 +390,61 @@ Now the site could be browsed using the containter using the url
 
     http://localhost:8002/
 
+# 6 Docker compose
 
-## Docker compose
+So far we have created all our containers manually but Docker, including all networks, volumes, ports. This could be scripted with a batch, but there's a cool tool called Docker Compose, which is a simple way to create and manage containers.
 
-docker compose build
-docker compose up
-docker compose down
+Slides 
+
+- Docker Compose
+    - Services
+    - Networks
+    - Volumes
+    - Ports
+
+## 6.1 Create the Docker Compose file
+
+TODO : Expand on this. 
+
+For now :
+
+- Copy /Files/docker-compose.yml to /docker-compose.yml
+- Copy /UmbDock/appsettings.Staging.json to /UmbDock/appsettings.Production.json
+- Copy /UmBlazor/wwwroot/appsettings.Production.json to /UmBlazor/wwwroot/appsettings.Production.json
+
+Todo : What's a better way to to Appsettings in Blazor?
+
+## 6.2 Run the Docker Compose file
+
+Finally before we run, we need to delete all existing containers. Run the following command in your terminal:
+
+    docker rm -f umblazor umbdock umbdock2 umbdata
+
+Verify that none are running by looking at the Docker Desktop app. Once confirming all running containers have been deleted, we can run the Docker Compose file
+
+We first build the relevant images using the following command:
+
+    docker compose build
+
+That step isn't necessary, but it's good to have the images built before we run the containers. It also allows us to run all containers with the following command. 
+
+    docker compose up
+
+Once these are up, we can browse the umbraco websites using the following URLs
+
+- Umbraco 1 : http://localhost:5080/ 
+- Umbraco 2 : http://localhost:5081/
+- Blazor : http://localhost:5082/
+
+To stop the containers, run the following command:
+
+    docker-compose down 
 
 # References
 
 ## Umbraco
 
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
-
 
 
 ## File Types
