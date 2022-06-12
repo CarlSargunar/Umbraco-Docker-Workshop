@@ -128,7 +128,7 @@ Create a new Umbraco site using the following command. This will define the name
     
   ## 2.2 Install a template site for the exercise. 
 
-This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
+This workshop will use the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
 
     dotnet add UmbDock package Clean
 
