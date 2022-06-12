@@ -26,13 +26,15 @@ For all instructions, it is assumed you will be working in the root folder of th
 
 Where commands are executed, you should be using the built in terminal from VS Code, and not the command line. To open the terminal, select **View**, then **Terminal**.
 
-# Exercise 1 - Create a Database Container
-
 It's recommended the first step is to fork this repository on Github so you can have your own copy of it and then clone it onto your machine. If you don't have a github account, you can download a zip of this repository and extract it to your machine.
 
-## 1.1 Create a container for the database server
+These instructions are also available on the [GitHub repository](https://github.com/CarlSargunar/Umbraco-Docker-Workshop/blob/main/Workshop.md) or your own fork.
 
-Here we will create a container for the database and run the site against this database. Create a folder called UmbData in the root folder of this project. 
+# Exercise 1 - Create a Database Container
+
+The first step is to create a database container which will host our database for the Umbraco sites going forward in this workshop. We are deliberately not using SQLite or LocalDB as these aren't universally compatible across all platforms.
+
+## 1.1 Create a container for the database server
 
 Create a blank file in the UmbData folder called Dockerfile. This will define the database container, and also describe the configuration we will use with that database container. 
 
