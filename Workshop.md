@@ -108,7 +108,7 @@ You can inspect the network by running the following command.
 
 # 2. Creating the a basic Umbraco Site
 
-Now that we have a database container running, we are going to create our Umbraco website. We will creae it first as as a normal website running on the file system, and not in a container. 
+Now that we have a database container running, we are going to create our Umbraco website. We will create it first as as a normal website running on the file system, and not in a container. 
 
 ## Installing Umbraco Template and start Website
 
@@ -124,9 +124,9 @@ Set the SDK Version being used and Create solution/project. This will create a g
 
 Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
 
-    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" 
-
-## 2.2 Install a template site for the exercise. 
+    dotnet new umbraco -n UmbDock --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;Integrated Security=true;" 
+    
+  ## 2.2 Install a template site for the exercise. 
 
 This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
 
