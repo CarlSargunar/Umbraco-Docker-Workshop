@@ -66,13 +66,9 @@ Historically windows terminates line-endings in file with a carriage return and 
 
 To that end, we need to make sure all our files related to this and any containers are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF).
 
-If you are using VS Code, this can be done using the option as shown below.
+In VS Code, this can be done using the option as shown below.
 
-![image](https://user-images.githubusercontent.com/3941753/173228662-dbb2e7fc-8f12-46ac-b334-2be10bff14a9.png)
-
-If you are using Visual Studio, use the **File->Advanced Save Options** to determine the line endings.
-![image](https://user-images.githubusercontent.com/3941753/173228709-e010dd10-2dad-4af2-953c-05466eccfa10.png)
-
+![image](media/6_VSCodeLineEndings.png)
 
 ## 1.3 Build the database image and run the database container
 
@@ -108,7 +104,7 @@ You can inspect the network by running the following command.
 
 # 2. Creating the a basic Umbraco Site
 
-Now that we have a database container running, we are going to create our Umbraco website. We will creae it first as as a normal website running on the file system, and not in a container. 
+Now that we have a database container running, we are going to create our Umbraco website. We will create it first as as a normal website running on the file system, and not in a container. 
 
 ## Installing Umbraco Template and start Website
 
@@ -128,7 +124,7 @@ Create a new Umbraco site using the following command. This will define the name
 
 ## 2.2 Install a template site for the exercise. 
 
-This workshop will be using the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
+This workshop will use the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
 
     dotnet add UmbDock package Clean
 
