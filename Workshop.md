@@ -356,14 +356,38 @@ I've created the Dockerfile and nginx configuration file, these need to be copie
 - /Files/UmBlazor/Dockerfile to /UmBlazor/Dockerfile
 - /Files/UmBlazor/nginx.conf to /UmBlazor/nginx.conf
 
+Looking at the contents of the Dockerfile : 
 
-## Build Image
+    FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+    WORKDIR /src
+    COPY UmBlazor.csproj .
+    RUN dotnet restore UmBlazor.csproj
+    COPY . .
+    RUN dotnet build UmBlazor.csproj -c Release -o /app/build
+
+    FROM build AS publish
+    RUN dotnet publish UmBlazor.csproj -c Release -o /app/publish
+
+    FROM nginx:alpine AS final
+    WORKDIR /usr/share/nginx/html
+    COPY --from=publish /app/publish/wwwroot .
+    COPY nginx.conf /etc/nginx/nginx.conf
+
+We can see that this container is using the nginx image, and rather than starting the application, it merely hosts the published output of the UmBlazor project. 
+
+### Build Image and run the container
+
+Next we can build the Blazor Image using the following command:
 
     docker build --tag=umblazor .\UmBlazor    
 
-## Run the Container
+Once that's done, we can run the Container
 
-    docker run --name umblazor -p 8001:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umblazor
+    docker run --name umblazor -p 8002:80 --network=umbNet -d umblazor
+
+Now the site could be browsed using the containter using the url
+
+    http://localhost:8002/
 
 
 ## Docker compose
