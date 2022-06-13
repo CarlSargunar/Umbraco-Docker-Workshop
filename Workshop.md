@@ -28,6 +28,8 @@ These instructions are also available on the [GitHub repository](https://github.
 
 Wherever there are something for you to do I will add the flag **Action:**. This will indicate to you that you should do the action described in the instruction.
 
+During the workshop please take extra care to make sure you have the right path according to the instructions. There are a lot of similarly named files and folders, and you will need to be careful to not mix them up.
+
 
 ## Working Folder
 
