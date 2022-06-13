@@ -1,6 +1,8 @@
 ﻿@page "/fetchdata"
 @using UmBlazor.Models
 @using System.Diagnostics
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @inject HttpClient Http
 
 <PageTitle>Umbraco Blog Summary</PageTitle>
@@ -11,7 +13,10 @@
 
 @if (_blogSummaries == null)
 {
-    <p><em>Loading...</em></p>
+    string umbracoURL = Configuration["UmbracoURL"];
+    <p>
+        <em>Loading blog pages from @umbracoURL ...</em>
+    </p>
 }
 else
 {
@@ -46,11 +51,12 @@ else
     {
         try
         {
-            _blogSummaries = await Http.GetFromJsonAsync<BlogSummary[]>("http://localhost:8000/umbraco/api/myapp/getblogSummaries");
+            _blogSummaries = await Http.GetFromJsonAsync<BlogSummary[]>(Configuration["UmbracoURL"]);
         }
         catch (Exception ex)
         {
             var s = ex.Message;
         }
     }
+
 }
