@@ -238,7 +238,7 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
 **Action:** Create a copy of the appsettings.Development.json called appsettings.Staging.json, and in that file ensure the connectionstring is set-up to connect to umbdata as a container name.
 
     "ConnectionStrings": {
-        "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
+        "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
     }
 
 Todo: Image of what it looks like after
