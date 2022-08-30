@@ -155,10 +155,6 @@ Now that we have a database container running, we are going to create our Umbrac
 
 ## Installing Umbraco Template and start Website
 
-**Action:** Run the following in the terminal to install the umbraco template.
-
-    dotnet new -i Umbraco.Templates::10.0.0
-
 **Action:** Set the SDK Version being used and Create solution/project. This will create a global file with the current latest version of the SDK, and a blank solution which you can use with Visual Studio if you prefer to use that.
 
     dotnet new globaljson --sdk-version 6.0 --force 
