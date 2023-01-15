@@ -31,9 +31,10 @@ The folders which are in this workshop are :
 
 - **Files** - This folder contains pre-created files which will be used in this workshop to save you typing everything out manually
 - **Media** - The images used in this workshop are stored in there
-- **Workshop Complete** - This folder contains a fully complete version of the workshop which can be used for reference in case you run into problems, in a zipped up file. No cheating!!
-- **Workshop** - This will be the folder where the workshop is being run from.
+- **Workshop Complete** - This folder contains a fully complete version of the workshop which can be used for reference in case you run into problems, in a zipped up file. No cheating - you won't learn if you do, but it's a useful guide for reference if you get stuck 🙂 
+- **Working** - This will be the active folder where the workshop is being run from, and all files you create and edit will be in this folder. 
 
+---
 
 # Exercise 1 - Create a Database Container
 
@@ -47,11 +48,11 @@ The first step is to create a database container which will host our database fo
 
 This will folder and the associated Dockerfile will define the database container, the image to use, and the ports it exposes and also describe the configuration we will use with that database container. 
 
-*Note : the case of the file is important - it needs to be called Dockerfile with no extension*
+*Note : the casing of the file is important - it needs to be called Dockerfile with no extension*
 
 **Action:** Paste the contents below in that file, and make sure the line endings are **LF**.
 
-    FROM mcr.microsoft.com/azure-sql-edge:1.0.4
+    FROM mcr.microsoft.com/azure-sql-edge:latest
 
     ENV ACCEPT_EULA=Y
     ENV SA_PASSWORD=SQL_password123
@@ -70,16 +71,18 @@ This will folder and the associated Dockerfile will define the database containe
     ENTRYPOINT [ "/bin/bash", "startup.sh" ]
     CMD [ "/opt/mssql/bin/sqlservr" ]   
 
-*Note : We are use Azure SQL Edge here as a database container in case there is anyone using a Macbook with an M1 chip as these run on the Arm architecture.*
+This file will instruct Docker to create a SQL server running azure-sql-edge, will accept the End User License Agreement, and will define environmental variables to configure the paths to be used for databases.
 
-There are 2 other files created in this repository which we need to copy into the UmbData folder.
+It will also configure the ports to be exposed (1433), and copy two scripts into the container. These scripts will be used to create a blank database if none exists when the database container starts. 
 
-**Action:** Copy these files:
+*Note : We are use Azure SQL Edge here as a database container for compatibility - SQL Edge will with on both x64 as well as ARM cpus which come on Macbooks with an M1 chip.*
 
-- From /Files/UmbData/setup.sql to /Workshop/UmbData/setup.sql
-- From /Files/UmbData/startup.sh to /Workshop/UmbData/startup.sh
+**Action:** Copy the database setup scripts:
 
-These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use, but if the database already exists it won't re-create it. 
+- From /Files/UmbData/setup.sql to /Working/UmbData/setup.sql
+- From /Files/UmbData/startup.sh to /Working/UmbData/startup.sh
+
+These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use, but if the database already exists it won't re-create it. One of the files contains a timed script which calls the second after a delay, and the second file contains the SQL script to create the database if none exists.
 
 ## 1.2 Windows vs Linux Line Endings
 
@@ -91,7 +94,7 @@ In VS Code, this can be done using the option as shown below.
 
 If it shows CRLF, click on the label and at the top you can change it to LF.
 
-Historically windows terminates line-endings in file with a carriage return and line feed (CRLF), while Linux uses a single line feed (LF) - and if you want to learn about the history of why then check out this awesome video from Scott Hanselman : [https://www.youtube.com/watch?v=TtiBhktB4Qg](https://www.youtube.com/watch?v=TtiBhktB4Qg)
+*Note : Historically windows terminates line-endings in file with a carriage return and line feed (CRLF), while Linux uses a single line feed (LF) - and if you want to learn about the history of why then check out this awesome video from Scott Hanselman : [https://www.youtube.com/watch?v=TtiBhktB4Qg](https://www.youtube.com/watch?v=TtiBhktB4Qg)*
 
 
 ## 1.3 Build the database image and run the database container

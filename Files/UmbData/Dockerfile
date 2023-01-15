@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/azure-sql-edge:1.0.4
+FROM mcr.microsoft.com/azure-sql-edge:latest
 
 ENV ACCEPT_EULA=Y
 ENV SA_PASSWORD=SQL_password123
