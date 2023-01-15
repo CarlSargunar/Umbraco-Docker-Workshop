@@ -7,7 +7,7 @@ In order to participate in this workshop you will need to ensure you have the fu
 
 # Slides 
 
-Before we start the next stages we will look at the following concepts. The link to the slides used throughout this presentation is https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3ORd1cPwL82J_Ks
+Before we start the next stages we will look at the following concepts. The link to the slides used throughout this presentation is https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3ORd1cPwL82J_Ks/edit?usp=sharing
 
 
 # Tools and Set-up
@@ -77,10 +77,12 @@ It will also configure the ports to be exposed (1433), and copy two scripts into
 
 *Note : We are use Azure SQL Edge here as a database container for compatibility - SQL Edge will with on both x64 as well as ARM cpus which come on Macbooks with an M1 chip.*
 
-**Action:** Copy the database setup scripts:
+**Action:** : Copy scripts
 
-- From /Files/UmbData/setup.sql to /Working/UmbData/setup.sql
-- From /Files/UmbData/startup.sh to /Working/UmbData/startup.sh
+- Copy the database setup scripts
+    - From /Files/UmbData/setup.sql to /Working/UmbData/setup.sql
+    - From /Files/UmbData/startup.sh to /Working/UmbData/startup.sh
+- Ensure the line endings are **LF** for both files.
 
 These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use, but if the database already exists it won't re-create it. One of the files contains a timed script which calls the second after a delay, and the second file contains the SQL script to create the database if none exists.
 

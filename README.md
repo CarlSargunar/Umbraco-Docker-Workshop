@@ -11,8 +11,8 @@ Please make sure you have gone through the checklist for this workshop in the [P
 The main workshop is in the [Workshop.md](Workshop.md) file. Follow the instructions in there to get started.
 
 
-# References
-Slides - https://docs.google.com/presentation/d/1MYf3CkzKYx-vZS0ntKIbNPejYVDbU2iPQit1OTzsoUM/
+# References and Resources
+Slides - https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3ORd1cPwL82J_Ks
 
 ## Docker
 
