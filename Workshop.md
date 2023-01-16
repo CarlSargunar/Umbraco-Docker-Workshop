@@ -186,7 +186,10 @@ This should, if there are no errors, start up the kestrel server and serve the s
 
 ![2_run_site](media/2_run_site.png)
 
-If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running.
+If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running. You can also access the Umbraco backoffice at https://localhost:11608/umbraco using the credentials below
+
+- Username : admin@admin.com
+- Password : 1234567890
 
 ## 3 Running the Umbraco Site in a container
 
@@ -223,7 +226,7 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 
 ## 3.2 Modify the UmbWeb.csproj project file to include Media
 
-**Action:** In order to include the media files which came with the template, in VS Code you need to add the following to the UmbWeb.csproj project file. There are several itemgroups in the file, so you can add this new section to the same level as those in any position of the file.
+**Action:** For this demo, in order to include the media files which came with the template, you need to add the following to the UmbWeb.csproj project file. There are several itemgroups in the file, so you can add this new section to the same level as those in any position of the file. ***NOTE : This not recommended for production sites, as it will force the media files to be included in the container.***
 
     <ItemGroup>
         <Content Include="wwwroot\media\**" />
@@ -236,7 +239,7 @@ Todo: Image of what it will look like after
 
 Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. 
 
-**Action:** Create a copy of the appsettings.Development.json called appsettings.Staging.json, and in that file ensure the connectionstring is set-up to connect to umbdata as a container name.
+**Action:** Create a copy of the **appsettings.Development.json** called **appsettings.Staging.json**. In that file ensure the connectionstring is set-up to connect to **umbdata** as the database server. You will need to add the following to the file.
 
     "ConnectionStrings": {
         "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
