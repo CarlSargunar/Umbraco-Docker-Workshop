@@ -158,10 +158,6 @@ Now that we have a database container running, we are going to create our Umbrac
 
     dotnet new install Umbraco.Templates::* --force
 
-**Action:** Set the SDK Version being used and Create solution/project. This will create a global file with the current latest version of the SDK, and a blank solution which you can use with Visual Studio if you prefer to use that.
-
-    dotnet new globaljson --sdk-version 7.0 --force 
-
 ## 2.1 Start a new blank Umbraco Site
 
 **Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
@@ -232,18 +228,18 @@ This Dockerfile starts with a build image which contains the SDK to actually com
         <Content Include="wwwroot\media\**" />
     </ItemGroup>
 
-Todo: Image of what it will look like after
-
 
 ## 3.3 Building the Umbraco Site image, setting a network and running it
 
 Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. 
 
-**Action:** Create a copy of the **appsettings.Development.json** called **appsettings.Staging.json**. In that file ensure the connectionstring is set-up to connect to **umbdata** as the database server. You will need to add the following to the file.
+**Action:** Create a copy of the **appsettings.Development.json** called **appsettings.Staging.json**. In that file ensure the connectionstring is set-up to connect to **umbdata** as the database server. You will need to add the following to the file. 
 
     "ConnectionStrings": {
         "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
     }
+
+You could also copy the already edited from from the **/Files/UmbWeb/appsettings.Staging.json** file in the repository.
 
 Todo: Image of what it looks like after
 
@@ -253,7 +249,7 @@ Finally we can compile a docker image for the Umbraco site.
 
     docker build --tag=umbweb ./UmbWeb
 
-This will download the required components and compile a final image ready to run the site in a container, and may take some time. However before we are able to run both the site and the database container, we need to set up the network. 
+This will download the required components and compile a final image ready to run the site in a container, and may take some time. 
 
 At this point we can see all the images we have created by using the following command
 
@@ -261,7 +257,7 @@ At this point we can see all the images we have created by using the following c
 
 ## 3.4 Running the website container in the same network
 
-We can then run the website container. *Notice in the command below there is an argument to let the container know which network to connect to - the same **umbNet** network*.
+We can then run the website container. *Notice in the command below there is an argument to let the container know which network to connect to - the same **umbNet** network*. Here we are doing this using the --network flag instead of using an explicit command.
 
 **Action:** Run the following command to run the website container.
 
