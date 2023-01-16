@@ -77,12 +77,10 @@ It will also configure the ports to be exposed (1433), and copy two scripts into
 
 *Note : We are use Azure SQL Edge here as a database container for compatibility - SQL Edge will with on both x64 as well as ARM cpus which come on Macbooks with an M1 chip.*
 
-**Action:** : Copy scripts
+**Action:** : Copy the database setup scripts
 
-- Copy the database setup scripts
-    - From /Files/UmbData/setup.sql to /Working/UmbData/setup.sql
-    - From /Files/UmbData/startup.sh to /Working/UmbData/startup.sh
-- Ensure the line endings are **LF** for both files.
+- From **/Files/UmbData/setup.sql** to **/Working/UmbData/setup.sql**
+- From **/Files/UmbData/startup.sh** to **/Working/UmbData/startup.sh**
 
 These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use, but if the database already exists it won't re-create it. One of the files contains a timed script which calls the second after a delay, and the second file contains the SQL script to create the database if none exists.
 
@@ -107,7 +105,7 @@ All our files are ready to build the database image and run the database contain
 
 **Action:** 
 
-In your terminal window build the database image with the following command:
+Ensure you are in the **/Working** folder in your terminal window and build the database image with the following command:
 
     docker build --tag=umbdata ./UmbData    
 
@@ -115,11 +113,13 @@ Once the image is built, run it with the following command.
 
     docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
 
-This should give you a container ID back if the container was started successfully. 
+This should give you a container ID back if the container was started successfully. You should also be able to see the container running in Docker Desktop.
+
+![Docker desktop with the datbase container running.](media/1_1_database-container.png)
 
 ## 1.4 Creating the network for our containers
 
-To let the website and database containers communicate with each other, we need to define a custom bridge network between the two of them. 
+Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address. 
 
 **Action:** Run the following command in the terminal window to create a new Bridge network for our containers to use. 
 
@@ -133,7 +133,9 @@ You can inspect the network by running the following command.
 
     docker network inspect umbNet
 
-Todo : Image
+In the output you should see the umbdata container listed in the containers section.
+
+![Docker network inspect showing the umbdata container attached to the network.](media/docker-network.png)
 
 ## Connecting to the database container
 
@@ -154,21 +156,23 @@ Now that we have a database container running, we are going to create our Umbrac
 
 **Action:** Install the Umbraco .NET Template.
 
-    dotnet new -i Umbraco.Templates::*
+    dotnet new install Umbraco.Templates::* --force
 
 **Action:** Set the SDK Version being used and Create solution/project. This will create a global file with the current latest version of the SDK, and a blank solution which you can use with Visual Studio if you prefer to use that.
 
-    dotnet new globaljson --sdk-version 6.0 --force 
+    dotnet new globaljson --sdk-version 7.0 --force 
 
 ## 2.1 Start a new blank Umbraco Site
 
-**Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
+**Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
+
+Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
 
     dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;" 
 
 ## 2.2 Install a template site for the exercise. 
 
-This workshop will use the Clean starter kit for Umbraco. This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
+This workshop will use the [Clean starter kit for Umbraco](https://our.umbraco.com/packages/starter-kits/clean-starter-kit/). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
 
 **Action:** Run the following command to install the Clean starter kit.
 
@@ -195,7 +199,7 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
 **Action:** In the Umbraco UmbWeb project create a Dockerfile to define the components of the Umbraco container. Paste the contents below in that file, and make sure the line endings are **LF**. 
 
     # Use the SDK image to build and publish the website
-    FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+    FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
     WORKDIR /src
     COPY ["UmbWeb.csproj", "."]
     RUN dotnet restore "UmbWeb.csproj"
@@ -203,7 +207,7 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
     RUN dotnet publish "UmbWeb.csproj" -c Release -o /app/publish
 
     # Copy the published output to the final running image
-    FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final 
+    FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final 
     WORKDIR /app
     COPY --from=build /app/publish .
     ENTRYPOINT ["dotnet", "UmbWeb.dll"]
