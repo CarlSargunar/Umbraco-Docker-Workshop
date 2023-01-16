@@ -7,7 +7,7 @@ In order to participate in this workshop you will need to ensure you have the fu
 
 # Slides 
 
-Before we start the next stages we will look at the following concepts. The link to the slides used throughout this presentation is https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3ORd1cPwL82J_Ks/edit?usp=sharing
+Before we start the next stages we will look at the following concepts. The link to the slides used throughout this presentation is https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3ORd1cPwL82J_Ks
 
 
 # Tools and Set-up
@@ -139,7 +139,7 @@ In the output you should see the umbdata container listed in the containers sect
 
 ## Connecting to the database container
 
-To test that your container is running Ok, you may want to test connecting to the server. You can connect with Sql Server Management Studio, LinqPad, or the Visual Studio Code SQL Server extension using the following credentials
+To test that your container is running Ok, you may want to test connecting to the server. You can connect with any number of tools, e.g.Sql Server Management Studio, LinqPad, or the Visual Studio Code SQL Server extension using the following credentials : 
 
 - Host : Localhost
 - Username : sa
@@ -178,7 +178,7 @@ This workshop will use the [Clean starter kit for Umbraco](https://our.umbraco.c
 
     dotnet add UmbWeb package Clean
 
-**Action:** Run the website by issueing the following command.
+**Action:** Run the website by issueing the following command. This will start the website using Kestrel, and connect to the database server in the container.
 
     dotnet run --project UmbWeb
 
@@ -186,7 +186,7 @@ This should, if there are no errors, start up the kestrel server and serve the s
 
 ![2_run_site](media/2_run_site.png)
 
-If you browse the site at https://localhost:11608 (or whatever port your computer reports) you should be able to see the site running. You can also access the Umbraco backoffice at https://localhost:11608/umbraco using the credentials below
+If you browse the site at https://localhost:11608 (or whatever port your computer reports - it may vary) you should be able to see the site running. You can also access the Umbraco backoffice at https://localhost:11608/umbraco using the credentials below.
 
 - Username : admin@admin.com
 - Password : 1234567890
@@ -261,7 +261,7 @@ At this point we can see all the images we have created by using the following c
 
 ## 3.4 Running the website container in the same network
 
-We can then run the website container. Notice in the command below there is an argument to let the container know which network to connect to.
+We can then run the website container. *Notice in the command below there is an argument to let the container know which network to connect to - the same **umbNet** network*.
 
 **Action:** Run the following command to run the website container.
 
