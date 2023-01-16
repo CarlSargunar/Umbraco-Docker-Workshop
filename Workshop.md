@@ -154,9 +154,9 @@ Now that we have a database container running, we are going to create our Umbrac
 
 ## Installing Umbraco Template and start Website
 
-**Action:** Install the Umbraco .NET Template.
+**Action:** Install the Umbraco .NET Template. *Note - 11.1 is the latest table releast at time of writing, but as long as you use a released version of Umbraco 11, this workshop should work. Newer versions (i.e. 12 and higher) may require different versions of the SDK.*
 
-    dotnet new install Umbraco.Templates::* --force
+    dotnet new install Umbraco.Templates::11.1.0 --force
 
 ## 2.1 Start a new blank Umbraco Site
 
