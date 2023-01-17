@@ -208,8 +208,16 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
     # Copy the published output to the final running image
     FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final 
     WORKDIR /app
+
+    # Copy the published output to the final running image
     COPY --from=build /app/publish .
+
+    # Copy the media items to the final running image
+    COPY ./wwwroot/media ./wwwroot/media
+
+    # Set the entrypoint to the web application
     ENTRYPOINT ["dotnet", "UmbWeb.dll"]
+
 
 This Dockerfile starts with a build image which contains the SDK to actually compile the project, and one with ASP.NET runtimes to actually host the running application. The running application doesn't need any build tools, so we don't include them. From the above Dockerfile we can see the stages of the build process.
 
@@ -217,8 +225,10 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 2. Copying the working project folder to the build image
 3. Run the restore command to download the dependencies
 4. Compile and publish the output of the project
-5. Switch to the hosting image and copy the published output to the final image
-6. Set the entrypoint to the binary output of the main project
+5. Switch to the hosting image 
+6. Copy the published output to the final image
+7. Copy the media files to the final image
+8. Set the entrypoint to the binary output of the main project
 
 ## 3.2 Modify the UmbWeb.csproj project file to include Media
 
@@ -239,9 +249,7 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
         "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
     }
 
-You could also copy the already edited from from the **/Files/UmbWeb/appsettings.Staging.json** file in the repository.
-
-Todo: Image of what it looks like after
+You could altenatively copy the already edited from from the **/Files/UmbWeb/appsettings.Staging.json** file in the repository.
 
 Finally we can compile a docker image for the Umbraco site. 
 
