@@ -287,22 +287,13 @@ Once the container is running, if you run a docker ps command, you'll see both t
 
 You can also see the status of running containers and logs by running the Docker Desktop application.
 
-# Slides - Networks and Volumes
+# Additional Reading - Networks and Volumes
 
-Before we move to the next steps we will recap in more detail some of the steps we went through to get our site and database container up and running
+Docker networks and volumes won't be covered in depth during this workshop as it's time-limited, but if you wish to read further, the following links may be useful.
 
-- Container Networking
-    - Bridge Network
-    - Custom bridge Network
-    - Host Network
-    - Others
-        - Overlay
-        - Macvlan
-        - Ipvlan
-- Container volumes
-    - Volumes
-    - Bind mounts
-    - tmpfs mounts
+- [Docker Networks](https://docs.docker.com/network/)
+- [Docker Volumes](https://docs.docker.com/storage/volumes/)
+
 
 # 4 Adding an API to the site
 
@@ -315,8 +306,8 @@ To save typing the code for the API is already created in the the /Files/UmbWeb 
 **Action:** Complete the following steps :
 
 1. Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
-    - /Files/UmbWeb/Controllers to /Workshop/UmbWeb/Controllers
-    - /Files/UmbWeb/Models to /Workshop/UmbWeb/Models
+    - **/Files/UmbWeb/Controllers** to **/Workshop/UmbWeb/Controllers**
+    - **/Files/UmbWeb/Models** to **/Workshop/UmbWeb/Models**
 
 2. Amend the /Workshop/UmbWeb/Startup.cs file so the ConfigureServices method resembles the following:
     
@@ -402,6 +393,10 @@ You can browse this container by visiting the following URL:
 
     http://localhost:8001/
 
+With multiple website containers running, your Docker Desktop instance will look similar to the following:
+
+![Docker Desktop](media/4_DockerDesktop_2.png)
+
 # 5 Add the Blazor Container
 
 We will now create a final container which will be used to run a blazor app, connect to the Blog summary API and show a summary of posts.
@@ -414,8 +409,8 @@ We will now create a final container which will be used to run a blazor app, con
 
 **Action:** Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
 
-- /Files/UmBlazor/Models to /Workshop/UmBlazor/Models
-- /Files/UmBlazor/Pages/FetchData.razor to /Workshop/UmBlazor/Pages/FetchData.razor
+- **/Files/UmBlazor/Models** to **/Workshop/UmBlazor/Models**
+- **/Files/UmBlazor/Pages/FetchData.razor** to **/Workshop/UmBlazor/Pages/FetchData.razor**
 
 **Action:** Test that the application works by running the following command in your terminal:
 
