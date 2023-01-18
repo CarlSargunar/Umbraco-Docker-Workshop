@@ -230,16 +230,7 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 7. Copy the media files to the final image
 8. Set the entrypoint to the binary output of the main project
 
-## 3.2 Modify the UmbWeb.csproj project file to include Media
-
-**Action:** For this demo, in order to include the media files which came with the template, you need to add the following to the UmbWeb.csproj project file. There are several itemgroups in the file, so you can add this new section to the same level as those in any position of the file. ***NOTE : This not recommended for production sites, as it will force the media files to be included in the container.***
-
-    <ItemGroup>
-        <Content Include="wwwroot\media\**" />
-    </ItemGroup>
-
-
-## 3.3 Building the Umbraco Site image, setting a network and running it
+## 3.2 Building the Umbraco Site image, setting a network and running it
 
 Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. 
 
@@ -263,7 +254,7 @@ At this point we can see all the images we have created by using the following c
 
     docker images
 
-## 3.4 Running the website container in the same network
+## 3.3 Running the website container in the same network
 
 We can then run the website container. *Notice in the command below there is an argument to let the container know which network to connect to - the same **umbNet** network*. Here we are doing this using the --network flag instead of using an explicit command.
 
@@ -287,7 +278,7 @@ Once the container is running, if you run a docker ps command, you'll see both t
 
 You can also see the status of running containers and logs by running the Docker Desktop application.
 
-# Additional Reading - Networks and Volumes
+## Additional Reading - Networks and Volumes
 
 Docker networks and volumes won't be covered in depth during this workshop as it's time-limited, but if you wish to read further, the following links may be useful.
 
