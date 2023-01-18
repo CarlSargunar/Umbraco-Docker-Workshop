@@ -423,9 +423,9 @@ I've created the Dockerfile and nginx configuration file, these need to be copie
 
 **Action:** Copy the following:
 
-- /Files/UmBlazor/Dockerfile to /Workshop/UmBlazor/Dockerfile
-- /Files/UmBlazor/nginx.conf to /Workshop/UmBlazor/nginx.conf
-- /Files/UmBlazor/wwwroot/appsettings.json to /Workshop/UmBlazor/wwwroot/appsettings.json
+- **/Files/UmBlazor/Dockerfile** to **/Workshop/UmBlazor/Dockerfile**
+- **/Files/UmBlazor/nginx.conf** to **/Workshop/UmBlazor/nginx.conf**
+- **/Files/UmBlazor/wwwroot/appsettings.json** to **/Workshop/UmBlazor/wwwroot/appsettings.json**
 
 Looking at the contents of the Dockerfile : 
 
@@ -464,10 +464,11 @@ Now the site could be browsed using the containter using the url
 
     http://localhost:8002/
 
+Upon running the site we should see the same Blazor app from the earlier example, but this time running from the container instance, and when it queries the rest API to load blog content, it is doing so from the content delivery container.
 
 # 6 Docker compose
 
-So far we have created all our containers manually which is fine, but we want to make this repeatable. 
+So far we have created all our containers manually which is fine, but we want to make this repeatable. In this part we will use Docker compose to deploy all containers together, and to configure the network between them. This will use the Production profiles of the various projects.
 
 Docker compose is a tool for defining and running multi-contianer applications including all networks, volumes, ports, environmental variables etc with a single commmand. Docker compose isn't a deployment tool - it's designed for testing multi-container applications.
 
@@ -477,9 +478,9 @@ I've prepared a single docker compose file to complete this application To prepa
 
 **Action:** Copy the following files:
 
-- Copy /Files/docker-compose.yml to /Workshop/docker-compose.yml
-- Copy /UmbWeb/appsettings.Staging.json to /Workshop/UmbWeb/appsettings.Production.json
-- Copy /Files/UmBlazor/wwwroot/appsettings.Production.json to /Workshop/UmBlazor/wwwroot/appsettings.Production.json
+- Copy **/Files/docker-compose.yml** to **/Workshop/docker-compose.yml**
+- Copy **/UmbWeb/appsettings.Staging.json** to **/Workshop/UmbWeb/appsettings.Production.json**
+- Copy **/Files/UmBlazor/wwwroot/appsettings.Production.json** to **/Workshop/UmBlazor/wwwroot/appsettings.Production.json**
 
 ## 6.2 Run the Docker Compose file
 
@@ -501,13 +502,17 @@ That step isn't necessary, but it's good to have the images built before we run 
 
     docker compose up -d
 
+This will start all the containers from the images we have just built, and if you open Docker Desktop, you should see all the containers running.
+
+![Alt text](media/9_DockerCompose.png)
+
 Once these are up, we can browse the umbraco websites using the following URLs
 
 - Umbraco 1 : http://localhost:5080/ 
 - Umbraco 2 : http://localhost:5081/
 - Blazor : http://localhost:5082/
 
-To stop the containers, run the following command:
+To stop and remove the containers, run the following command:
 
     docker-compose down 
 
