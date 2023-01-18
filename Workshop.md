@@ -12,7 +12,7 @@ Before we start the next stages we will look at the following concepts. The link
 
 # Tools and Set-up
 
-During this workshop it is recommended that you use Visual Studio Code to run the workshop, and that you have the Auto-save feature enabled. To do this, go to the **File** menu, and select **Autosave**.
+During this workshop it is recommended that you use [Visual Studio Code](https://code.visualstudio.com/) to run the workshop, and that you have the Auto-save feature enabled. To do this, go to the **File** menu, and select **Autosave**.
 
 Where commands are executed, you should be using the built in terminal from VS Code, and not the command line. To open the terminal, select **View**, then **Terminal**.
 
