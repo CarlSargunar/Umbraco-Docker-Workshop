@@ -429,7 +429,7 @@ I've created the Dockerfile and nginx configuration file, these need to be copie
 
 Looking at the contents of the Dockerfile : 
 
-    FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+    FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
     WORKDIR /src
     COPY UmBlazor.csproj .
     RUN dotnet restore UmBlazor.csproj
@@ -464,17 +464,10 @@ Now the site could be browsed using the containter using the url
 
     http://localhost:8002/
 
-# Slides 
-
-- Docker Compose
-    - Services
-    - Networks
-    - Volumes
-    - Ports
 
 # 6 Docker compose
 
-So far we have created all our containers manually which is fine, but very slow, and prone to error. 
+So far we have created all our containers manually which is fine, but we want to make this repeatable. 
 
 Docker compose is a tool for defining and running multi-contianer applications including all networks, volumes, ports, environmental variables etc with a single commmand. Docker compose isn't a deployment tool - it's designed for testing multi-container applications.
 
@@ -487,8 +480,6 @@ I've prepared a single docker compose file to complete this application To prepa
 - Copy /Files/docker-compose.yml to /Workshop/docker-compose.yml
 - Copy /UmbWeb/appsettings.Staging.json to /Workshop/UmbWeb/appsettings.Production.json
 - Copy /Files/UmBlazor/wwwroot/appsettings.Production.json to /Workshop/UmBlazor/wwwroot/appsettings.Production.json
-
-Todo : What's a better way to to Appsettings in Blazor?
 
 ## 6.2 Run the Docker Compose file
 
