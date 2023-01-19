@@ -51,7 +51,9 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 
 We are going to create our Umbraco website running locally totally standalone for the moment. We will create it first as a normal website running on the file system, and not in a container. 
 
-**Action:** Create a folder called UmbWeb in the Workshop folder
+**Action:** 
+- Create a new folder in your working folder called **Working**.
+- Ensure your Visual Studio Code terminal is in the **Working** folder.
 
 ## Installing Umbraco Template and start Website
 
@@ -60,10 +62,6 @@ We are going to create our Umbraco website running locally totally standalone fo
     dotnet new install Umbraco.Templates::11.1.0 --force
 
 ## 1.1 Start a new blank Umbraco Site
-
-**Action:** 
-- Create a new folder in your working folder called **Working**.
-- Ensure your Visual Studio Code terminal is in the **Working** folder.
 
 **Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
 
@@ -94,9 +92,9 @@ If you browse the site at https://localhost:11608 (or whatever port your compute
 
 # Exercise 2 - Create a Database Container
 
-The next step is to create a database container which will host our database for the Umbraco sites going forward in this workshop. We are deliberately not using SQLite or LocalDB as these aren't universally compatible across all platforms.
-
 If the site is still running, stop it by running by pressing **Ctrl + c** in the terminal window. 
+
+The next step is to create a database container which will host our database for the Umbraco sites going forward in this workshop. We are deliberately not using SQLite or LocalDB as these aren't universally compatible across all platforms.
 
 ## 2.1 Create a container for the database server
 
