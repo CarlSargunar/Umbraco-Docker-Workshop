@@ -12,7 +12,7 @@ The main workshop is in the [Workshop.md](Workshop.md) file. Follow the instruct
 # References and Resources
 Slides - https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3ORd1cPwL82J_Ks
 
-## Docker
+## Documentation for Docker
 
 - Main Page : https://docs.docker.com/
 - Networking : https://docs.docker.com/network/
@@ -21,18 +21,17 @@ Slides - https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3OR
 - Storage : https://docs.docker.com/storage/
     - Volumes : https://docs.docker.com/storage/volumes/
 
-## Umbraco Docker    
+## Umbraco
 
-- https://swimburger.net/blog/umbraco/how-to-run-umbraco-9-as-a-linux-docker-container
-- https://codeshare.co.uk/blog/umbraco-9-useful-snippets/    
-
-## Networking
-    
-- https://www.tutorialworks.com/container-networking/
-
-## .NET
-    
-- https://github.com/dotnet/dotnet-docker/tree/main/samples/aspnetapp
+- Load Balancing
+    - https://docs.umbraco.com/umbraco-cms/fundamentals/setup/server-setup/load-balancing/azure-web-apps
+- Azure Blob Storage 
+    - https://docs.umbraco.com/umbraco-cloud/set-up/media#about-azure-blob-storage
+- Community Articles
+    - https://swimburger.net/blog/umbraco/how-to-run-umbraco-9-as-a-linux-docker-container
+    - https://codeshare.co.uk/blog/umbraco-9-useful-snippets/    
+    - https://www.tutorialworks.com/container-networking/
+    - https://github.com/dotnet/dotnet-docker/tree/main/samples/aspnetapp
 
 ## Database
     
