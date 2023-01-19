@@ -490,7 +490,15 @@ Upon running the site we should see the same Blazor app from the earlier example
 
 So far we have created all our containers manually which is fine, but we want to make this repeatable. In this part we will use Docker compose to deploy all containers together, and to configure the network between them. This will use the Production profiles of the various projects.
 
-Docker compose is a tool for defining and running multi-contianer applications including all networks, volumes, ports, environmental variables etc with a single commmand. Docker compose isn't a deployment tool - it's designed for testing multi-container applications.
+Docker compose is a tool for defining and running multi-contianer applications including :
+
+- Names of each of the containers (called Services in Docker compose)
+- The networks each container connects to
+- The volumes used by each container
+- The ports exposed by each container
+- Environmental variables configured for each container
+
+This single file represents the entire application, and can be used to deploy the application to any environment.
 
 ## 6.1 Create the Docker Compose file
 
@@ -499,7 +507,7 @@ I've prepared a single docker compose file to complete this application To prepa
 **Action:** Copy the following files:
 
 - Copy **/Files/docker-compose.yml** to **/Workshop/docker-compose.yml**
-- Copy **/UmbWeb/appsettings.Staging.json** to **/Workshop/UmbWeb/appsettings.Production.json**
+- Copy **/Files/UmbWeb/appsettings.Production.json** to **/Workshop/UmbWeb/appsettings.Production.json**
 - Copy **/Files/UmBlazor/wwwroot/appsettings.Production.json** to **/Workshop/UmBlazor/wwwroot/appsettings.Production.json**
 
 ## 6.2 Run the Docker Compose file

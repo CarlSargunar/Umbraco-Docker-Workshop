@@ -1,0 +1,87 @@
+services:
+
+  # This is the database container. The exposed volume means that the SQL DATA and LOG files
+  # are stored off the container, in case the container is restarted.
+  umbdata:
+    container_name: umbdata
+    build:
+      context: ./Umbdata
+    ports:
+     - "1433:1433"
+     - "1434:1434"
+    volumes:
+     - umb_database:/var/opt/mssql
+    networks:
+      - umbnet
+
+  # This is the web container. It exposes the port 80, and stored media and Umbraco logs on
+  # a volume so they are accessable outside the container.
+  umbweb_backend:
+    container_name: umbweb_backend
+    build:
+      context: ./UmbWeb
+    volumes:
+      - umb_media:/app/wwwroot/media
+      - umb_logs:/app/umbraco/Logs
+    restart: always
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Production
+    # This is the external port the website will be visible from : http://localhost:5080/
+    # The Umbraco URL is : http://localhost:5080/umbraco
+    ports:
+      - "5080:80"
+    depends_on:
+      - umbdata
+    networks:
+      - umbnet        
+
+
+  # This is the 2nd web container. It exposes the port 80, and stored media and Umbraco logs on
+  # a volume so they are accessable outside the container.
+  umbweb_frontend:
+    container_name: umbweb_frontend
+    build:
+      context: ./UmbWeb
+      dockerfile: Dockerfile
+    volumes:
+      - umb_media:/app/wwwroot/media
+      - umb_logs:/app/umbraco/Logs
+    restart: always
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Production
+    # This is the external port the website will be visible from : http://localhost:5081/
+    # The Umbraco URL is : http://localhost:5081/umbraco
+    ports:
+      - "5081:80"
+    depends_on:
+      - umbdata
+    networks:
+      - umbnet        
+
+
+  # This is the blazor container. It exposes the port 80 and accesses the umbweb_frontend container
+  # to load the blog summary content.
+  umblazor:
+    container_name: umblazor
+    build:
+      context: ./UmBlazor
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "5082:80"
+    depends_on:
+      - umbweb_frontend
+    networks:
+      - umbnet    
+
+volumes:
+  umb_media:
+  umb_logs:
+  umb_database:
+
+# This is the network that the containers will be on, and will ONLY contain the containers from the application
+networks:
+  umbnet:
+    driver: bridge
