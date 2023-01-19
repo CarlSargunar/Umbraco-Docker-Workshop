@@ -96,6 +96,8 @@ If you browse the site at https://localhost:11608 (or whatever port your compute
 
 The next step is to create a database container which will host our database for the Umbraco sites going forward in this workshop. We are deliberately not using SQLite or LocalDB as these aren't universally compatible across all platforms.
 
+If the site is still running, stop it by running by pressing **Ctrl + c** in the terminal window. 
+
 ## 2.1 Create a container for the database server
 
 **Action:** 
@@ -135,15 +137,14 @@ This file will instruct Docker to create a SQL server running azure-sql-edge, wi
 
 - From **/Files/UmbData/setup.sql** to **/Working/UmbData/setup.sql**
 - From **/Files/UmbData/startup.sh** to **/Working/UmbData/startup.sh**
-- From **/Files/UmbData/startup.sh** to **/Working/UmbData/startup.sh**
-- From **/Files/UmbData/startup.sh** to **/Working/UmbData/startup.sh**
+- From **/Working/UmbWeb/umbraco/Data/Umbraco_log.ldf** to **/Working/UmbData/Umbraco_log.ldf**
+- From **/Working/UmbWeb/umbraco/Data/Umbraco.mdf** to **/Working/UmbData/Umbraco.mdf**
 
-These two files will be used to create a blank database if none exists when the database container starts. That way when the website starts it will already have a blank database ready to use, but if the database already exists it won't re-create it. One of the files contains a timed script which calls the second after a delay, and the second file contains the SQL script to create the database if none exists.
+These two script files will be used to restore the database from the database files if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
 
-**Action:** Once all 3 files exist in the Working/UmbData folder, make sure they all have the correct Line Endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF).
+**Action:** Once all these files exist in the Working/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See earlier for details).
 
-
-## 1.3 Build the database image and run the database container
+## 2.2 Build the database image and run the database container
 
 All our files are ready to build the database image and run the database container, so that's the next step.
 
@@ -163,7 +164,7 @@ This should give you a container ID back if the container was started successful
 
 ![Docker desktop with the datbase container running.](media/1_1_database-container.png)
 
-## 1.4 Creating the network for our containers
+## 2.3 Creating the network for our containers
 
 Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address. 
 
@@ -194,13 +195,13 @@ To test that your container is running Ok, you may want to test connecting to th
 
 ## 3 Running the Umbraco Site in a container
 
-Now that the Umbraco site is running through Kestrel but conneting to the database server in the container, we need to create a container for the Umbraco site. 
+Now that the Umbraco site is running through Kestrel, we need to create a container for it. While running in the container, the Umbraco site will connect to the database in the container rather than the local database files. 
 
 If the site is still running, stop it by running by pressing **Ctrl + c** in the terminal window. 
 
 ## 3.1 Create the Umbraco Site container
 
-**Action:** In the Umbraco UmbWeb project create a Dockerfile to define the components of the Umbraco container. Paste the contents below in that file, and make sure the line endings are **LF**. 
+**Action:** In the **UmbWeb** folder create a Dockerfile to define the components of the Umbraco container. Paste the contents below in that file, and make sure the line endings are **LF**. 
 
     # Use the SDK image to build and publish the website
     FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
@@ -239,7 +240,7 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 
 Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. 
 
-**Action:** Create a copy of the **appsettings.Development.json** called **appsettings.Staging.json**. In that file ensure the connectionstring is set-up to connect to **umbdata** as the database server. You will need to add the following to the file. 
+**Action:** Create a copy of the **appsettings.Development.json** called **appsettings.Staging.json**. In that file ensure the connectionstring is set-up to connect to **umbdata** as the database server. You will need to add the following connectionstring section to the file as a sibling of the Umbraco node. 
 
     "ConnectionStrings": {
         "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
