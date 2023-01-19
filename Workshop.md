@@ -444,7 +444,7 @@ I've created the Dockerfile and nginx configuration file, these need to be copie
 
 - **/Files/UmBlazor/Dockerfile** to **/Workshop/UmBlazor/Dockerfile**
 - **/Files/UmBlazor/nginx.conf** to **/Workshop/UmBlazor/nginx.conf**
-- **/Files/UmBlazor/wwwroot/appsettings.json** to **/Workshop/UmBlazor/wwwroot/appsettings.json**
+- **/Files/UmBlazor/wwwroot/appsettings.Staging.json** to **/Workshop/UmBlazor/wwwroot/appsettings.Staging.json**
 
 Looking at the contents of the Dockerfile : 
 
@@ -477,7 +477,7 @@ Once that's done, we can run the Container
 
 **Action:** Run the following command to start the container.
 
-    docker run --name umblazor -p 8002:80 --network=umbNet -d umblazor
+    docker run --name umblazor -p 8002:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umblazor
 
 Now the site could be browsed using the containter using the url
 
