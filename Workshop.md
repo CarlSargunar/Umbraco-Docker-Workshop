@@ -278,6 +278,8 @@ We can then run the website container. *Notice in the command below there is an 
 
 In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
 
+Similarly with media, we want all website containers to be able to share the same media library, so we can use a volume for this so the images are stored on the docker host and not in the container.
+
 One other thing we can see is the Environment variable we are passing the container with the -e flag, which sets our AspNetCore Environment to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database.
 
 You can now see the website running by visiting:
@@ -388,7 +390,9 @@ This should return a JSON collection of Post Summaries in a collection, which we
 
 ## 4.3 Running a 2nd instance of the website container
 
-While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment.
+While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment. 
+
+*Node : By using the same volumes for media and logs, both containers will share the storage on the docker host, and thus the media library and logs will be shared between the containers.*
 
 **Action:** Run the following command to start the 2nd container.
 
