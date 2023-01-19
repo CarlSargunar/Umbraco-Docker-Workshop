@@ -392,7 +392,7 @@ This should return a JSON collection of Post Summaries in a collection, which we
 
 While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment. 
 
-*Node : By using the same volumes for media and logs, both containers will share the storage on the docker host, and thus the media library and logs will be shared between the containers.*
+*Note : By using the same volumes for media and logs, both containers will share the storage on the docker host, and thus the media library and logs will be shared between the containers.*
 
 **Action:** Run the following command to start the 2nd container.
 
@@ -420,6 +420,7 @@ We will now create a final container which will be used to run a blazor app, con
 
 - **/Files/UmBlazor/Models** to **/Workshop/UmBlazor/Models**
 - **/Files/UmBlazor/Pages/FetchData.razor** to **/Workshop/UmBlazor/Pages/FetchData.razor**
+- **/Files/UmBlazor/wwwroot/appsettings.json** to **/Workshop/UmBlazor/wwwroot/appsettings.json**
 
 **Action:** Test that the application works by running the following command in your terminal:
 
