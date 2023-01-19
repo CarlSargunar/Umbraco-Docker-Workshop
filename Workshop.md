@@ -262,7 +262,7 @@ At this point we can see all the images we have created by using the following c
 
 ## 3.3 Running the website container in the same network
 
-We can then run the website container. *Notice in the command below there is an argument to let the container know which network to connect to - the same **umbNet** network*. Here we are doing this using the --network flag instead of using an explicit command.
+We can then run the website container. *Notice in the command below there is an argument to let the container know which network to connect to - the same **umbNet** network*. Here we are doing this using the **docker run --network** flag instead of using an explicit command.
 
 **Action:** Run the following command to run the website container.
 
