@@ -77,7 +77,7 @@ This workshop will use the [Clean starter kit for Umbraco](https://our.umbraco.c
 
     dotnet add UmbWeb package Clean
 
-**Action:** Run the website by issueing the following command. This will start the website using Kestrel, and connect to the database server in the container.
+**Action:** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
 
     dotnet run --project UmbWeb
 
