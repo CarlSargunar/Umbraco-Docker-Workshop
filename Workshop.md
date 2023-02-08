@@ -77,7 +77,7 @@ This workshop will use the [Clean starter kit for Umbraco](https://our.umbraco.c
 
     dotnet add UmbWeb package Clean
 
-**Action:** Run the website by issueing the following command. This will start the website using Kestrel, and connect to the database server in the container.
+**Action:** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
 
     dotnet run --project UmbWeb
 
@@ -304,7 +304,7 @@ Docker networks and volumes won't be covered in depth during this workshop as it
 
 # 4 Adding an API to the site
 
-Now that there is a site and database running, we will add a simple REST API which will return a jason feed of the blog posts, which will be used in a later part of this workshop.
+Now that there is a site and database running, we will add a simple REST API which will return a JSON feed of the blog posts, which will be used in a later part of this workshop.
 
 ## 4.1 Creating the API controller
 
