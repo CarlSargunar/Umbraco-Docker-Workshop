@@ -5,7 +5,7 @@ services:
   umbdata:
     container_name: umbdata
     build:
-      context: ./Umbdata
+      context: ./UmbData
     ports:
      - "1433:1433"
      - "1434:1434"
