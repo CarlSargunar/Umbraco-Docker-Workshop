@@ -33,22 +33,9 @@ Slides - https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3OR
     - https://www.tutorialworks.com/container-networking/
     - https://github.com/dotnet/dotnet-docker/tree/main/samples/aspnetapp
 
-## Database
-    
-- https://bigdata-etl.com/how-to-run-microsoft-sql-server-database-using-docker-and-docker-compose/
-- https://www.abhith.net/blog/create-sql-server-database-from-a-script-in-docker-compose/
 
-## Running on Linux:
+## Notes
 
-- https://our.umbraco.com/forum/umbraco-9/107393-unable-to-deploy-v9-site-to-linux-web-app-on-azure
+The following are notes for myself, but may be useful for others.
 
-## Line Endings:
-
-- https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/
-
-
-
-
-
-
-
+- https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api#swagger
