@@ -10,7 +10,7 @@ The main workshop is in the [Workshop.md](Workshop.md) file. Follow the instruct
 
 
 # References and Resources
-Slides - https://docs.google.com/presentation/d/15s-IbggoNCyif4yjyN4oFRdtwGYy3ORd1cPwL82J_Ks
+Slides - https://docs.google.com/presentation/d/1Nn1hfFkZp8QWpCsnIAGMH6IdBk0R551CiuU3IiJpBdk/
 
 ## Documentation for Docker
 
