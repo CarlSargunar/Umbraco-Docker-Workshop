@@ -316,14 +316,21 @@ To enable the content API, you need to add the following setting to appsettings.
             "Enabled": true
     }
 
+Edit the Startup.cs file and add the following in ConfigureServies
+
+![Alt text](media/3_4_API%20ENable.png)
+
 You will next need to rebuild your indexes for Delivery API, in the Settings -> Examine management section:
 
 
 ![Alt text](media/3_3_Index.png)
 
+If you'd like to see more info about the Content delivery API, please read the docs : [https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api](https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api)
+
 ## 4.1 Creating the API controller
 
 To save typing the code for the API is already created in the the /Files/UmbWeb folder. 
+
 
 **Action:** Complete the following steps :
 
