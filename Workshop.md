@@ -52,14 +52,14 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 We are going to create our Umbraco website running locally totally standalone for the moment. We will create it first as a normal website running on the file system, and not in a container. 
 
 **Action:** 
-- Create a new folder in your working folder called **Working**.
-- Ensure your Visual Studio Code terminal is in the **Working** folder.
+- Create a new folder in your copy of the repostory called **Working**.
+- Ensure your Visual Studio Code terminal is in the new **Working** folder.
 
 ## Installing Umbraco Template and start Website
 
 **Action:** Install the Umbraco .NET Template. *Note - 11.1 is the latest table releast at time of writing, but as long as you use a released version of Umbraco 11, this workshop should work. Newer versions (i.e. 12 and higher) may require different versions of the SDK.*
 
-    dotnet new install Umbraco.Templates::11.1.0 --force
+    dotnet new install Umbraco.Templates::12.0.0-rc3 --force
 
 ## 1.1 Start a new blank Umbraco Site
 
@@ -304,7 +304,22 @@ Docker networks and volumes won't be covered in depth during this workshop as it
 
 # 4 Adding an API to the site
 
-Now that there is a site and database running, we will add a simple REST API which will return a JSON feed of the blog posts, which will be used in a later part of this workshop.
+Now that there is a site and database running, we will use the new content delivery API. Open the site at the url /umbraco/swagger/index.html and in the top dropdown, select the "Umbraco Delivery API"
+
+![Alt text](media/3_2_Swagger.png)
+
+## 4.1 - Enable Content API
+
+To enable the content API, you need to add the following setting to appsettings.config.
+
+    "DeliveryApi": {
+            "Enabled": true
+    }
+
+You will next need to rebuild your indexes for Delivery API, in the Settings -> Examine management section:
+
+
+![Alt text](media/3_3_Index.png)
 
 ## 4.1 Creating the API controller
 
