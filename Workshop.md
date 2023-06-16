@@ -373,69 +373,53 @@ You will need to rebuild the umbWeb docker image and run it again to see the cha
 
     docker build --tag=umbweb ./UmbWeb
 
-Delete the existing container and run the new one
+Stop and remove the previous running umbweb container
 
+    docker stop umbweb
     docker rm umbweb
+
+
+Run the new version of the umbweb image
+
     docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
+    
 
+## 4.4 - Rebuild the Index and test the API
 
+You will need to log in to Umbraco and rebuild the index to ensure the API is working. You can do this by going to the following url:
 
+    http://localhost:8000/umbraco
 
-Open the site at the url /umbraco/swagger/index.html and in the top dropdown, select the "Umbraco Delivery API"
+Use the credentials below :
 
-![Alt text](media/3_2_Swagger.png)
+    Username : admin@admin.com
+    Password : 1234567890
 
-**Action:** Complete the following steps :
-
-
-
-
+You can then navitage to Settings > Examine Management > DeliveryApiContentIndex and rebuild that index.
 
 ![Alt text](media/3_3_Index.png)
 
+Open the site at the url http://localhost:8000/umbraco/swagger/index.html and in the top dropdown, select the "Umbraco Delivery API". You should be able to test the content API to ensure it is working.
+
+![Alt text](media/3_2_Swagger.png)
+
+
 If you'd like to see more info about the Content delivery API, please read the docs : [https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api](https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api)
 
-## Testing the API
+## Testing the Product API
 
-To test the API, you can simply call a url like the following:
-
-    http://localhost:8000/umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct
-
-Which will query the content and return all content of type "Product" as JSON.
-
-
-## 4.2 Rebuild the image and test the API
-
-With those changes in there, you can re-build the UmbWeb image with the following command:
-
-**Action:** Run the following command to build the image.
-
-    docker build --tag=umbweb ./UmbWeb
-
-We need to delete the existing running container before we can start the updated container, as docker will only allow once container with the same name at the same time. Run the following command in your terminal.
-
-**Action:** Run the following command to delete the existing container.
-
-    docker rm -f umbweb
-
-We can then re-start the UmbWeb container with the following command:
-
-**Action:** Run the following command to start the container.
-
-    docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb    
-
-Once the container is running again we can check the API is working by browsing to the following URL:
+To test the API, you can simply call a url like the following url, which returns all documents of type "Product":
 
     http://localhost:8000/umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct
 
 This should return a JSON collection of Post Summaries in a collection, which we will use with the Blazor App.
 
 
-## 4.3 Running a 2nd instance of the website container
+## 4.5 Running a 2nd instance of the website container
 
 While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment. 
 
-*Note : By using the same volumes for media and logs, both containers will share the storage on the docker host, and thus the media library and logs will be shared between the containers.*
+*Note : By using the same volumes for media and logs, both containers will share the storage on the docker host, and thus the media library and logs will be shared between the containers. However this is NOT enough to run a load balanced container in production - this is to separate the content entry and content delivery nodes in this demo.*
 
 **Action:** Run the following command to start the 2nd container.
 
