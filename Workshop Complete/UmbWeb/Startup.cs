@@ -30,16 +30,17 @@ namespace UmbWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(policy =>
-            {
-                policy.AddPolicy("CorsPolicy", opt => opt
-                    .AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod());
-            });
+                 {
+                     policy.AddPolicy("CorsPolicy", opt => opt
+                         .AllowAnyOrigin()
+                         .AllowAnyHeader()
+                         .AllowAnyMethod());
+                 });
 
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
                 .AddWebsite()
+                .AddDeliveryApi()
                 .AddComposers()
                 .Build();
         }

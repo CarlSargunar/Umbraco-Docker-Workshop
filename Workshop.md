@@ -110,7 +110,7 @@ These two script files will be used to create a new database if none already exi
 
 **Action:** Once all these files exist in the Working/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See earlier for details).
 
-## 2.2 Build the database image and run the database container
+## 1.2 Build the database image and run the database container
 
 All our files are ready to build the database image and run the database container, so that's the next step.
 
@@ -132,49 +132,8 @@ This should give you a container ID back if the container was started successful
 
 ![Docker desktop with the datbase container running.](media/1_1_database-container.png)
 
-# Exercise 2. Creating the basic Umbraco Site
 
-We are going to create our Umbraco website running locally on your machine natively, and connected to the database container we just created.
-
-## Installing Umbraco Template and start Website
-
-**Action:** Install the Umbraco .NET Template.
-
-    dotnet new install Umbraco.Templates::12.0.0-rc3 --force
-
-## 1.1 Start a container to run the database
-
-**Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
-
-Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
-
-    dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true"
-
-If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 2.2 and then run the site connecting to that image.
-
-## 1.2 Install a template site for the exercise. 
-
-This workshop will use the [standard starter kit for Umbraco](https://www.nuget.org/packages/Umbraco.TheStarterKit). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with, as well as a content structure which is suited to a headless API.
-
-**Action:** Run the following command to install the Umbraco starter kit.
-
-    dotnet add UmbWeb package Umbraco.TheStarterKit
-
-**Action:** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
-
-    dotnet run --project UmbWeb
-
-This should, if there are no errors, start up the kestrel server and serve the site for you to browse.
-
-![2_run_site](media/2_run_site.png)
-
-If you browse the site at https://localhost:11608 (or whatever port your computer reports - it may vary) you should be able to see the site running. You can also access the Umbraco backoffice at https://localhost:11608/umbraco using the credentials below.
-
-- Username : admin@admin.com
-- Password : 1234567890
-
-
-## 2.3 Creating the network for our containers
+## 1.3 Creating the network for our containers
 
 Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address. 
 
@@ -194,7 +153,7 @@ In the output you should see the umbdata container listed in the containers sect
 
 ![Docker network inspect showing the umbdata container attached to the network.](media/docker-network.png)
 
-## Connecting to the database container
+### Connecting to the database container
 
 To test that your container is running Ok, you may want to test connecting to the server. You can connect with any number of tools, e.g.Sql Server Management Studio, LinqPad, or the Visual Studio Code SQL Server extension using the following credentials : 
 
@@ -203,9 +162,52 @@ To test that your container is running Ok, you may want to test connecting to th
 - Password : SQL_password123
 - Port : 1433
 
-## 3 Running the Umbraco Site in a container
+# Exercise 2. Creating the basic Umbraco Site
 
-Now that the Umbraco site is running through Kestrel, we need to create a container for it. While running in the container, the Umbraco site will connect to the database in the container rather than the local database files. 
+We are going to create our Umbraco website running locally on your machine natively, and connected to the database container we just created.
+
+## Installing Umbraco Template and start Website
+
+**Action:** Install the Umbraco .NET Template.
+
+    dotnet new install Umbraco.Templates::12.0.0-rc3 --force
+
+## 2.1 Start a container to run the database
+
+**Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
+
+Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
+
+    dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true"
+
+If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 2.2 and then run the site connecting to that image.
+
+## 2.2 Install a template site for the exercise. 
+
+This workshop will use the [standard starter kit for Umbraco](https://www.nuget.org/packages/Umbraco.TheStarterKit). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with, as well as a content structure which is suited to a headless API.
+
+**Action:** Run the following command to install the Umbraco starter kit.
+
+    dotnet add UmbWeb package Umbraco.TheStarterKit
+
+**Action:** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
+
+    dotnet run --project UmbWeb
+
+This should, if there are no errors, start up the website for you to browse.
+
+![2_run_site](media/2_run_site.png)
+
+If you browse the site at https://localhost:11608 (or whatever port your computer reports - it may vary) you should be able to see the site running. You can also access the Umbraco backoffice at https://localhost:11608/umbraco using the credentials below.
+
+- Username : admin@admin.com
+- Password : 1234567890
+
+
+
+## Exercise 3. Running the Umbraco Site in a container
+
+Now that the Umbraco site is working, we need to create a container for it. While running in the container, the Umbraco site will connect to the database in the umbData container directly. 
 
 If the site is still running, stop it by running by pressing **Ctrl + c** in the terminal window. 
 
@@ -254,13 +256,6 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
 
     "ConnectionStrings": {
         "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
-    }
-
-You will also need to enable the content API in appsettings.json by addingthe following under Umbraco > CMS
-
-    "DeliveryApi": {
-            "Enabled": true,
-            "RichTextOutputAsJson": false
     }
 
 
@@ -312,17 +307,88 @@ Docker networks and volumes won't be covered in depth during this workshop as it
 - [Docker Volumes](https://docs.docker.com/storage/volumes/)
 
 
-# 4 Adding an API to the site
+# Exercise 4. Adding an API to the site
 
-Now that there is a site and database running, we will use the new content delivery API. Open the site at the url /umbraco/swagger/index.html and in the top dropdown, select the "Umbraco Delivery API"
+We will use the new Umbraco 12 Content Delivery API to add an API to the site.
+
+## 4.1 - Build Index for Content API
+
+Now that there is a site and database running, we will use the new content delivery API. First we need to enable the API by adding the following to appsettings.json under Umbraco > CMS
+
+    "DeliveryApi": {
+            "Enabled": true,
+            "RichTextOutputAsJson": false
+    }
+
+## 4.2 - Enable CORS Policy to allow access to the API
+
+We will also need to enable CORS to allow access to the API. To do this, we will add the following to the Configure method in Startup.cs
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+        services.AddUmbraco(_env, _config)
+            .AddBackOffice()
+            .AddWebsite()
+            .AddDeliveryApi()
+            .AddComposers()
+            .Build();
+    }
+
+You will also need to start that CORS Policy in the Startup.cs Configure method
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.UseCors("CorsPolicy");
+
+        app.UseUmbraco()
+            .WithMiddleware(u =>
+            {
+                u.UseBackOffice();
+                u.UseWebsite();
+            })
+            .WithEndpoints(u =>
+            {
+                u.UseInstallerEndpoints();
+                u.UseBackOfficeEndpoints();
+                u.UseWebsiteEndpoints();
+            });
+    }
+
+## 4.3 - Rebuild the image and run it
+
+You will need to rebuild the umbWeb docker image and run it again to see the changes. You can use the following to do that
+
+    docker build --tag=umbweb ./UmbWeb
+
+Delete the existing container and run the new one
+
+    docker rm umbweb
+    docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
+
+
+
+
+Open the site at the url /umbraco/swagger/index.html and in the top dropdown, select the "Umbraco Delivery API"
 
 ![Alt text](media/3_2_Swagger.png)
 
 **Action:** Complete the following steps :
 
-## 4.1 - Build Index for Content API
 
-You will need to rebuild the umbWeb docker image and run it again to see the changes. You can use the following to do that
+
 
 
 ![Alt text](media/3_3_Index.png)
