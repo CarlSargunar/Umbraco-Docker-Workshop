@@ -32,7 +32,7 @@ The folders which are in this workshop are :
 - **Files** - This folder contains pre-created files which will be used in this workshop to save you typing everything out manually
 - **Media** - The images used in this workshop are stored in there
 - **Workshop Complete** - This folder contains a fully complete version of the workshop which can be used for reference in case you run into problems, in a zipped up file. No cheating - you won't learn if you do, but it's a useful guide for reference if you get stuck 🙂 
-- **Working** - This will be the active folder where the workshop is being run from, and all files you create and edit will be in this folder. 
+- **Workshop** - This will be the active folder where the workshop is being run from, and all files you create and edit will be in this folder. 
 
 
 ## A Note on Windows vs Linux Line Endings
@@ -47,61 +47,17 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 
 ---
 
-# Exercise 1. Creating the basic Umbraco Site
 
-We are going to create our Umbraco website running locally totally standalone for the moment. We will create it first as a normal website running on the file system, and not in a container. 
+# Exercise 1 - Create a Database Container
 
-**Action:** 
-- Create a new folder in your copy of the repostory called **Working**.
-- Ensure your Visual Studio Code terminal is in the new **Working** folder.
+The first task we will do is to create a database container which will be used to store the data for our Umbraco site.
 
-## Installing Umbraco Template and start Website
-
-**Action:** Install the Umbraco .NET Template.
-
-    dotnet new install Umbraco.Templates::12.0.0-rc3 --force
-
-## 1.1 Start a new blank Umbraco Site
-
-**Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
-
-Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
-
-    dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True" 
-
-If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 2.2 and then run the site connecting to that image.
-
-## 1.2 Install a template site for the exercise. 
-
-This workshop will use the [standard starter kit for Umbraco](https://www.nuget.org/packages/Umbraco.TheStarterKit). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with, as well as a content structure which is suited to a headless API.
-
-**Action:** Run the following command to install the Umbraco starter kit.
-
-    dotnet add UmbWeb package Umbraco.TheStarterKit
-
-**Action:** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
-
-    dotnet run --project UmbWeb
-
-This should, if there are no errors, start up the kestrel server and serve the site for you to browse.
-
-![2_run_site](media/2_run_site.png)
-
-If you browse the site at https://localhost:11608 (or whatever port your computer reports - it may vary) you should be able to see the site running. You can also access the Umbraco backoffice at https://localhost:11608/umbraco using the credentials below.
-
-- Username : admin@admin.com
-- Password : 1234567890
-
-# Exercise 2 - Create a Database Container
-
-If the site is still running, stop it by running by pressing **Ctrl + c** in the terminal window. 
-
-The next step is to create a database container which will host our database for the Umbraco sites going forward in this workshop. We are deliberately not using SQLite or LocalDB as these aren't universally compatible across all platforms.
-
-## 2.1 Create a container for the database server
+## 1.1 Create a container for the database server
 
 **Action:** 
-- In your working folder, create a new folder called **UmbData**. 
+- Create a new folder in your copy of the repostory called **Workshop**.
+- Ensure your Visual Studio Code terminal is in the new **Workshop** folder.
+- In your Workshop folder, create a new folder called **UmbData**. 
 - In that folder, create a blank file in the UmbData folder called **Dockerfile**. 
 
 This will folder and the associated Dockerfile will define the database container, the image to use, and the ports it exposes and also describe the configuration we will use with that database container. 
@@ -141,7 +97,7 @@ This will folder and the associated Dockerfile will define the database containe
 
 This file will instruct Docker to create a SQL server running azure-sql-edge, will accept the End User License Agreement, and will define environmental variables to configure the paths to be used for databases. It will also configure the ports to be exposed (1433), and copy two scripts into the container. These scripts will be used to restore the database export from the container. 
 
-*Note : We are use Azure SQL Edge here as a database container for compatibility - SQL Edge will with on both x64 as well as ARM cpus which come on Macbooks with an M1 chip. However the instructions in the workshop are currently only complete for windows and linux, as well as Intel based Macs. M1 mac instructions will be updated shortly.*
+*Note : We are use Azure SQL Edge here as a database container for compatibility - SQL Edge will with on both x64 as well as ARM cpus which come on Macbooks with an M1 chip.*
 
 **Action:** : Copy the database setup scripts and databases
 
@@ -150,7 +106,7 @@ This file will instruct Docker to create a SQL server running azure-sql-edge, wi
 - From **/Working/UmbWeb/umbraco/Data/Umbraco_log.ldf** to **/Working/UmbData/Umbraco_log.ldf**
 - From **/Working/UmbWeb/umbraco/Data/Umbraco.mdf** to **/Working/UmbData/Umbraco.mdf**
 
-These two script files will be used to restore the database from the database files if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
+These two script files will be used to create a new database if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
 
 **Action:** Once all these files exist in the Working/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See earlier for details).
 
@@ -159,6 +115,8 @@ These two script files will be used to restore the database from the database fi
 All our files are ready to build the database image and run the database container, so that's the next step.
 
 *Note : If you are running a local SQL Server on your machine, or any other process listening on port 1433, you will need to stop that process before you can run the database container, or the container will not be able to start.*
+
+*Note : You need to ensure that you don't have a running SQL server on your host machine, as the port used will clash with your container. Stop any servers to ensure port 1433 is not in use.*
 
 **Action:** 
 
@@ -173,6 +131,48 @@ Once the image is built, run it with the following command.
 This should give you a container ID back if the container was started successfully. You should also be able to see the container running in Docker Desktop.
 
 ![Docker desktop with the datbase container running.](media/1_1_database-container.png)
+
+# Exercise 2. Creating the basic Umbraco Site
+
+We are going to create our Umbraco website running locally on your machine natively, and connected to the database container we just created.
+
+## Installing Umbraco Template and start Website
+
+**Action:** Install the Umbraco .NET Template.
+
+    dotnet new install Umbraco.Templates::12.0.0-rc3 --force
+
+## 1.1 Start a container to run the database
+
+**Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
+
+Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
+
+    dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true"
+
+If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 2.2 and then run the site connecting to that image.
+
+## 1.2 Install a template site for the exercise. 
+
+This workshop will use the [standard starter kit for Umbraco](https://www.nuget.org/packages/Umbraco.TheStarterKit). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with, as well as a content structure which is suited to a headless API.
+
+**Action:** Run the following command to install the Umbraco starter kit.
+
+    dotnet add UmbWeb package Umbraco.TheStarterKit
+
+**Action:** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
+
+    dotnet run --project UmbWeb
+
+This should, if there are no errors, start up the kestrel server and serve the site for you to browse.
+
+![2_run_site](media/2_run_site.png)
+
+If you browse the site at https://localhost:11608 (or whatever port your computer reports - it may vary) you should be able to see the site running. You can also access the Umbraco backoffice at https://localhost:11608/umbraco using the credentials below.
+
+- Username : admin@admin.com
+- Password : 1234567890
+
 
 ## 2.3 Creating the network for our containers
 

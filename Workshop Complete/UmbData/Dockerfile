@@ -19,10 +19,5 @@ EXPOSE 1433/tcp
 COPY setup.sql /
 COPY startup.sh /
 
-# Copy the database files to the container
-# NOTE : This is not a recommendation for production use as the database files should be stored in a persistent volume and not be a part of the image
-COPY Umbraco.mdf /var/opt/sqlserver
-COPY Umbraco_log.ldf /var/opt/sqlserver
-
 ENTRYPOINT [ "/bin/bash", "startup.sh" ]
 CMD [ "/opt/mssql/bin/sqlservr" ]
