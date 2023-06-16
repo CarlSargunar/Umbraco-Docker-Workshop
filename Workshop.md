@@ -69,7 +69,7 @@ Here we will be using SQL LocalDB as the database so that in later steps it can 
 
     dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Umbraco.mdf;Integrated Security=True" 
 
-If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container and then run the site connecting to that image.
+If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 2.2 and then run the site connecting to that image.
 
 ## 1.2 Install a template site for the exercise. 
 
@@ -256,6 +256,14 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
         "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
     }
 
+You will also need to enable the content API in appsettings.json by addingthe following under Umbraco > CMS
+
+    "DeliveryApi": {
+            "Enabled": true,
+            "RichTextOutputAsJson": false
+    }
+
+
 You could altenatively copy the already edited from from the **/Files/UmbWeb/appsettings.Staging.json** file in the repository.
 
 Finally we can compile a docker image for the Umbraco site. 
@@ -312,20 +320,9 @@ Now that there is a site and database running, we will use the new content deliv
 
 **Action:** Complete the following steps :
 
-## 4.1 - Enable Content API
+## 4.1 - Build Index for Content API
 
-To enable the content API, you need to add the following setting to appsettings.config.
-
-    "DeliveryApi": {
-            "Enabled": true,
-            "RichTextOutputAsJson": false
-    }
-
-Edit the Startup.cs file and add the following in ConfigureServies
-
-![Alt text](media/3_4_API%20ENable.png)
-
-You will next need to rebuild your indexes for Delivery API, in the Settings -> Examine management section:
+You will need to rebuild the umbWeb docker image and run it again to see the changes. You can use the following to do that
 
 
 ![Alt text](media/3_3_Index.png)
@@ -336,7 +333,7 @@ If you'd like to see more info about the Content delivery API, please read the d
 
 To test the API, you can simply call a url like the following:
 
-    /umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct
+    http://localhost:8000/umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct
 
 Which will query the content and return all content of type "Product" as JSON.
 
