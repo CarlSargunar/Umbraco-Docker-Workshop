@@ -539,7 +539,7 @@ I've prepared a single docker compose file to complete this application To prepa
 
 ## 6.2 Run the Docker Compose file
 
-Finally before we run, we need to delete all existing containers. 
+Finally before we run, we need to delete all existing running containers. 
 
 **Action :** Run the following command in your terminal:
 
@@ -547,17 +547,11 @@ Finally before we run, we need to delete all existing containers.
 
 Verify that none are running by looking at the Docker Desktop app, or by running the 'docker ps' command. Once all running containers have been deleted, we can run the Docker Compose file.
 
-**Action :** We first build the relevant images running the following command:
-
-    docker compose build
-
-That step isn't necessary, but it's good to have the images built before we run the containers.
-
 **Action :** Start all contaiers using the following command:
 
     docker compose up -d
 
-This will start all the containers from the images we have just built, and if you open Docker Desktop, you should see all the containers running.
+This will first buuld and then start all the containers from the images we have just built, and if you open Docker Desktop, you should see all the containers running.
 
 ![Alt text](media/9_DockerCompose.png)
 
