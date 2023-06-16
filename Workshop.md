@@ -71,11 +71,11 @@ Here we will be using SQL LocalDB as the database so that in later steps it can 
 
 ## 1.2 Install a template site for the exercise. 
 
-This workshop will use the [Clean starter kit for Umbraco](https://our.umbraco.com/packages/starter-kits/clean-starter-kit/). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with. 
+This workshop will use the [standard starter kit for Umbraco](https://www.nuget.org/packages/Umbraco.TheStarterKit). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with, as well as a content structure which is suited to a headless API.
 
-**Action:** Run the following command to install the Clean starter kit.
+**Action:** Run the following command to install the Umbraco starter kit.
 
-    dotnet add UmbWeb package Clean
+    dotnet add package Umbraco.TheStarterKit
 
 **Action:** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
 
@@ -308,12 +308,15 @@ Now that there is a site and database running, we will use the new content deliv
 
 ![Alt text](media/3_2_Swagger.png)
 
+**Action:** Complete the following steps :
+
 ## 4.1 - Enable Content API
 
 To enable the content API, you need to add the following setting to appsettings.config.
 
     "DeliveryApi": {
-            "Enabled": true
+            "Enabled": true,
+            "RichTextOutputAsJson": false
     }
 
 Edit the Startup.cs file and add the following in ConfigureServies
@@ -327,12 +330,15 @@ You will next need to rebuild your indexes for Delivery API, in the Settings -> 
 
 If you'd like to see more info about the Content delivery API, please read the docs : [https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api](https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api)
 
-## 4.1 Creating the API controller
+## Testing the API
 
-To save typing the code for the API is already created in the the /Files/UmbWeb folder. 
+To test the API, you can simply call a url like the following:
+
+    /umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct
+
+Which will query the content and return all content of type "Product" as JSON.
 
 
-**Action:** Complete the following steps :
 
 1. Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
     - **/Files/UmbWeb/Controllers** to **/Workshop/UmbWeb/Controllers**
