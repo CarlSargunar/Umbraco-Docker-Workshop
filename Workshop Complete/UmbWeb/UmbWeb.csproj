@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Clean" Version="2.1.6" />
-    <PackageReference Include="Umbraco.Cms" Version="11.1.0" />
+    <PackageReference Include="Umbraco.Cms" Version="12.0.0-rc3" />
+    <PackageReference Include="Umbraco.TheStarterKit" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,5 +26,6 @@
     <RazorCompileOnBuild>false</RazorCompileOnBuild>
     <RazorCompileOnPublish>false</RazorCompileOnPublish>
   </PropertyGroup>
+
   
 </Project>
