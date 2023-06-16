@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UmbWeb.Models
+namespace UmBlazor.Models
 {
     public class BodyText
     {
