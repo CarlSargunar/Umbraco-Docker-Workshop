@@ -4,9 +4,9 @@ This repository contains all the notes and worksheets for the Docker Workshop be
 
 ## Workshop
 
-The main workshop is in the [1 - Workshop.md](Workshop/1%20-%20Workshop.md) file. Follow the instructions in there to get started.
+The main workshop is in the [1-Workshop-Intro.md](/1-Workshop-Intro.md) file. Follow the instructions in there to get started.
 
-*Please make sure you have gone through the prerequisites for this workshop in the [Prerequisites.md](Prerequisites.md) file prior to starting.*
+*Please make sure you have gone through the prerequisites for this workshop in the [0-Prerequisites.md](/0-Prerequisites.md) file prior to starting.*
 
 
 # References and Resources
