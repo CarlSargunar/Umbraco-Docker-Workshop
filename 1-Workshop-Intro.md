@@ -38,4 +38,4 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 
 ## Next Steps
 
-The first task we will do is to create a database container. To do this, please go to the [2-Database-Container.md](/2-Database-Container.md) file.
+The first task we will do is to create a database container. To do this, please continue on the [2-Database-Container.md](/2-Database-Container.md) file.
