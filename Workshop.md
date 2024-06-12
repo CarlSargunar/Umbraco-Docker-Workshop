@@ -18,14 +18,14 @@ Where commands are executed, you should be using the built in terminal from VS C
 
 These instructions are also available on the [GitHub repository](https://github.com/CarlSargunar/Umbraco-Docker-Workshop/blob/main/Workshop.md) or your own fork.
 
-Wherever there are something for you to do I will add the flag **Action:**. This will indicate to you that you should do the action described in the instruction.
+Wherever there are something for you to do I will add the flag ***Action:***. This will indicate to you that you should do the action described in the instruction.
 
 During the workshop please take extra care to make sure you have the right path according to the instructions. There are a lot of similarly named files and folders, and you will need to be careful to not mix them up.
 
 
 ## Working Folder
 
-**Action:** Create a folder in the root of your application called Workshop. In your terminal window, change directory to the **Workshop** directory. All exercises will be completed in this folder.
+***Action:*** Create a folder in the root of your application called Workshop. In your terminal window, change directory to the **Workshop** directory. All exercises will be completed in this folder.
 
 The folders which are in this workshop are : 
 
@@ -54,7 +54,7 @@ The first task we will do is to create a database container which will be used t
 
 ## 1.1 Create a container for the database server
 
-**Action:** 
+***Action:*** 
 - Create a new folder in your copy of the repostory called **Workshop**.
 - Ensure your Visual Studio Code terminal is in the new **Workshop** folder.
 - In your Workshop folder, create a new folder called **UmbData**. 
@@ -64,7 +64,7 @@ This will folder and the associated Dockerfile will define the database containe
 
 *Note : the casing of the file is important - it needs to be called Dockerfile with no extension*
 
-**Action:** Paste the contents below in that file, and make sure the line endings are **LF**.
+***Action:*** Paste the contents below in that file, and make sure the line endings are **LF**.
 
     FROM mcr.microsoft.com/azure-sql-edge:latest
 
@@ -99,7 +99,7 @@ This file will instruct Docker to create a SQL server running azure-sql-edge, wi
 
 *Note : We are use Azure SQL Edge here as a database container for compatibility - SQL Edge will with on both x64 as well as ARM cpus which come on Macbooks with an M1 chip.*
 
-**Action:** : Copy the database setup scripts and databases
+***Action:*** : Copy the database setup scripts and databases
 
 - From **/Files/UmbData/setup.sql** to **/Working/UmbData/setup.sql**
 - From **/Files/UmbData/startup.sh** to **/Working/UmbData/startup.sh**
@@ -108,7 +108,7 @@ This file will instruct Docker to create a SQL server running azure-sql-edge, wi
 
 These two script files will be used to create a new database if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
 
-**Action:** Once all these files exist in the Working/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See earlier for details).
+***Action:*** Once all these files exist in the Working/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See earlier for details).
 
 ## 1.2 Build the database image and run the database container
 
@@ -118,7 +118,7 @@ All our files are ready to build the database image and run the database contain
 
 *Note : You need to ensure that you don't have a running SQL server on your host machine, as the port used will clash with your container. Stop any servers to ensure port 1433 is not in use.*
 
-**Action:** 
+***Action:*** 
 
 Ensure you are in the **/Working** folder in your terminal window and build the database image with the following command:
 
@@ -137,7 +137,7 @@ This should give you a container ID back if the container was started successful
 
 Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address. 
 
-**Action:** Run the following command in the terminal window to create a new Bridge network for our containers to use. 
+***Action:*** Run the following command in the terminal window to create a new Bridge network for our containers to use. 
 
     docker network create -d bridge umbNet    
 
@@ -168,13 +168,13 @@ We are going to create our Umbraco website running locally on your machine nativ
 
 ## Installing Umbraco Template and start Website
 
-**Action:** Install the Umbraco .NET Template.
+***Action:*** Install the Umbraco .NET Template.
 
     dotnet new install Umbraco.Templates::12.0.0-rc3 --force
 
 ## 2.1 Start a container to run the database
 
-**Action:** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
+***Action:*** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
 
 Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
 
@@ -186,11 +186,11 @@ If you are running this exercise on a Mac or Linux, you won't be able to run thi
 
 This workshop will use the [standard starter kit for Umbraco](https://www.nuget.org/packages/Umbraco.TheStarterKit). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with, as well as a content structure which is suited to a headless API.
 
-**Action:** Run the following command to install the Umbraco starter kit.
+***Action:*** Run the following command to install the Umbraco starter kit.
 
     dotnet add UmbWeb package Umbraco.TheStarterKit
 
-**Action:** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
+***Action:*** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
 
     dotnet run --project UmbWeb
 
@@ -213,7 +213,7 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
 
 ## 3.1 Create the Umbraco Site container
 
-**Action:** In the **UmbWeb** folder create a Dockerfile to define the components of the Umbraco container. Paste the contents below in that file, and make sure the line endings are **LF**. 
+***Action:*** In the **UmbWeb** folder create a Dockerfile to define the components of the Umbraco container. Paste the contents below in that file, and make sure the line endings are **LF**. 
 
     # Use the SDK image to build and publish the website
     FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
@@ -252,7 +252,7 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 
 Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. 
 
-**Action:** Create a copy of the **appsettings.Development.json** called **appsettings.Staging.json**. In that file ensure the connectionstring is set-up to connect to **umbdata** as the database server. You will need to add the following connectionstring section to the file as a sibling of the Umbraco node. 
+***Action:*** Create a copy of the **appsettings.Development.json** called **appsettings.Staging.json**. In that file ensure the connectionstring is set-up to connect to **umbdata** as the database server. You will need to add the following connectionstring section to the file as a sibling of the Umbraco node. 
 
     "ConnectionStrings": {
         "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_password123;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
@@ -263,7 +263,7 @@ You could altenatively copy the already edited from from the **/Files/UmbWeb/app
 
 Finally we can compile a docker image for the Umbraco site. 
 
-**Action:** Run the following command to build the image.
+***Action:*** Run the following command to build the image.
 
     docker build --tag=umbweb ./UmbWeb
 
@@ -277,7 +277,7 @@ At this point we can see all the images we have created by using the following c
 
 We can then run the website container. *Notice in the command below there is an argument to let the container know which network to connect to - the same **umbNet** network*. Here we are doing this using the **docker run --network** flag instead of using an explicit command.
 
-**Action:** Run the following command to run the website container.
+***Action:*** Run the following command to run the website container.
 
     docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
 
@@ -421,7 +421,7 @@ While the website container has the API running, we want to spin up a 2nd instan
 
 *Note : By using the same volumes for media and logs, both containers will share the storage on the docker host, and thus the media library and logs will be shared between the containers. However this is NOT enough to run a load balanced container in production - this is to separate the content entry and content delivery nodes in this demo.*
 
-**Action:** Run the following command to start the 2nd container.
+***Action:*** Run the following command to start the 2nd container.
 
     docker run --name umbweb2 -p 8001:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb 
 
@@ -439,17 +439,17 @@ We will now create a final container which will be used to run a blazor app, con
 
 ## 5.1 Create the Blazor App and show the blog summaries
 
-**Action:** Start a new Blazor WASM project by running the following:
+***Action:*** Start a new Blazor WASM project by running the following:
 
     dotnet new blazorwasm --name UmBlazor
 
-**Action:** Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
+***Action:*** Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
 
 - **/Files/UmBlazor/Models** to **/Workshop/UmBlazor/Models**
 - **/Files/UmBlazor/Pages/FetchData.razor** to **/Workshop/UmBlazor/Pages/FetchData.razor**
 - **/Files/UmBlazor/wwwroot/appsettings.json** to **/Workshop/UmBlazor/wwwroot/appsettings.json**
 
-**Action:** Test that the application works by running the following command in your terminal:
+***Action:*** Test that the application works by running the following command in your terminal:
 
     dotnet run --project UmBlazor
     
@@ -467,7 +467,7 @@ To run the Blazor WASM app in a container, it's a little different to running an
 
 I've created the Dockerfile and nginx configuration file, these need to be copied to the project folder.
 
-**Action:** Copy the following:
+***Action:*** Copy the following:
 
 - **/Files/UmBlazor/Dockerfile** to **/Workshop/UmBlazor/Dockerfile**
 - **/Files/UmBlazor/nginx.conf** to **/Workshop/UmBlazor/nginx.conf**
@@ -497,13 +497,13 @@ We can see that this container is using the nginx image, and rather than startin
 
 Next we can build the Blazor Image using the following command:
 
-**Action:** Run the following command to build the image.
+***Action:*** Run the following command to build the image.
 
     docker build --tag=umblazor .\UmBlazor    
 
 Once that's done, we can run the Container
 
-**Action:** Run the following command to start the container.
+***Action:*** Run the following command to start the container.
 
     docker run --name umblazor -p 8002:80 --network=umbNet -d umblazor
 
@@ -531,7 +531,7 @@ This single file represents the entire application, and can be used to deploy th
 
 I've prepared a single docker compose file to complete this application To prepare the application for deployment with Docker compose:
 
-**Action:** Copy the following files:
+***Action:*** Copy the following files:
 
 - Copy **/Files/docker-compose.yml** to **/Workshop/docker-compose.yml**
 - Copy **/Files/UmbWeb/appsettings.Production.json** to **/Workshop/UmbWeb/appsettings.Production.json**
