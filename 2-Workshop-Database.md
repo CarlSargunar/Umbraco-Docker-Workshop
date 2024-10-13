@@ -18,7 +18,7 @@ This will folder and the associated Dockerfile will define the database containe
 
 ***Action:*** Paste the contents below in that file, and make sure the line endings are **LF**.
 
-    FROM mcr.microsoft.com/azure-sql-edge:latest
+    FROM mcr.microsoft.com/mssql/server:2022-latest
 
     ENV ACCEPT_EULA=Y
     ENV SA_PASSWORD=SQL_password123
