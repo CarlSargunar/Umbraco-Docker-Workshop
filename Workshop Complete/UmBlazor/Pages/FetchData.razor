@@ -2,6 +2,7 @@
 @using UmBlazor.Models
 @using System.Diagnostics
 @using Microsoft.Extensions.Configuration
+@using System.Data
 @inject IConfiguration Configuration
 @inject HttpClient Http
 
@@ -11,7 +12,7 @@
 
 <p>These are the currently published blogs on the site!</p>
 
-@if (_blogSummaries == null)
+@if (rootNode == null)
 {
     string umbracoURL = Configuration["UmbracoURL"];
     <p>
@@ -23,35 +24,31 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Summary</th>
+                <th>Id</th>
+                <th>Name</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var summary in _blogSummaries)
+            @foreach (var item in rootNode.items)
             {
-                var displayTitle = string.IsNullOrEmpty(summary.Title) ? summary.Name : summary.Title;
                 <tr>
-                    <td>@summary.PublishDate.ToShortDateString()</td>
-                    <td>@displayTitle</td>
-                    <td>@summary.AuthorName</td>
-                    <td>@summary.Summary</td>
+                    <td>@item.id</td>
+                    <td>@item.name</td>
                 </tr>
             }
+
         </tbody>
     </table>
 }
 
 @code {
-    private BlogSummary[]? _blogSummaries;
+    private Root rootNode = null;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            _blogSummaries = await Http.GetFromJsonAsync<BlogSummary[]>(Configuration["UmbracoURL"]);
+            rootNode = await Http.GetFromJsonAsync<Root>(Configuration["UmbracoURL"]);
         }
         catch (Exception ex)
         {

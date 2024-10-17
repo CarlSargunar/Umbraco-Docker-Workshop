@@ -4,9 +4,9 @@ This repository contains all the notes and worksheets for the Docker Workshop be
 
 ## Workshop
 
-The main workshop is in the [Workshop.md](Workshop.md) file. Follow the instructions in there to get started.
+The main workshop is in the [1-Workshop-Intro.md](/1-Workshop-Intro.md) file. Follow the instructions in there to get started.
 
-*Please make sure you have gone through the prerequisites for this workshop in the [Prerequisites.md](Prerequisites.md) file prior to starting.*
+*Please make sure you have gone through the prerequisites for this workshop in the [0-Prerequisites.md](/0-Prerequisites.md) file prior to starting.*
 
 
 # References and Resources
@@ -37,7 +37,11 @@ Slides - https://docs.google.com/presentation/d/1Nn1hfFkZp8QWpCsnIAGMH6IdBk0R551
 ## Notes
 
 The following are notes for myself, but may be useful for others.
-
+- HTTP Setting for openiddict
+    - https://github.com/umbraco/Umbraco-CMS/pull/16614
 - https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api#swagger
 - https://carole.dev/blog/whats-new-in-umbraco-12-content-delivery-api/
 - https://emmti.com/headless-content-delivery-api-in-umbraco-12-rc-1#heading-installing-12rc1-on-your-local-machine
+- SQL on M1
+    - https://devblogs.microsoft.com/azure-sql/development-with-sql-in-containers-on-macos/
+- SQL Edge Retirement : https://azure.microsoft.com/en-us/updates/v2/azure-sql-edge-retirement
