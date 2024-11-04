@@ -41,7 +41,7 @@ I've created the Dockerfile and nginx configuration file, these need to be copie
 
 Looking at the contents of the Dockerfile : 
 
-    FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+    FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
     WORKDIR /src
     COPY UmBlazor.csproj .
     RUN dotnet restore UmBlazor.csproj

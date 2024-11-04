@@ -17,7 +17,7 @@ Check the version of the .NET SDK you have installed using the following command
 
     dotnet sdk check
 
-This workshop will require version 7.0 of the SDK, preferrably the latest version available. If you need to download the SDK, you can do so from [https://dotnet.microsoft.com/en-us/download/visual-studio-sdks](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks).
+This workshop will require version 8.0 of the SDK, preferrably the latest version available. If you need to download the SDK, you can do so from [https://dotnet.microsoft.com/en-us/download/visual-studio-sdks](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks).
 
 ![sdk-check](/media/1_sdk_check.png)
 

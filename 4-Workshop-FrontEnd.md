@@ -9,7 +9,7 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
 ***Action:*** In the **UmbWeb** folder create a Dockerfile to define the components of the Umbraco container. Paste the contents below in that file, and make sure the line endings are **LF**. 
 
     # Use the SDK image to build and publish the website
-    FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+    FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
     WORKDIR /src
     COPY ["UmbWeb.csproj", "."]
     RUN dotnet restore "UmbWeb.csproj"
@@ -17,7 +17,7 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
     RUN dotnet publish "UmbWeb.csproj" -c Release -o /app/publish
 
     # Copy the published output to the final running image
-    FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final 
+    FROM mcr.microsoft.com/dotnet/aspnet:780 AS final 
     WORKDIR /app
 
     # Copy the published output to the final running image
