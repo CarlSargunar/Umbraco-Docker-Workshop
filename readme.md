@@ -9,6 +9,11 @@ The main workshop is in the [1-Workshop-Intro.md](/1-Workshop-Intro.md) file. Fo
 *Please make sure you have gone through the prerequisites for this workshop in the [0-Prerequisites.md](/0-Prerequisites.md) file prior to starting.*
 
 
+TODO: Volumes vs Bind Mounts
+
+
+
+
 # References and Resources
 Slides - https://docs.google.com/presentation/d/1Nn1hfFkZp8QWpCsnIAGMH6IdBk0R551CiuU3IiJpBdk/
 
