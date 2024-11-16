@@ -10,7 +10,9 @@ The main workshop is in the [1-Workshop-Intro.md](/1-Workshop-Intro.md) file. Fo
 
 
 TODO: Volumes vs Bind Mounts
-
+ - bind database with a bind mount to the folder inside th repo
+ - Amend the sql script to attach the database from the bind mount?
+    - Changes in the MDF/LDF file will show as repo changes - add a note about that
 
 
 
