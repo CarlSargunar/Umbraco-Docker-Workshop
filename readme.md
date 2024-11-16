@@ -13,6 +13,9 @@ TODO: Volumes vs Bind Mounts
  - bind database with a bind mount to the folder inside th repo
  - Amend the sql script to attach the database from the bind mount?
     - Changes in the MDF/LDF file will show as repo changes - add a note about that
+ - Create a path somehow (maybe a .env file) and use that in the docker-compose file to set the volume path
+    - Add a note about the volume path being different on Windows and Linux
+    
 
 
 
