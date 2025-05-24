@@ -2,12 +2,20 @@
 
 To attend this workshop you will need the following:
 
-- A windows, mac or linux computer with : 
-    - As docker uses quite a lot of memory, it is recommended to have at least 16Gb of Ram, but you will be able to complete the workshop with 8gb.
-    - Enough free space to store container images and instances. Recommended to have at least 15Gb of available space. Database containers particularly can sometimes be quite large.
+- A windows, mac or linux laptop :
+    - 16gb of Memory - As docker uses quite a lot of memory, it is recommended to have at least 16Gb of Ram, but you should still be able to complete the workshop with 8gb.
+    - At least 15Gb of available space - Database containers particularly can sometimes be quite large.
 - A working Docker engine installation. 
     - The simplest way to do this is using [Docker Desktop](https://docs.docker.com/get-docker/).
     - For linux, if you prefer running a full docker instance, there are installations which are distro specific available [here](https://docs.docker.com/desktop/linux/install/).
+- On Windows, it is recommended to have WSL2 installed. This is the recommended way to run Docker on Windows. 
+        - If you are using Docker Desktop, this will be installed for you automatically as part of installing Docker Desktop.
+        - If you are using a different installation of Docker, you can install WSL2 by following the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install).
+- you will need to have the following installed:
+    - .NET 8.0 SDK
+        - It's also worth installing the .NET 9 SDK for some of the bonus content
+    - Visual Studio 2022 or later (or Visual Studio Code)
+    - Git
 
 This guide is primarily focused on Windows and Mac development, but will work for Linux just as well. 
 

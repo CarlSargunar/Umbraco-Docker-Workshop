@@ -6,8 +6,6 @@ During this workshop it is recommended that you use [Visual Studio Code](https:/
 
 Where commands are executed, you should be using the built in terminal from VS Code, and not the command line. To open the terminal, select **View**, then **Terminal**.
 
-These instructions are also available on the [GitHub repository](https://github.com/CarlSargunar/Umbraco-Docker-Workshop/blob/main/Workshop.md) or your own fork.
-
 Wherever there are something for you to do I will add the flag ***Action:***. This will indicate to you that you should do the action described in the instruction.
 
 During the workshop please take extra care to make sure you have the right path according to the instructions. There are a lot of similarly named files and folders, and you will need to be careful to not mix them up.
