@@ -42,3 +42,19 @@ docker ps
 This command will list all running containers, and you should see `test_sql_server_2022` in the list.
 If you see the container running, then your Docker installation is working correctly. If you encounter any issues, please refer to the [Docker documentation](https://docs.docker.com/desktop/troubleshoot-and-support/troubleshoot/) for troubleshooting tips.
 
+
+## Troubleshooting
+
+**Windows Only** 
+
+If you are using Windows, you will need to ensure that your WSL (Windows Subsystem for Linux) installation is up to date. Docker Desktop relies on WSL to run containers on Windows, and an outdated version can cause issues. To check if your WSL installation is up to date, run the following command in your terminal
+
+```bash 
+wsl --status
+```
+
+If you need to update WSL, you can do so with the following command:
+
+```bash 
+wsl --update
+```
