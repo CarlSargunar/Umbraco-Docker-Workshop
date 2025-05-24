@@ -24,17 +24,21 @@ This workshop will require version 8.0 of the SDK, preferrably the latest versio
 
 ## Test your Docker installation
 
-It's important that your docker installation is working before you attend the workshop. To test that you can run the following command on your terminal.
+It's important that your docker installation is working before you attend the workshop. We will do that by downloading and running a container image for SQL Server 2022, which will be used later in the workshop. This will also pre-cache the image on your comptuer so that it is available when we need it.
 
-    docker run --name dkr-getting-started -d -p 9080:80 docker/getting-started 
+```bash
+docker run --platform linux/amd64 -d --name test_sql_server_2022 -m 2g -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=SQL_password123' -v dev_sql_system_22:/var/opt/mssql -v dev_sql_user_22:/var/opt/sqlserver -p 14330:1433 mcr.microsoft.com/mssql/server:2022-latest
+```
 
-This will run the default 'getting started' container in port 9080. You can then access the container at http://localhost:9080 when it is running. If it is successful, you will see the following in your docker desktop application 
+This command will run a SQL Server 2022 container in detached mode (`-d`), with the name `test_sql_server_2022`. It sets the memory limit to 2GB (`-m 2g`), accepts the EULA, sets the SA password, and mounts two volumes for system and user data. It also maps port 14330 on your host to port 1433 in the container. Don't worry too much about the details of this command, we will go through it in more detail during the workshop.
 
-![dkr-getting-started](media/dkr-getting-started.png)
+![Test Docker is runnig and you can start a SQL server](/media/Docker_Test.png)
 
+You will see the container running in your Docker Desktop application, and you can also check that it is running by using the following command:
 
-**PLEASE NOTE** : The reason this is not using the standard port 80 is that a lot of web developers on Windows will have IIS running on port 80. This will cause issues when trying to access the container.
+```bash
+docker ps
+```
+This command will list all running containers, and you should see `test_sql_server_2022` in the list.
+If you see the container running, then your Docker installation is working correctly. If you encounter any issues, please refer to the [Docker documentation](https://docs.docker.com/desktop/troubleshoot-and-support/troubleshoot/) for troubleshooting tips.
 
-This will mean that when you browse the site at http://localhost:9080 the details there will be slightly different, and will refer to port 80 in the guide, but in reality you are running this on port 9080
-
-If your local port 9080 is used for something else, you can choose any other port number instead by changing the value in this argument : -p **9080**:80
