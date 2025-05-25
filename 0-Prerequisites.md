@@ -14,7 +14,7 @@ To attend this workshop you will need the following:
 - you will need to have the following installed:
     - .NET 8.0 SDK
         - It's also worth installing the .NET 9 SDK for some of the bonus content
-    - Visual Studio 2022 or later (or Visual Studio Code)
+    - Visual Studio Code or Visual Studio 2022
     - Git
 
 This guide is primarily focused on Windows and Mac development, but will work for Linux just as well. 
@@ -23,8 +23,9 @@ This guide is primarily focused on Windows and Mac development, but will work fo
 
 Check the version of the .NET SDK you have installed using the following command:
 
-    dotnet sdk check
-
+```bash
+dotnet sdk check
+```
 This workshop will require version 8.0 of the SDK, preferrably the latest version available. If you need to download the SDK, you can do so from [https://dotnet.microsoft.com/en-us/download/visual-studio-sdks](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks).
 
 ![sdk-check](/media/1_sdk_check.png)
@@ -47,6 +48,7 @@ You will see the container running in your Docker Desktop application, and you c
 ```bash
 docker ps
 ```
+
 This command will list all running containers, and you should see `test_sql_server_2022` in the list.
 If you see the container running, then your Docker installation is working correctly. If you encounter any issues, please refer to the [Docker documentation](https://docs.docker.com/desktop/troubleshoot-and-support/troubleshoot/) for troubleshooting tips.
 

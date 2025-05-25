@@ -6,7 +6,7 @@ We are going to create our Umbraco website running locally on your machine nativ
 
 ***Action:*** Install the Umbraco .NET Template.
 
-    dotnet new install Umbraco.Templates::12.0.0-rc3 --force
+    dotnet new install Umbraco.Templates::13.8.1 --force
 
 ## 2.1 Start a container to run the database
 
