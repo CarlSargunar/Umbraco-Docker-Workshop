@@ -77,11 +77,15 @@ All our files are ready to build the database image and run the database contain
 
 Ensure you are in the **/Working** folder in your terminal window and build the database image with the following command:
 
-    docker build --tag=umbdata ./UmbData    
+```bash
+docker build --tag=umbdata ./UmbData    
+```
 
 Once the image is built, run it with the following command. 
 
-    docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
+```bash
+docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
+```
 
 This should give you a container ID back if the container was started successfully. You should also be able to see the container running in Docker Desktop.
 
