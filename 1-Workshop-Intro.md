@@ -1,17 +1,20 @@
 # Umbraco and Docker Workshop - Introduction
 
+Before you start on this workshop, Fork this repository to your own GitHub account, and then clone it to your local machine. You can do this using the GitHub Desktop application or the command line.
 
-
-## Working Folder
-
-***Action:*** Create a folder in the root of your application called Workshop. In your terminal window, change directory to the **Workshop** directory. All exercises will be completed in this folder.
-
-The folders which are in this workshop are : 
+The folders which are in this workshop are:
 
 - **Files** - This folder contains pre-created files which will be used in this workshop to save you typing everything out manually
 - **Media** - The images used in this workshop are stored in there
 - **Workshop Complete** - This folder contains a fully complete version of the workshop which can be used for reference in case you run into problems, in a zipped up file. No cheating - you won't learn if you do, but it's a useful guide for reference if you get stuck 🙂 
-- **Workshop** - This will be the active folder where the workshop is being run from, and all files you create and edit will be in this folder. 
+- **Workshop** - This will be the active folder where the workshop is being run from, and all files you create and edit will be in this folder. This will be created in the next step.
+
+
+## Working Folder
+
+***Action:*** In the root of your cloned repostory, **create a folder called Workshop**. In your terminal window, change directory to the **Workshop** directory. All exercises will be completed in this folder.
+
+Note: This folder is deliberately ignored in the .gitignore file, and will not be committed to the repository. This is to ensure that you can run the workshop multiple times without having to delete files or folders.
 
 
 ## A Note on Windows vs Linux Line Endings
@@ -27,4 +30,4 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 
 ## Next Steps
 
-The first task we will do is to create a database container. To do this, please continue on the [2-Database-Container.md](/2-Database-Container.md) file.
+The first task we will do is to create a database container. To do this, please continue on the [2-Workshop-Database](2-Workshop-Database.md) file.
