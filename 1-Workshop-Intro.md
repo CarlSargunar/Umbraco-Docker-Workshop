@@ -1,14 +1,5 @@
 # Umbraco and Docker Workshop - Introduction
 
-## Tools and Set-up
-
-During this workshop it is recommended that you use [Visual Studio Code](https://code.visualstudio.com/) to run the workshop, and that you have the Auto-save feature enabled. To do this, go to the **File** menu, and select **Autosave**.
-
-Where commands are executed, you should be using the built in terminal from VS Code, and not the command line. To open the terminal, select **View**, then **Terminal**.
-
-Wherever there are something for you to do I will add the flag ***Action:***. This will indicate to you that you should do the action described in the instruction.
-
-During the workshop please take extra care to make sure you have the right path according to the instructions. There are a lot of similarly named files and folders, and you will need to be careful to not mix them up.
 
 
 ## Working Folder

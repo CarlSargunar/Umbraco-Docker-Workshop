@@ -26,7 +26,11 @@ Check the version of the .NET SDK you have installed using the following command
 ```bash
 dotnet sdk check
 ```
-This workshop will require version 8.0 of the SDK, preferrably the latest version available. If you need to download the SDK, you can do so from [https://dotnet.microsoft.com/en-us/download/visual-studio-sdks](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks).
+
+
+
+
+This workshop will require version 8.0 of the SDK, preferrably the latest version available. If you need to download the SDK, you can do so from [https://aka.ms/dotnet-core-download.](https://aka.ms/dotnet-core-download.).
 
 ![sdk-check](/media/1_sdk_check.png)
 
@@ -52,10 +56,19 @@ docker ps
 This command will list all running containers, and you should see `test_sql_server_2022` in the list.
 If you see the container running, then your Docker installation is working correctly. If you encounter any issues, please refer to the [Docker documentation](https://docs.docker.com/desktop/troubleshoot-and-support/troubleshoot/) for troubleshooting tips.
 
+## Tools and Set-up
 
-## Troubleshooting
+During this workshop it is recommended that you use [Visual Studio Code](https://code.visualstudio.com/) to run the workshop, and that you have the Auto-save feature enabled. To do this, go to the **File** menu, and select **Autosave**.
 
-**Windows Only** 
+Where commands are executed, you should be using the built in terminal from VS Code, and not the command line. To open the terminal, select **View**, then **Terminal**.
+
+Wherever there are something for you to do I will add the flag ***Action:***. This will indicate to you that you should do the action described in the instruction.
+
+During the workshop please take extra care to make sure you have the right path according to the instructions. There are a lot of similarly named files and folders, and you will need to be careful to not mix them up.
+
+## Check your WSL installation
+
+**This applies to Windows Only**
 
 If you are using Windows, you will need to ensure that your WSL (Windows Subsystem for Linux) installation is up to date. Docker Desktop relies on WSL to run containers on Windows, and an outdated version can cause issues. To check if your WSL installation is up to date, run the following command in your terminal
 
