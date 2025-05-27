@@ -27,10 +27,13 @@ Check the version of the .NET SDK you have installed using the following command
 dotnet sdk check
 ```
 
+This workshop will require version 8.0 of the SDK, preferrably the latest version available. If you need to download the SDK, you can do so from [https://aka.ms/dotnet-core-download](https://aka.ms/dotnet-core-download).
 
+It's also useful to have the .NET 9 SDK installed for some of the bonus content, but this is not required for the main workshop.
 
+In the example below, there are updates available to the SDK, which I wull then update prior to the workshop. If you see this, please update your SDK to the latest version.
 
-This workshop will require version 8.0 of the SDK, preferrably the latest version available. If you need to download the SDK, you can do so from [https://aka.ms/dotnet-core-download.](https://aka.ms/dotnet-core-download.).
+```bash
 
 ![sdk-check](/media/1_sdk_check.png)
 
