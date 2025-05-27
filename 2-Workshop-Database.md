@@ -18,34 +18,37 @@ This will folder and the associated Dockerfile will define the database containe
 
 ***Action:*** Paste the contents below in that file, and make sure the line endings are **LF**.
 
-    FROM mcr.microsoft.com/mssql/server:2022-latest
+```dockerfile
+FROM mcr.microsoft.com/mssql/server:2022-latest
 
-    ENV ACCEPT_EULA=Y
-    ENV MSSQL_SA_PASSWORD=P@55word!!
+ENV ACCEPT_EULA=Y
+ENV MSSQL_SA_PASSWORD=P@55word!!
 
-    USER root
-    
-    RUN mkdir /var/opt/sqlserver
-    
-    RUN chown mssql /var/opt/sqlserver
-    
-    ENV MSSQL_BACKUP_DIR="/var/opt/mssql"
-    ENV MSSQL_DATA_DIR="/var/opt/mssql/data"
-    ENV MSSQL_LOG_DIR="/var/opt/mssql/log"
+USER root
 
-    EXPOSE 1433/tcp
+RUN mkdir /var/opt/sqlserver
 
-    # Copy Setup SQL script
-    COPY setup.sql /
-    COPY startup.sh /
+RUN chown mssql /var/opt/sqlserver
 
-    # Copy the database files to the container
-    # NOTE : This is not a recommendation for production use as the database files should be stored in a persistent volume and not be a part of the image
-    COPY Umbraco.mdf /var/opt/sqlserver
-    COPY Umbraco_log.ldf /var/opt/sqlserver
+ENV MSSQL_BACKUP_DIR="/var/opt/mssql"
+ENV MSSQL_DATA_DIR="/var/opt/mssql/data"
+ENV MSSQL_LOG_DIR="/var/opt/mssql/log"
 
-    ENTRYPOINT [ "/bin/bash", "startup.sh" ]
-    CMD [ "/opt/mssql/bin/sqlservr" ] 
+EXPOSE 1433/tcp
+
+# Copy Setup SQL script
+COPY setup.sql /
+COPY startup.sh /
+
+# Copy the database files to the container
+# NOTE : This is not a recommendation for production use as the database files should be stored in a persistent volume and not be a part of the image
+COPY Umbraco.mdf /var/opt/sqlserver
+COPY Umbraco_log.ldf /var/opt/sqlserver
+
+ENTRYPOINT [ "/bin/bash", "startup.sh" ]
+CMD [ "/opt/mssql/bin/sqlservr" ] 
+```
+
 
 This file will instruct Docker to create a SQL server running azure-sql-edge, will accept the End User License Agreement, and will define environmental variables to configure the paths to be used for databases. It will also configure the ports to be exposed (1433), and copy two scripts into the container. These scripts will be used to restore the database export from the container. 
 
