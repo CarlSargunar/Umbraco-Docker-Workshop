@@ -15,61 +15,43 @@ Now that there is a site and database running, we will use the new content deliv
 
 ## 4.2 - Enable CORS Policy to allow access to the API
 
-We will also need to enable CORS to allow access to the API. To do this, we will add the following to the Configure method in Startup.cs
+We will also need to enable CORS to allow access to the API. To do this, we will add the following to the start of the services in Program.cs
 
-    public void ConfigureServices(IServiceCollection services)
+```csharp
+    // Add CORS policy for workshop/demo (allow all)
+    builder.Services.AddCors(options =>
     {
-        services.AddCors(policy =>
-            {
-                policy.AddPolicy("CorsPolicy", opt => opt
-                    .AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod());
-            });
-
-        services.AddUmbraco(_env, _config)
-            .AddBackOffice()
-            .AddWebsite()
-            .AddDeliveryApi()
-            .AddComposers()
-            .Build();
-    }
+        options.AddPolicy("AllowAll", policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+    });
+```
 
 You will also need to start that CORS Policy in the Startup.cs Configure method
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        if (env.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
-
-        app.UseCors("CorsPolicy");
-
-        app.UseUmbraco()
-            .WithMiddleware(u =>
-            {
-                u.UseBackOffice();
-                u.UseWebsite();
-            })
-            .WithEndpoints(u =>
-            {
-                u.UseInstallerEndpoints();
-                u.UseBackOfficeEndpoints();
-                u.UseWebsiteEndpoints();
-            });
-    }
+```csharp
+// Use CORS before Umbraco middleware
+app.UseCors("AllowAll");
+```
 
 ## 4.3 - Rebuild the image and run it
 
 You will need to rebuild the umbWeb docker image and run it again to see the changes. You can use the following to do that
 
-    docker build --tag=umbweb ./UmbWeb
+```bash
+docker build --tag=umbweb ./UmbWeb
+```
 
-Stop and remove the previous running umbweb container
+Stop and remove the previous running umbweb container. You can also do this in the Docker Desktop app by right-clicking the container and selecting "Stop" and then "Remove".
 
-    docker stop umbweb
-    docker rm umbweb
+
+```bash
+docker stop umbweb
+docker rm umbweb
+```
 
 
 Run the new version of the umbweb image

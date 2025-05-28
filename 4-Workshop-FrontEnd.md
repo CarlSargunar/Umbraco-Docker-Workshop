@@ -80,7 +80,7 @@ We can then run the website container. *Notice in the command below there is an 
 ***Action:*** Run the following command to run the website container.
 
 ```bash
-    docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
+docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
 ```
 
 In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. The reason to use these is that with media we want to share the media library if we should want to create more running sites (as we will later in the course) and with logs, we want to be able to view these logs and diagnose issues if the container isn't able to run for any reason.
@@ -89,13 +89,13 @@ Similarly with media, we want all website containers to be able to share the sam
 
 One other thing we can see is the Environment variable we are passing the container with the -e flag, which sets our AspNetCore Environment to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database.
 
-You can now see the website running by visiting:
-    
-    http://localhost:8000
+You can now see the website running by visiting: [http://localhost:8000](http://localhost:8000)
 
 Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
 
-    docker ps
+```bash
+docker ps
+```
 
 ![Running Containers](media/3_DockerPS.png)
 

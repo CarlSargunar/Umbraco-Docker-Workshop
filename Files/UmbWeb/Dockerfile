@@ -7,7 +7,7 @@ COPY . .
 RUN dotnet publish "UmbWeb.csproj" -c Release -o /app/publish
 
 # Copy the published output to the final running image
-FROM mcr.microsoft.com/dotnet/aspnet:780 AS final 
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final 
 WORKDIR /app
 
 # Copy the published output to the final running image

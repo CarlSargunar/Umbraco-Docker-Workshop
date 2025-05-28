@@ -32,9 +32,11 @@ Finally before we run, we need to delete all existing running containers.
 
 Verify that none are running by looking at the Docker Desktop app, or by running the 'docker ps' command. Once all running containers have been deleted, we can run the Docker Compose file.
 
-**Action :** Start all contaiers using the following command:
+**Action :** Start all containers using the following command:
 
-    docker compose up -d
+```bash
+docker compose up -d
+```
 
 This will first buuld and then start all the containers from the images we have just built, and if you open Docker Desktop, you should see all the containers running.
 
@@ -48,7 +50,9 @@ Once these are up, we can browse the umbraco websites using the following URLs
 
 To stop and remove the containers, run the following command:
 
-    docker-compose down 
+```bash
+docker-compose down 
+```
 
 # References
 
@@ -57,14 +61,5 @@ To stop and remove the containers, run the following command:
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
 
 ## Troubleshooting 
-
-Trust the Dev Certs
-
-    dotnet dev-certs https --trust
-
-Clear your local nuget cache
-
-    dotnet nuget locals all --clear
-
 
 
