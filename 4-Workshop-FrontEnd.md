@@ -101,6 +101,13 @@ docker ps
 
 You can also see the status of running containers and logs by running the Docker Desktop application.
 
+
+## Add a Network
+
+docker network create umbNet
+
+
+
 ## Additional Reading - Networks and Volumes
 
 Docker networks and volumes won't be covered in depth during this workshop as it's time-limited, but if you wish to read further, the following links may be useful.
