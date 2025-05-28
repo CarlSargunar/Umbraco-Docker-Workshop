@@ -91,15 +91,21 @@ Before we create website containers, we need to create a network to allow our co
 
 ***Action:*** Run the following command in the terminal window to create a new Bridge network for our containers to use. 
 
-    docker network create -d bridge umbNet    
+```bash
+docker network create -d bridge umbNet    
+```
 
 We then need to run the database and website containers attached to this network. Since the database container is already running, we can issue the following command to attach the container to the network.
 
-    docker network connect umbNet umbdata
+```bash
+docker network connect umbNet umbdata
+```
 
 You can inspect the network by running the following command.
 
-    docker network inspect umbNet
+```bash
+docker network inspect umbNet
+```
 
 In the output you should see the umbdata container listed in the containers section.
 
