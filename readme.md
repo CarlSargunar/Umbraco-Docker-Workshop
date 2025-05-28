@@ -7,6 +7,10 @@ The main workshop is in the [1-Workshop-Intro.md](/1-Workshop-Intro.md) file. Fo
 
 *Please make sure you have gone through the prerequisites for this workshop in the [0-Prerequisites.md](/0-Prerequisites.md) file prior to starting.*
 
+## Table of Contents
+
+
+
 
 TODO: Volumes vs Bind Mounts
  - bind database with a bind mount to the folder inside th repo

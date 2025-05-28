@@ -56,7 +56,7 @@ This file will instruct Docker to create a SQL server running SQL Server 2022, w
 
 These two script files will be used to create a new database if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
 
-***Action:*** Once all these files exist in the Working/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See earlier for details).
+***Action:*** Once all these files exist in the Working/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See [1-Workshop-Intro](1-Workshop-Intro.md) for details).
 
 ## 1.2 Build the database image and run the database container
 

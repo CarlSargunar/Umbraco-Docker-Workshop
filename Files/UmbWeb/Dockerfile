@@ -7,13 +7,14 @@ COPY . .
 RUN dotnet publish "UmbWeb.csproj" -c Release -o /app/publish
 
 # Copy the published output to the final running image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final 
+FROM mcr.microsoft.com/dotnet/aspnet:780 AS final 
 WORKDIR /app
 
 # Copy the published output to the final running image
 COPY --from=build /app/publish .
 
 # Copy the media items to the final running image
+# THIS IS NOT WHAT YOU WANT TO DO IN PRODUCTION, but for the sake of this workshop we will copy the media items into the container. In Production you would use a volume to store the media items, or a shared storage solution.
 COPY ./wwwroot/media ./wwwroot/media
 
 # Set the entrypoint to the web application
