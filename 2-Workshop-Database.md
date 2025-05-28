@@ -1,7 +1,7 @@
 
 # Exercise 1 - Create a Database Container
 
-The first task we will do is to create a database container, using Azure SQL Edge. This will be used to store the Umbraco database, and will be used by the Umbraco website container we will create later.
+The first task we will do is to create a database container, using Sql Server 2022. This will be used to store the Umbraco database, and will be used by the Umbraco website container we will create later.
 
 
 ## 1.1 Create a container for the database server
@@ -25,11 +25,11 @@ ENV ACCEPT_EULA=Y
 ENV MSSQL_SA_PASSWORD=P@55word!!
 
 USER root
-
+ 
 RUN mkdir /var/opt/sqlserver
-
+ 
 RUN chown mssql /var/opt/sqlserver
-
+ 
 ENV MSSQL_BACKUP_DIR="/var/opt/mssql"
 ENV MSSQL_DATA_DIR="/var/opt/mssql/data"
 ENV MSSQL_LOG_DIR="/var/opt/mssql/log"
@@ -40,17 +40,12 @@ EXPOSE 1433/tcp
 COPY setup.sql /
 COPY startup.sh /
 
-# Copy the database files to the container
-# NOTE : This is not a recommendation for production use as the database files should be stored in a persistent volume and not be a part of the image
-COPY Umbraco.mdf /var/opt/sqlserver
-COPY Umbraco_log.ldf /var/opt/sqlserver
-
 ENTRYPOINT [ "/bin/bash", "startup.sh" ]
-CMD [ "/opt/mssql/bin/sqlservr" ] 
+CMD [ "/opt/mssql/bin/sqlservr" ]
 ```
 
 
-This file will instruct Docker to create a SQL server running azure-sql-edge, will accept the End User License Agreement, and will define environmental variables to configure the paths to be used for databases. It will also configure the ports to be exposed (1433), and copy two scripts into the container. These scripts will be used to restore the database export from the container. 
+This file will instruct Docker to create a SQL server running SQL Server 2022, will accept the End User License Agreement, and will define environmental variables to configure the paths to be used for databases. It will also configure the ports to be exposed (1433), and copy two scripts into the container. These scripts will be used to restore the database export from the container. 
 
 *Note : We are use Azure SQL Edge here as a database container for compatibility - SQL Edge will with on both x64 as well as ARM cpus which come on Macbooks with an M1 chip.*
 
@@ -58,8 +53,6 @@ This file will instruct Docker to create a SQL server running azure-sql-edge, wi
 
 - From **/Files/UmbData/setup.sql** to **/Working/UmbData/setup.sql**
 - From **/Files/UmbData/startup.sh** to **/Working/UmbData/startup.sh**
-- From **/Working/UmbWeb/umbraco/Data/Umbraco_log.ldf** to **/Working/UmbData/Umbraco_log.ldf**
-- From **/Working/UmbWeb/umbraco/Data/Umbraco.mdf** to **/Working/UmbData/Umbraco.mdf**
 
 These two script files will be used to create a new database if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
 

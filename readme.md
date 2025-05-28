@@ -52,7 +52,6 @@ The following are notes for myself, but may be useful for others.
 - HTTP Setting for openiddict
     - https://github.com/umbraco/Umbraco-CMS/pull/16614
 - https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api#swagger
-- https://carole.dev/blog/whats-new-in-umbraco-12-content-delivery-api/
 - https://emmti.com/headless-content-delivery-api-in-umbraco-12-rc-1#heading-installing-12rc1-on-your-local-machine
 - SQL on M1
     - https://devblogs.microsoft.com/azure-sql/development-with-sql-in-containers-on-macos/
