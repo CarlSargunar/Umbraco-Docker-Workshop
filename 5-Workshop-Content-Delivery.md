@@ -6,10 +6,12 @@ We will use the new Umbraco 12 Content Delivery API to add an API to the site.
 
 Now that there is a site and database running, we will use the new content delivery API. First we need to enable the API by adding the following to appsettings.json under Umbraco > CMS
 
+```json
     "DeliveryApi": {
             "Enabled": true,
             "RichTextOutputAsJson": false
     }
+```
 
 ## 4.2 - Enable CORS Policy to allow access to the API
 
