@@ -60,3 +60,8 @@ The following are notes for myself, but may be useful for others.
 - SQL on M1
     - https://devblogs.microsoft.com/azure-sql/development-with-sql-in-containers-on-macos/
 - SQL Edge Retirement : https://azure.microsoft.com/en-us/updates/v2/azure-sql-edge-retirement
+
+
+
+global json force .net 8 for website
+spaces!!
