@@ -3,8 +3,9 @@
 To attend this workshop you will need the following:
 
 - A windows, mac or linux laptop :
-    - 16gb of Memory - As docker uses quite a lot of memory, it is recommended to have at least 16Gb of Ram, but you should still be able to complete the workshop with 8gb.
+    - 16gb of Memory recommended - As docker uses quite a lot of memory. (Although you should still be able to complete the workshop with 8gb)
     - At least 15Gb of available space - Database containers particularly can sometimes be quite large.
+    - 64-bit processor with at least 4 cores - Docker requires a 64-bit processor to run.
 - A working Docker engine installation. 
     - The simplest way to do this is using [Docker Desktop](https://docs.docker.com/get-docker/).
     - For linux, if you prefer running a full docker instance, there are installations which are distro specific available [here](https://docs.docker.com/desktop/linux/install/).
@@ -40,13 +41,24 @@ In the example below, there are updates available to the SDK, which I wull then 
 
 It's important that your docker installation is working before you attend the workshop. We will do that by downloading and running a container image for SQL Server 2022, which will be used later in the workshop. This will also pre-cache the image on your computer so that it is available when we need it.
 
-**Note** : If you have SQL server running on your host machine, you will need to stop it before running the container, as it will use the same port (1433) as the container.
+**Note** : If you have SQL server running on your host machine, you will need to stop it before running the container, as it will use the same port (1433) as the container. 
 
 ```bash
-docker run --platform linux/amd64 --name test_sql_server_2022 -m 2g -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=SQL_password123' -v dev_sql_system_22:/var/opt/mssql -v dev_sql_user_22:/var/opt/sqlserver -p 14330:1433 mcr.microsoft.com/mssql/server:2022-latest
+docker run --platform linux/amd64 --name test_sql_server_2022 -m 2g -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=SQL_password123' -p 14330:1433 mcr.microsoft.com/mssql/server:2022-latest
 ```
 
-This command will run a SQL Server 2022 container in interactive mode, with the name `test_sql_server_2022`. It sets the memory limit to 2GB (`-m 2g`), accepts the EULA, sets the SA password, and mounts two volumes for system and user data. It also maps port 14330 on your host to port 1433 in the container. Don't worry too much about the details of this command, we will go through it in more detail during the workshop.
+This command will run a SQL Server 2022 container in interactive mode, with the name `test_sql_server_2022`. It sets the memory limit to 2GB (`-m 2g`), accepts the EULA, sets the SA password, and mounts two volumes for system and user data.
+
+It also maps port 14330 on your host to port 1433 in the container. Don't worry too much about the details of this command, we will go through it in more detail during the workshop.
+
+It will fail if there is already a container with the name `test_sql_server_2022` running, so if you have run this command before, you will need to stop and remove the existing container first. You can do this with the following commands:
+
+```bash
+docker stop test_sql_server_2022
+docker rm test_sql_server_2022
+```
+
+
 
 ![Test Docker is running and you can start a SQL server](/media/Docker_Test.png)
 
