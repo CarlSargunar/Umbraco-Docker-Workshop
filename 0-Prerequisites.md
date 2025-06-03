@@ -27,7 +27,7 @@ Check the version of the .NET SDK you have installed using the following command
 dotnet sdk check
 ```
 
-This workshop will require version 8.0 of the SDK, preferrably the latest version available. If you need to download the SDK, you can do so from [https://aka.ms/dotnet-core-download](https://aka.ms/dotnet-core-download).
+This workshop will require version 8.0 of the SDK, preferably the latest version available. If you need to download the SDK, you can do so from [https://aka.ms/dotnet-core-download](https://aka.ms/dotnet-core-download).
 
 It's also useful to have the .NET 9 SDK installed for some of the bonus content, but this is not required for the main workshop.
 
@@ -38,7 +38,7 @@ In the example below, there are updates available to the SDK, which I wull then 
 
 ## Test your Docker installation
 
-It's important that your docker installation is working before you attend the workshop. We will do that by downloading and running a container image for SQL Server 2022, which will be used later in the workshop. This will also pre-cache the image on your comptuer so that it is available when we need it.
+It's important that your docker installation is working before you attend the workshop. We will do that by downloading and running a container image for SQL Server 2022, which will be used later in the workshop. This will also pre-cache the image on your computer so that it is available when we need it.
 
 **Note** : If you have SQL server running on your host machine, you will need to stop it before running the container, as it will use the same port (1433) as the container.
 
@@ -48,7 +48,7 @@ docker run --platform linux/amd64 --name test_sql_server_2022 -m 2g -e 'ACCEPT_E
 
 This command will run a SQL Server 2022 container in interactive mode, with the name `test_sql_server_2022`. It sets the memory limit to 2GB (`-m 2g`), accepts the EULA, sets the SA password, and mounts two volumes for system and user data. It also maps port 14330 on your host to port 1433 in the container. Don't worry too much about the details of this command, we will go through it in more detail during the workshop.
 
-![Test Docker is runnig and you can start a SQL server](/media/Docker_Test.png)
+![Test Docker is running and you can start a SQL server](/media/Docker_Test.png)
 
 You will see the container running in your Docker Desktop application. 
 
