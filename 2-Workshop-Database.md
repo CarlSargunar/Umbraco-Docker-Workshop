@@ -22,7 +22,7 @@ This will folder and the associated Dockerfile will define the database containe
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
 ENV ACCEPT_EULA=Y
-ENV MSSQL_SA_PASSWORD=P@55word!!
+ENV MSSQL_SA_PASSWORD=SQL_PassW0rd!!
 
 USER root
  
@@ -117,7 +117,7 @@ To test that your container is running Ok, you may want to test connecting to th
 
 - Host : Localhost
 - Username : sa
-- Password : P@55word!!
+- Password : SQL_PassW0rd!!
 - Port : 1433
 
 ## Next Steps

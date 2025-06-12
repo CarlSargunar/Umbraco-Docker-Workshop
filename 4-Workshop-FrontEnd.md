@@ -51,7 +51,7 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
 
 ```json
     "ConnectionStrings": {
-        "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=P@55word!!;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
+        "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_PassW0rd!!;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
     }
 ```
 

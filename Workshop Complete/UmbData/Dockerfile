@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
 ENV ACCEPT_EULA=Y
-ENV MSSQL_SA_PASSWORD=P@55word!!
+ENV MSSQL_SA_PASSWORD=SQL_PassW0rd!!
 
 USER root
  
