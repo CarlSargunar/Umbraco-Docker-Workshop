@@ -4,52 +4,62 @@ A reference guide for basic Docker CLI commands.
 
 ---
 
-## 1. Check Docker Version
+## 1. Docker Info & Version
 
 ```sh
 docker --version
 ```
 Shows the installed Docker version.
 
+```sh
+docker info
+```
+Displays detailed information about Docker installation and resources.
+
 ---
 
-## 2. List Docker Images
+## 2. Working with Images
+
+### List Images
 
 ```sh
 docker images
 ```
 Lists all images downloaded on your machine.
 
----
-
-## 3. List Running Containers
-
-```sh
-docker ps
-```
-Shows all currently running containers.
-
----
-
-## 4. List All Containers (including stopped)
-
-```sh
-docker ps -a
-```
-Lists all containers, running or stopped.
-
----
-
-## 5. Pull an Image
+### Pull an Image
 
 ```sh
 docker pull <image-name>
 ```
 Downloads an image from Docker Hub (e.g., `docker pull nginx`).
 
+### Remove an Image
+
+```sh
+docker rmi <image-name or id>
+```
+Deletes an image from your local machine.
+
 ---
 
-## 6. Run a Container
+## 3. Working with Containers
+
+### List Running Containers
+
+```sh
+docker ps
+```
+Shows all currently running containers.
+
+### List All Containers (including stopped)
+
+```sh
+docker ps -a
+```
+Lists all containers, running or stopped.
+
+### Run a Container
 
 ```sh
 docker run <options> <image-name>
@@ -64,45 +74,42 @@ Example:
 docker run -d -p 8080:80 --name webserver nginx
 ```
 
----
-
-## 7. Stop a Running Container
+### Stop a Running Container
 
 ```sh
 docker stop <container-name or id>
 ```
 Gracefully stops a running container.
 
----
+### Start a Stopped Container
 
-## 8. Remove a Container
+```sh
+docker start <container-name or id>
+```
+Starts a previously stopped container.
+
+### Restart a Container
+
+```sh
+docker restart <container-name or id>
+```
+Restarts a running or stopped container.
+
+### Remove a Container
 
 ```sh
 docker rm <container-name or id>
 ```
 Deletes a stopped container.
 
----
-
-## 9. Remove an Image
-
-```sh
-docker rmi <image-name or id>
-```
-Deletes an image from your local machine.
-
----
-
-## 10. View Container Logs
+### View Container Logs
 
 ```sh
 docker logs <container-name or id>
 ```
 Displays the logs from a container.
 
----
-
-## 11. Execute a Command in a Running Container
+### Execute a Command in a Running Container
 
 ```sh
 docker exec -it <container-name or id> <command>
@@ -115,7 +122,73 @@ docker exec -it webserver /bin/bash
 
 ---
 
-## 12. Prune Unused Data
+## 4. Working with Networks
+
+### List Networks
+
+```sh
+docker network ls
+```
+Lists all Docker networks.
+
+### Inspect a Network
+
+```sh
+docker network inspect <network-name>
+```
+Shows detailed information about a specific network.
+
+### Create a Network
+
+```sh
+docker network create <network-name>
+```
+Creates a new Docker network.
+
+### Remove a Network
+
+```sh
+docker network rm <network-name>
+```
+Deletes a Docker network.
+
+---
+
+## 5. Working with Volumes
+
+### List Volumes
+
+```sh
+docker volume ls
+```
+Lists all Docker volumes.
+
+### Inspect a Volume
+
+```sh
+docker volume inspect <volume-name>
+```
+Shows detailed information about a specific volume.
+
+### Create a Volume
+
+```sh
+docker volume create <volume-name>
+```
+Creates a new Docker volume.
+
+### Remove a Volume
+
+```sh
+docker volume rm <volume-name>
+```
+Deletes a Docker volume.
+
+---
+
+## 6. System Cleanup
+
+### Prune Unused Data
 
 ```sh
 docker system prune
