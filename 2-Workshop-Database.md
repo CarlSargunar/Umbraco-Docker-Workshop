@@ -7,9 +7,9 @@ The first task we will do is to create a database container, using Sql Server 20
 ## 1.1 Create a container for the database server
 
 ***Action:*** 
-- Create a new folder in your copy of the repostory called **Workshop**.
-- Ensure your Visual Studio Code terminal is in the new **Workshop** folder.
-- In your Workshop folder, create a new folder called **UmbData**. 
+- Create a new folder in your copy of the repostory called **Working**.
+- Ensure your Visual Studio Code terminal is in the new **Working** folder.
+- In your Working folder, create a new folder called **UmbData**. 
 - In that folder, create a blank file in the UmbData folder called **Dockerfile**. 
 
 This will folder and the associated Dockerfile will define the database container, the image to use, and the ports it exposes and also describe the configuration we will use with that database container. 
@@ -47,7 +47,7 @@ CMD [ "/opt/mssql/bin/sqlservr" ]
 
 This file will instruct Docker to create a SQL server running SQL Server 2022, will accept the End User License Agreement, and will define environmental variables to configure the paths to be used for databases. It will also configure the ports to be exposed (1433), and copy two scripts into the container. These scripts will be used to restore the database export from the container. 
 
-*Note : We are use Azure SQL Edge here as a database container for compatibility - SQL Edge will with on both x64 as well as ARM cpus which come on Macbooks with an M1 chip.*
+Dockerfiles do not specify the platform they are built for, so by default they will be built for the platform of the machine you are running on. If you are running on an ARM64 machine (e.g. Mac M1 or M2), you will need to specify the platform when building the image, as we will do later.
 
 ***Action:*** : Copy the database setup scripts and databases
 
@@ -70,11 +70,13 @@ All our files are ready to build the database image and run the database contain
 
 Ensure you are in the **/Working** folder in your terminal window and build the database image with the following command:
 
+Note: The `--platform` option tells Docker to build the image for the specified platform. If you are running on an ARM64 machine (e.g. Mac M1 or M2), you will need to specify `linux/amd64` to ensure compatibility with the SQL Server image, but if you are running on an x86 machine, you can omit this option. Docker Desktop will use emulation if you are on an ARM64 machine.
+
 ```bash
-docker build --tag=umbdata ./UmbData    
+docker build --tag=umbdata ./UmbData --platform=linux/amd64
 ```
 
-Once the image is built, run it with the following command. 
+Once the image is built, run it with the following command.
 
 ```bash
 docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
