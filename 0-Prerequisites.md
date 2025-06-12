@@ -44,7 +44,7 @@ It's important that your docker installation is working before you attend the wo
 **Note** : If you have SQL server running on your host machine, you will need to stop it before running the container, as it will use the same port (1433) as the container. 
 
 ```bash
-docker run --platform linux/amd64 --name test_sql_server_2022 -m 2g -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=SQL_password123' -p 14330:1433 mcr.microsoft.com/mssql/server:2022-latest
+docker run --platform linux/amd64 --name test_sql_server_2022 -m 2g -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=SQL_PassW0rd!!' -p 14330:1433 mcr.microsoft.com/mssql/server:2022-latest
 ```
 
 This command will run a SQL Server 2022 container in interactive mode, with the name `test_sql_server_2022`. It sets the memory limit to 2GB (`-m 2g`), accepts the EULA, sets the SA password, and mounts two volumes for system and user data.
@@ -67,6 +67,8 @@ You will see the container running in your Docker Desktop application.
 ## Tools and Set-up
 
 During this workshop it is recommended that you use [Visual Studio Code](https://code.visualstudio.com/) to run the workshop, and that you have the Auto-save feature enabled. To do this, go to the **File** menu, and select **Autosave**.
+
+There is an extension for Visual Studio Code which can be helpful : [Containers in Visual Studio Code](https://code.visualstudio.com/docs/containers/overview).
 
 Where commands are executed, you should be using the built in terminal from VS Code, and not the command line. To open the terminal, select **View**, then **Terminal**.
 
