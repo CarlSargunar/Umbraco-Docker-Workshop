@@ -82,6 +82,8 @@ Once the image is built, run it with the following command.
 docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
 ```
 
+Ignore the warning about the platform if you are on an ARM64 based CPU, as this image is not available on ARM64.
+
 This should give you a container ID back if the container was started successfully. You should also be able to see the container running in Docker Desktop.
 
 ![Docker desktop with the datbase container running.](media/1_1_database-container.png)
