@@ -86,6 +86,13 @@ If you are using Windows, you will need to ensure that your WSL (Windows Subsyst
 wsl --status
 ```
 
+You should see output similar to the following:
+
+```
+Default Distribution: Ubuntu-20.04
+Default Version: 2
+```
+
 If you need to update WSL, you can do so with the following command:
 
 ```bash 
