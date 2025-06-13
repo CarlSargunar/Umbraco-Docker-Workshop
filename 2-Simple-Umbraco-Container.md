@@ -95,8 +95,9 @@ COPY ./wwwroot/media ./wwwroot/media
 ENTRYPOINT ["dotnet", "SimpleContainer.dll"]
 ```
 
-TODO : Desribe what each line of this file does.
+TODO : Desribe what each line of this file does. 
 
+TODO : Not sure launchsettings does anything, check and remove if not needed.
 
 ## Build the Docker Image
 Now that we have the Dockerfile set up, we can build the Docker image. Make sure you are in the `SimpleContainer` folder and run the following command:
@@ -112,6 +113,6 @@ This command will build the Docker image using the Dockerfile in the `SimpleCont
 Once the image is built, you can run the Docker container using the following command:
 
 ```bash
-docker run -d -p 8082:8081 --name simplecontainer simplecontainer
+docker run -d -p 8080:8081 --name simplecontainer simplecontainer
 ```
 
