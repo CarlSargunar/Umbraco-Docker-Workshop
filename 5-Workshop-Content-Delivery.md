@@ -1,6 +1,6 @@
 # Exercise 4. Adding an API to the site
 
-We will use the new Umbraco 12 Content Delivery API to add an API to the site.
+We will use the Umbraco Content Delivery API to add an API to the site.
 
 ## 4.1 - Build Index for Content API
 

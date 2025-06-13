@@ -1,15 +1,17 @@
 
 # Exercise 1 - Create a Database Container
 
-The first task we will do is to create a database container, using Sql Server 2022. This will be used to store the Umbraco database, and will be used by the Umbraco website container we will create later.
+The first task we will do is to create a database container, using Sql Server 2022. This will be used to store the Umbraco database, and will be used by the Umbraco website container we will create later. 
+
+In production 
 
 
 ## 1.1 Create a container for the database server
 
 ***Action:*** 
-- Create a new folder in your copy of the repostory called **Working**.
-- Ensure your Visual Studio Code terminal is in the new **Working** folder.
-- In your Working folder, create a new folder called **UmbData**. 
+- Create a new folder in your copy of the repostory called **Workshop**.
+- Ensure your Visual Studio Code terminal is in the new **Workshop** folder.
+- In your Workshop folder, create a new folder called **UmbData**. 
 - In that folder, create a blank file in the UmbData folder called **Dockerfile**. 
 
 This will folder and the associated Dockerfile will define the database container, the image to use, and the ports it exposes and also describe the configuration we will use with that database container. 
@@ -51,12 +53,12 @@ Dockerfiles do not specify the platform they are built for, so by default they w
 
 ***Action:*** : Copy the database setup scripts and databases
 
-- From **/Files/UmbData/setup.sql** to **/Working/UmbData/setup.sql**
-- From **/Files/UmbData/startup.sh** to **/Working/UmbData/startup.sh**
+- From **/Files/UmbData/setup.sql** to **/Workshop/UmbData/setup.sql**
+- From **/Files/UmbData/startup.sh** to **/Workshop/UmbData/startup.sh**
 
 These two script files will be used to create a new database if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
 
-***Action:*** Once all these files exist in the Working/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See [1-Workshop-Intro](1-Workshop-Intro.md) for details).
+***Action:*** Once all these files exist in the Workshop/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See [1-Workshop-Intro](1-Workshop-Intro.md) for details).
 
 ## 1.2 Build the database image and run the database container
 
@@ -68,7 +70,7 @@ All our files are ready to build the database image and run the database contain
 
 ***Action:*** 
 
-Ensure you are in the **/Working** folder in your terminal window and build the database image with the following command:
+Ensure you are in the **/Workshop** folder in your terminal window and build the database image with the following command:
 
 Note: The `--platform` option tells Docker to build the image for the specified platform. If you are running on an ARM64 machine (e.g. Mac M1 or M2), you will need to specify `linux/amd64` to ensure compatibility with the SQL Server image, but if you are running on an x86 machine, you can omit this option. Docker Desktop will use emulation if you are on an ARM64 machine.
 

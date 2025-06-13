@@ -1,18 +1,14 @@
 # Umbraco-Docker-Workshop
 
-This repository contains all the notes and worksheets for the Docker Workshop being given at Codegarden 2022.
-
-
-The main workshop is in the [1-Workshop-Intro.md](/1-Workshop-Intro.md) file. Follow the instructions in there to get started.
-
+This repository contains all the notes and worksheets for the Docker Workshop being given at Umbraco Codegarden. It will be based on the latest LTS version of Umbraco, which is currently Umbraco 13. 
+ 
 *Please make sure you have gone through the prerequisites for this workshop in the [0-Prerequisites.md](/0-Prerequisites.md) file prior to starting.*
 
 ## Table of Contents
 
-[0. Prerequisites](0-Prerequisites.md)
-[1. Workshop Introduction](1-Workshop-Intro.md)
-[2. Setting up a Database Container](2-Workshop-Database.md)
-[3. Setting up a Website Container](3-Workshop-Website.md)
+0. [Prerequisites](0-Prerequisites.md)
+1. [Workshop Introduction](1-Workshop-Intro.md)
+
 
 
 

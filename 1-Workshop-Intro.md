@@ -30,4 +30,4 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 
 ## Next Steps
 
-The first task we will do is to create a database container. To do this, please continue on the [2-Workshop-Database](2-Workshop-Database.md) file.
+The first task we will do is to create a database container. To do this, please continue on the [2-Simple-Umbraco-Container](2-Simple-Umbraco-Container.md) file.
