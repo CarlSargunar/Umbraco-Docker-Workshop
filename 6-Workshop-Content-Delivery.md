@@ -1,8 +1,8 @@
-# Exercise 4. Adding an API to the site
+# Exercise 6. Adding an API to the site
 
 We will use the Umbraco Content Delivery API to add an API to the site.
 
-## 4.1 - Build Index for Content API
+## 6.1 - Build Index for Content API
 
 Now that there is a site and database running, we will use the new content delivery API. First we need to enable the API by adding the following to appsettings.json under Umbraco > CMS
 
@@ -13,7 +13,7 @@ Now that there is a site and database running, we will use the new content deliv
     }
 ```
 
-## 4.2 - Enable CORS Policy to allow access to the API
+## 6.2 - Enable CORS Policy to allow access to the API
 
 We will also need to enable CORS to allow access to the API. To do this, we will add the following to the start of the services in Program.cs
 
@@ -37,7 +37,7 @@ You will also need to start that CORS Policy in the Startup.cs Configure method
 app.UseCors("AllowAll");
 ```
 
-## 4.3 - Rebuild the image and run it
+## 6.3 - Rebuild the image and run it
 
 You will need to rebuild the umbWeb docker image and run it again to see the changes. You can use the following to do that
 
@@ -59,7 +59,7 @@ Run the new version of the umbweb image
     docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
     
 
-## 4.4 - Rebuild the Index and test the API
+## 6.4 - Rebuild the Index and test the API
 
 You will need to log in to Umbraco and rebuild the index to ensure the API is working. You can do this by going to the following url:
 
@@ -81,7 +81,7 @@ Open the site at the url http://localhost:8000/umbraco/swagger/index.html and in
 
 If you'd like to see more info about the Content delivery API, please read the docs : [https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api](https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api)
 
-## Testing the Product API
+## 6.5 Testing the Product API
 
 To test the API, you can simply call a url like the following url, which returns all documents of type "Product":
 
@@ -89,8 +89,7 @@ To test the API, you can simply call a url like the following url, which returns
 
 This should return a JSON collection of Post Summaries in a collection, which we will use with the Blazor App.
 
-
-## 4.5 Running a 2nd instance of the website container
+## 6.6 Running a 2nd instance of the website container
 
 While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment. 
 

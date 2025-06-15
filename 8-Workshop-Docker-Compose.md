@@ -1,4 +1,4 @@
-# 6 Docker compose
+# 8 Docker compose
 
 So far we have created all our containers manually which is fine, but we want to make this repeatable. In this part we will use Docker compose to deploy all containers together, and to configure the network between them. This will use the Production profiles of the various projects.
 
@@ -12,7 +12,7 @@ Docker compose is a tool for defining and running multi-contianer applications i
 
 This single file represents the entire application, and can be used to deploy the application to any environment.
 
-## 6.1 Create the Docker Compose file
+## 8.1 Create the Docker Compose file
 
 I've prepared a single docker compose file to complete this application To prepare the application for deployment with Docker compose:
 
@@ -22,7 +22,7 @@ I've prepared a single docker compose file to complete this application To prepa
 - Copy **/Files/UmbWeb/appsettings.Production.json** to **/Workshop/UmbWeb/appsettings.Production.json**
 - Copy **/Files/UmBlazor/wwwroot/appsettings.Production.json** to **/Workshop/UmBlazor/wwwroot/appsettings.Production.json**
 
-## 6.2 Run the Docker Compose file
+## 8.2 Run the Docker Compose file
 
 Finally before we run, we need to delete all existing running containers. 
 
@@ -59,7 +59,5 @@ docker-compose down
 ## Umbraco
 
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
-
-## Troubleshooting 
 
 

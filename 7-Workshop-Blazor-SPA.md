@@ -1,8 +1,8 @@
-# 5 Add the Blazor Container
+# 7 Add the Blazor Container
 
 We will now create a final container which will be used to run a blazor app, connect to the Blog summary API and show a summary of posts.
 
-## 5.1 Create the Blazor App and show the blog summaries
+## 7.1 Create the Blazor App and show the blog summaries
 
 ***Action:*** Start a new Blazor WASM project by running the following:
 
@@ -26,7 +26,7 @@ In my case I can use https://localhost:7025. This will bring up a site, and the 
 
 ![Blazor Fetch Data](media/5_BlazorWasm2.png)
 
-## 5.2 Create the Blazor Container
+## 7.2 Create the Blazor Container
 
 To run the Blazor WASM app in a container, it's a little different to running an Umbraco website. The Umbraco site needs to run Kestrel as a webserver, but Blazor WASM just needs to serve files. As such it will use nginx to serve these pages on the container. 
 
