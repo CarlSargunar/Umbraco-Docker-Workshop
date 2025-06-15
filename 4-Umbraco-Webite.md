@@ -1,8 +1,8 @@
-# Exercise 2. Creating the basic Umbraco Editor Site Container
+# Exercise 4. Creating the basic Umbraco Editor Site Container
 
 We are going to create our Umbraco website running locally on your machine natively, and connected to the database container we just created.
 
-## Installing Umbraco Template and start Website
+## 4.1 Installing Umbraco Template and start Website
 
 ***Action:*** Install the Umbraco .NET Template.
 
@@ -10,7 +10,7 @@ We are going to create our Umbraco website running locally on your machine nativ
 dotnet new install Umbraco.Templates::13.8.1 --force
 ```
 
-## 2.1 Start a container to run the database
+## 4.2 Create a new Umbraco site
 
 ***Action:*** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
 
@@ -20,9 +20,9 @@ Here we will be using SQL LocalDB as the database so that in later steps it can 
 dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_PassW0rd!!;TrustServerCertificate=true"
 ```
 
-If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 2.2 and then run the site connecting to that image.
+If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 4.3 and then run the site connecting to that image.
 
-## 2.2 Create the SLN file and Starter Kit
+## 4.3 Create the SLN file and Starter Kit
 
 Run the follwowing command to create the solution file for the Umbraco site. Run the following command in the **/Workshop** folder. This will create a new solution file and add the Umbraco project starter kit template.
 
@@ -35,7 +35,7 @@ dotnet sln Umbraco-Docker-Workshop.sln add "UmbWeb/UmbWeb.csproj"
 dotnet add UmbWeb package Umbraco.TheStarterKit --version 13.0.0
 ```
 
-## 2.2 Start the Umbraco Website. 
+## 4.4 Start the Umbraco Website
 
 ***Action:*** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
 
@@ -51,7 +51,6 @@ If you browse the site at https://localhost:11608 (or whatever port your compute
 
 - Username : admin@admin.com
 - Password : 1234567890
-
 
 This will illustrate that developing with Umbraco in a container is very similar to developing with Umbraco natively, and that you can run the site locally on your machine without needing to use Docker. Once we have the site setup and running, we will then look at how to containerize the site and run it in a Docker container.
 

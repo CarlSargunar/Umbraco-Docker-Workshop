@@ -1,11 +1,11 @@
-# Exercise 2 - Create a Database Container
+# Exercise 3 - Create a Database Container
 
 The first task we will do is to create a database container, using Sql Server 2022. This will be used to store the Umbraco database, and will be used by the Umbraco website container we will create later. 
 
 In production 
 
 
-## 2.1 Create a container for the database server
+## 3.1 Create a container for the database server
 
 ***Action:*** 
 - Ensure your Visual Studio Code terminal is in the new **Workshop** folder.
@@ -58,7 +58,7 @@ These two script files will be used to create a new database if none already exi
 
 ***Action:*** Once all these files exist in the Workshop/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See [1-Workshop-Intro](1-Workshop-Intro.md) for details).
 
-## 2.2 Build the database image and run the database container
+## 3.2 Build the database image and run the database container
 
 All our files are ready to build the database image and run the database container, so that's the next step.
 
@@ -102,7 +102,7 @@ When running the database container, we used the `--volume umbsqlFiles:/var/opt/
 - Volumes allow you to keep your data safe and persistent, separate from the lifecycle of your containers.
 - You can easily back up, restore, or share data between containers using volumes.
 
-## 2.3 Connect to the Running SQL Server
+## 3.3 Connect to the Running SQL Server
 
 Now that your SQL Server container is running, let's connect to it to verify that everything is working correctly.
 
@@ -125,7 +125,7 @@ Once connected, you should be able to see the SQL Server instance and any databa
 
 ---
 
-## 2.4 Creating the network for our containers
+## 3.4 Creating the network for our containers
 
 Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address. 
 
