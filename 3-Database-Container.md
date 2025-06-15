@@ -88,8 +88,44 @@ This should give you a container ID back if the container was started successful
 
 ![Docker desktop with the datbase container running.](media/1_1_database-container.png)
 
+## Understanding Docker Volumes
 
-## 2.3 Creating the network for our containers
+When running the database container, we used the `--volume umbsqlFiles:/var/opt/mssql` option. This creates a **named volume** called `umbsqlFiles` and mounts it to the `/var/opt/mssql` directory inside the container.
+
+**What does this mean?**
+- A Docker volume is a persistent storage mechanism managed by Docker.
+- Data written to `/var/opt/mssql` inside the container (where SQL Server stores its databases) is actually stored in the `umbsqlFiles` volume on your host machine.
+- This means your database data will **persist** even if you stop, remove, or recreate the container.
+- If you delete the volume (`docker volume rm umbsqlFiles`), all data in the database will be lost.
+
+**Why use volumes?**
+- Volumes allow you to keep your data safe and persistent, separate from the lifecycle of your containers.
+- You can easily back up, restore, or share data between containers using volumes.
+
+## 2.3 Connect to the Running SQL Server
+
+Now that your SQL Server container is running, let's connect to it to verify that everything is working correctly.
+
+You can use any SQL client tool you prefer, such as:
+- **SQL Server Management Studio (SSMS)**
+- **Azure Data Studio**
+- **Visual Studio Code** with the SQL Server extension
+- **LinqPad**
+- Or any other SQL client that supports SQL Server
+
+**Connection details:**
+- **Server/Host:** `localhost`
+- **Port:** `1433`
+- **Username:** `sa`
+- **Password:** `SQL_PassW0rd!!`
+
+> If you are using Visual Studio Code, you can install the "SQL Server (mssql)" extension and use the above credentials to connect.
+
+Once connected, you should be able to see the SQL Server instance and any databases that are present. This confirms that your containerized SQL Server is running and accessible.
+
+---
+
+## 2.4 Creating the network for our containers
 
 Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address. 
 

@@ -22,24 +22,20 @@ dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.c
 
 If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 2.2 and then run the site connecting to that image.
 
-## 2.2 Create the SLN file
+## 2.2 Create the SLN file and Starter Kit
 
-Run the follwowing command to create the solution file for the Umbraco site. Run the following command in the **/Workshop** folder.
+Run the follwowing command to create the solution file for the Umbraco site. Run the following command in the **/Workshop** folder. This will create a new solution file and add the Umbraco project starter kit template.
 
 ```bash
+# Create a new solution file for the Umbraco site
 dotnet new sln --name "Umbraco-Docker-Workshop"
-dotnet sln add "UmbWeb/UmbWeb.csproj"
-```
+dotnet sln Umbraco-Docker-Workshop.sln add "UmbWeb/UmbWeb.csproj"
 
-## 2.2 Install a template site for the exercise. 
-
-This workshop will use the [standard starter kit for Umbraco](https://www.nuget.org/packages/Umbraco.TheStarterKit). This is a great starting point, and will let us focus on the docker integration while giving us a great site to work with, as well as a content structure which is suited to a headless API.
-
-***Action:*** Run the following command to install the Umbraco starter kit.
-
-```bash
+# Add the Umbraco StarterKit package to the project
 dotnet add UmbWeb package Umbraco.TheStarterKit --version 13.0.0
 ```
+
+## 2.2 Start the Umbraco Website. 
 
 ***Action:*** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
 
@@ -56,5 +52,11 @@ If you browse the site at https://localhost:11608 (or whatever port your compute
 - Username : admin@admin.com
 - Password : 1234567890
 
+
+This will illustrate that developing with Umbraco in a container is very similar to developing with Umbraco natively, and that you can run the site locally on your machine without needing to use Docker. Once we have the site setup and running, we will then look at how to containerize the site and run it in a Docker container.
+
+## Next Steps
+
+Open the next file to continue with the workshop: [5-Website-Container](5-Website-Container.md).
 
 
