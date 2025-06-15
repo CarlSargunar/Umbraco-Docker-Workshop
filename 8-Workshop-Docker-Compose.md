@@ -60,4 +60,3 @@ docker-compose down
 
 There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
 
-

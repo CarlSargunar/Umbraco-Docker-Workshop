@@ -63,14 +63,12 @@ docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_log
 
 ## 6.4 - Rebuild the Index and test the API
 
-You will need to log in to Umbraco and rebuild the index to ensure the API is working. You can do this by going to the following url:
-
-    http://localhost:8000/umbraco
+You will need to log in to Umbraco and rebuild the index to ensure the API is working. You can do this by going to the following url: [http://localhost:8000/umbraco](http://localhost:8000/umbraco)
 
 Use the credentials below :
 
-    Username : admin@admin.com
-    Password : 1234567890
+- Username : admin@admin.com
+- Password : 1234567890
 
 You can then navitage to Settings > Examine Management > DeliveryApiContentIndex and rebuild that index.
 
@@ -85,11 +83,9 @@ If you'd like to see more info about the Content delivery API, please read the d
 
 ## 6.5 Testing the Product API
 
-To test the API, you can simply call a url like the following url, which returns all documents of type "Product":
+To test the API, you can simply call a url like the following url, which returns all documents of type "Product": [http://localhost:8000/umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct](http://localhost:8000/umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct)
 
-    http://localhost:8000/umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct
-
-This should return a JSON collection of Post Summaries in a collection, which we will use with the Blazor App.
+This should return a JSON collection of Post Summaries in a collection, which we will use with the Blazor App. If you would like to know more about the API, you can read the documentation here: [https://docs.umbraco.com/umbraco-cms/13.latest/reference/content-delivery-api](https://docs.umbraco.com/umbraco-cms/13.latest/reference/content-delivery-api)
 
 ## 6.6 Running a 2nd instance of the website container
 
@@ -99,12 +95,13 @@ While the website container has the API running, we want to spin up a 2nd instan
 
 ***Action:*** Run the following command to start the 2nd container.
 
+```bash
     docker run --name umbweb2 -p 8001:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb 
+```
 
-You can browse this container by visiting the following URL:
+You can browse this container by visiting the following URL: [http://localhost:8001/](http://localhost:8001/).
 
-    http://localhost:8001/
-
+    
 With multiple website containers running, your Docker Desktop instance will look similar to the following:
 
 ![Docker Desktop](media/4_DockerDesktop_2.png)

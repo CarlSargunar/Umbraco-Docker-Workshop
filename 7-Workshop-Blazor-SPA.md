@@ -6,7 +6,9 @@ We will now create a final container which will be used to run a blazor app, con
 
 ***Action:*** Start a new Blazor WASM project by running the following:
 
+```bash
     dotnet new blazorwasm --name UmBlazor
+```
 
 ***Action:*** Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
 
@@ -16,7 +18,9 @@ We will now create a final container which will be used to run a blazor app, con
 
 ***Action:*** Test that the application works by running the following command in your terminal:
 
+```bash
     dotnet run --project UmBlazor
+```
     
 Ignoring any warnings, you should be able to browse the WASM site using the relevant output URL
 
@@ -41,6 +45,7 @@ I've created the Dockerfile and nginx configuration file, these need to be copie
 
 Looking at the contents of the Dockerfile : 
 
+```dockerfile
     FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
     WORKDIR /src
     COPY UmBlazor.csproj .
@@ -55,6 +60,7 @@ Looking at the contents of the Dockerfile :
     WORKDIR /usr/share/nginx/html
     COPY --from=publish /app/publish/wwwroot .
     COPY nginx.conf /etc/nginx/nginx.conf
+```
 
 We can see that this container is using the nginx image, and rather than starting the application, it merely hosts the published output of the UmBlazor project. 
 
@@ -64,17 +70,19 @@ Next we can build the Blazor Image using the following command:
 
 ***Action:*** Run the following command to build the image.
 
-    docker build --tag=umblazor .\UmBlazor    
+```bash
+docker build --tag=umblazor .\UmBlazor    
+```
 
 Once that's done, we can run the Container
 
 ***Action:*** Run the following command to start the container.
 
-    docker run --name umblazor -p 8002:80 --network=umbNet -d umblazor
+```bash
+docker run --name umblazor -p 8002:80 --network=umbNet -d umblazor
+```
 
-Now the site could be browsed using the containter using the url
-
-    http://localhost:8002/
-
+Now the site could be browsed using the containter using the url [http://localhost:8002/](http://localhost:8002/).
+   
 Upon running the site we should see the same Blazor app from the earlier example, but this time running from the container instance, and when it queries the rest API to load blog content, it is doing so from the content delivery container.
 
