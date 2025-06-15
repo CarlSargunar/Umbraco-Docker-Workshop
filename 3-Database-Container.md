@@ -1,15 +1,13 @@
-
-# Exercise 1 - Create a Database Container
+# Exercise 2 - Create a Database Container
 
 The first task we will do is to create a database container, using Sql Server 2022. This will be used to store the Umbraco database, and will be used by the Umbraco website container we will create later. 
 
 In production 
 
 
-## 1.1 Create a container for the database server
+## 2.1 Create a container for the database server
 
 ***Action:*** 
-- Create a new folder in your copy of the repostory called **Workshop**.
 - Ensure your Visual Studio Code terminal is in the new **Workshop** folder.
 - In your Workshop folder, create a new folder called **UmbData**. 
 - In that folder, create a blank file in the UmbData folder called **Dockerfile**. 
@@ -60,7 +58,7 @@ These two script files will be used to create a new database if none already exi
 
 ***Action:*** Once all these files exist in the Workshop/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See [1-Workshop-Intro](1-Workshop-Intro.md) for details).
 
-## 1.2 Build the database image and run the database container
+## 2.2 Build the database image and run the database container
 
 All our files are ready to build the database image and run the database container, so that's the next step.
 
@@ -91,7 +89,7 @@ This should give you a container ID back if the container was started successful
 ![Docker desktop with the datbase container running.](media/1_1_database-container.png)
 
 
-## 1.3 Creating the network for our containers
+## 2.3 Creating the network for our containers
 
 Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address. 
 

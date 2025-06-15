@@ -14,7 +14,9 @@ The folders which are in this workshop are:
 
 ***Action:*** In the root of your cloned repostory, **create a folder called Workshop**. In your terminal window, change directory to the **Workshop** directory. All exercises will be completed in this folder.
 
-Note: This folder is deliberately ignored in the .gitignore file, and will not be committed to the repository. This is to ensure that you can run the workshop multiple times without having to delete files or folders.
+Note: This folder is deliberately ignored in the .gitignore file, and will not be committed to the repository. This is to ensure that you can run the workshop multiple times without having to delete files or folders. If you want to track files as you do the workshop, you can modify the .gitignore file to remove the Workshop folder from being ignored.
+
+Open a new terminal window in Visual Studio Code, and ensure you are in the **Workshop** folder. All the commands you run in this workshop will be run from this folder. 
 
 
 ## A Note on Windows vs Linux Line Endings
@@ -26,7 +28,6 @@ When you clone files onto windows the line endings may be checked out using the 
 If it shows CRLF, click on the label and at the top you can change it to LF.
 
 *Note : Historically windows terminates line-endings in file with a carriage return and line feed (CRLF), while Linux uses a single line feed (LF) - and if you want to learn about the history of why then check out this awesome video from Scott Hanselman : [https://www.youtube.com/watch?v=TtiBhktB4Qg](https://www.youtube.com/watch?v=TtiBhktB4Qg)*
-
 
 ## Next Steps
 
