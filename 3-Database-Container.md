@@ -79,7 +79,7 @@ docker build --tag=umbdata ./UmbData --platform=linux/amd64
 Once the image is built, run it with the following command.
 
 ```bash
-docker run --name umbdata -p 1433:1433 --volume sqlFiles:/var/opt/mssql  -d umbdata
+docker run --name umbdata -p 1433:1433 --volume umbsqlFiles:/var/opt/mssql  -d umbdata
 ```
 
 Ignore the warning about the platform if you are on an ARM64 based CPU, as this image is not available on ARM64.
