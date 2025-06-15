@@ -34,32 +34,10 @@ Before we proceed with Docker, let's ensure that the Umbraco site runs correctly
 dotnet run --project "SimpleContainer"
 ```
 
-You should see the familiar Umbraco Sample Site running with the starter kit installed.
+You should see the familiar Umbraco Sample Site running with the starter kit installed, check the output of the terminal window to see which port to access the site on.
 
 
-## Modify the Launch Settings
-
-We want to ensure that the Umbraco site runs on a specific port when we run it in a container. To do this, we will modify the launch settings.
-Open the `Properties/launchSettings.json` file in the `SimpleContainer` folder and modify it to look like this:
-
-```json
-{
-  "profiles": {
-    "SimpleContainer": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:8081",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    }
-  }
-}   
-```
-
-This configuration sets the application to run on port `8081` when launched, which is important for our Docker setup.
-
-
+![Umbraco Log](media/1_umbraco_log.png)
 
 ## Create the Dockerfile
 
@@ -98,8 +76,6 @@ ENTRYPOINT ["dotnet", "SimpleContainer.dll"]
 
 TODO : Desribe what each line of this file does. 
 
-TODO : Not sure launchsettings does anything, check and remove if not needed.
-
 ## Build the Docker Image
 Now that we have the Dockerfile set up, we can build the Docker image. Make sure you are in the `SimpleContainer` folder and run the following command:
 
@@ -127,7 +103,7 @@ Once the container has started up, you should be able to access the Umbraco site
 You can start another instance of the container on a different port by changing the left side of the port mapping. For example, to run on port 8082:
 
 ```bash
-docker run -d -p 8082:8081 --name simplecontainer2 simplecontainer
+docker run -d -p 8081:8081 --name simplecontainer2 simplecontainer
 ```
 
 Now, you can access the new instance at `http://localhost:8082`. 
@@ -161,3 +137,6 @@ One thing to note is that these two containers are completely independent of eac
 - Started additional container instances on different ports.
 - Stopped and removed containers as needed.
 
+### Next Step
+
+Now that we have a simple Umbraco container running, the next step is to set up a database container that our Umbraco site can connect to. This will allow us to store content and media in a more robust way than using SQLite. Open [3-Database-Container](3-Database-Container.md) to continue.
