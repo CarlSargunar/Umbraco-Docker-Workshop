@@ -147,5 +147,17 @@ To remove the stopped container (optional):
 docker rm simplecontainer2
 ```
 
-One thing to note is that these two containers are completely independent of each other. They do not share any data, and any changes made in one container will not affect the other. This is a key feature of containerization, allowing you to run multiple instances of the same application without conflicts.
+One thing to note is that these two containers are completely independent of each other. They do not share any data, media or files, and any changes made in one container will not affect the other. The only thing they have in common is the Docker image they were created from, which is `simplecontainer`. This is a key feature of containerization, as it allows you to run multiple instances of the same application without them interfering with each other.
+
+## Summary
+
+**Key things we did in this exercise:**
+
+- Created a new Umbraco site using the .NET CLI and installed the Starter Kit.
+- Configured the site to run on a specific port for containerization.
+- Wrote a Dockerfile to build and run the Umbraco site in a container.
+- Built a Docker image for the Umbraco site.
+- Ran the Umbraco site in a Docker container and accessed it via the browser.
+- Started additional container instances on different ports.
+- Stopped and removed containers as needed.
 
