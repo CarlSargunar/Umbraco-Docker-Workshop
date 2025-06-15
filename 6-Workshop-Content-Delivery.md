@@ -56,8 +56,10 @@ docker rm umbweb
 
 Run the new version of the umbweb image
 
-    docker run --name umbweb -p 8000:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
-    
+```bash
+docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
+```    
+
 
 ## 6.4 - Rebuild the Index and test the API
 
@@ -97,7 +99,7 @@ While the website container has the API running, we want to spin up a 2nd instan
 
 ***Action:*** Run the following command to start the 2nd container.
 
-    docker run --name umbweb2 -p 8001:80 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb 
+    docker run --name umbweb2 -p 8001:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb 
 
 You can browse this container by visiting the following URL:
 
