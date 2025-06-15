@@ -29,6 +29,45 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 
 *Note : Historically windows terminates line-endings in file with a carriage return and line feed (CRLF), while Linux uses a single line feed (LF) - and if you want to learn about the history of why then check out this awesome video from Scott Hanselman : [https://www.youtube.com/watch?v=TtiBhktB4Qg](https://www.youtube.com/watch?v=TtiBhktB4Qg)*
 
+
+## Troubleshooting Tips
+
+- **Port already in use:** Make sure no other SQL Server or process is using port 1433 on your machine.
+- **Container fails to start:** Check Docker Desktop for error messages. Ensure you have enough memory allocated to Docker (at least 4GB recommended).
+- **Platform errors on ARM/M1/M2:** Always use `--platform=linux/amd64` when building/running SQL Server containers on ARM-based machines.
+- **Line endings issues:** Ensure all scripts and Dockerfiles use LF line endings, not CRLF.
+- **Cannot connect to database:** Double-check the username (`sa`), password (`SQL_PassW0rd!!`), and port (`1433`). Make sure the container is running.
+
+## How to Reset
+
+If you need to completely reset your workshop environment (including all files and changes in the `Workshop` folder), you can delete the entire `Workshop` folder and remove any related Docker resources.
+
+> **Warning:** This will permanently delete all files, projects, and changes you have made in the `Workshop` folder. Make sure to back up anything you want to keep before proceeding.
+
+1. **Delete the Workshop folder:**
+   - In your file explorer or terminal, delete the entire `Workshop` folder.
+
+2. **Remove any containers (if running):**
+
+You can list all running containers with:
+
+```bash
+docker ps
+```
+
+You can remove any running containers with the docker rm command, with a force stop if necessary:
+
+```bash
+docker rm -f <container_name_or_id>
+```
+
+**Recreate the `Workshop` folder and restart the exercises from the beginning.**
+
+## Need Help?
+
+If you get stuck or have any questions, **please raise your hand and get my attention**. I'm here to help!
+
+
 ## Next Steps
 
 The first task we will do is to create a database container. To do this, please continue on the [2-Simple-Umbraco-Container](2-Simple-Umbraco-Container.md) file.
