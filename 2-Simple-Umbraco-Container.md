@@ -117,7 +117,35 @@ Once the image is built, you can run the Docker container using the following co
 docker run -d -p 8080:8081 --name simplecontainer simplecontainer
 ```
 
-Once the container has started up, you should be able to access the Umbraco site by navigating to `http://localhost:8080` in your web browser.
+Once the container has started up, you should be able to access the Umbraco site by navigating to `http://localhost:8080` in your web browser. It will take a few moments for the container to start up and for Umbraco to initialize.
 
 ![Umbraco Starter Kit](media/1_umbraco_sample_site.png)
+
+
+### Run a New Instance on a Different Port
+
+You can start another instance of the container on a different port by changing the left side of the port mapping. For example, to run on port 8082:
+
+```bash
+docker run -d -p 8082:8081 --name simplecontainer2 simplecontainer
+```
+
+Now, you can access the new instance at `http://localhost:8082`. 
+
+
+### Stop and Remove the Running Container
+
+To stop the new running container, use:
+
+```bash
+docker stop simplecontainer2
+```
+
+To remove the stopped container (optional):
+
+```bash
+docker rm simplecontainer2
+```
+
+One thing to note is that these two containers are completely independent of each other. They do not share any data, and any changes made in one container will not affect the other. This is a key feature of containerization, allowing you to run multiple instances of the same application without conflicts.
 
