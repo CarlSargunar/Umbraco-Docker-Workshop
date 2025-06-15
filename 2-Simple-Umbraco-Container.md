@@ -19,12 +19,23 @@ dotnet new install Umbraco.Templates::13.9.1 --force
 
 dotnet new sln --name "SimpleContainer"
 dotnet new umbraco --force -n "SimpleContainer"  --friendly-name "Administrator" --email "admin@example.com" --password "1234567890" --development-database-type SQLite
-dotnet sln add "SimpleContainer"
+dotnet sln SimpleContainer.sln add "SimpleContainer"
 
 dotnet add SimpleContainer package Umbraco.TheStarterKit --version 13.0.0
 ```
 
 This will create a new Umbraco site in a folder called `SimpleContainer`, with the administrator user set up and the Starter Kit installed.
+
+## Run the Umbraco Site Locally
+
+Before we proceed with Docker, let's ensure that the Umbraco site runs correctly on your local machine. You can do this by running the following command in the terminal:
+
+```bash
+dotnet run --project "SimpleContainer"
+```
+
+You should see the familiar Umbraco Sample Site running with the starter kit installed.
+
 
 ## Modify the Launch Settings
 
@@ -48,17 +59,7 @@ Open the `Properties/launchSettings.json` file in the `SimpleContainer` folder a
 
 This configuration sets the application to run on port `8081` when launched, which is important for our Docker setup.
 
-## Run the Umbraco Site Locally
 
-Before we proceed with Docker, let's ensure that the Umbraco site runs correctly on your local machine. You can do this by running the following command in the terminal:
-
-```bash
-dotnet run --project "SimpleContainer"
-```
-
-You should see the familiar Umbraco Sample Site running with the starter kit installed.
-
-![Umbraco Starter Kit](media/1_umbraco_sample_site.png)
 
 ## Create the Dockerfile
 
@@ -115,4 +116,8 @@ Once the image is built, you can run the Docker container using the following co
 ```bash
 docker run -d -p 8080:8081 --name simplecontainer simplecontainer
 ```
+
+Once the container has started up, you should be able to access the Umbraco site by navigating to `http://localhost:8080` in your web browser.
+
+![Umbraco Starter Kit](media/1_umbraco_sample_site.png)
 
