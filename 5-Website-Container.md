@@ -8,7 +8,7 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
 
 ***Action:*** In the **UmbWeb** folder create a Dockerfile to define the components of the Umbraco container. Paste the contents below in that file, and make sure the line endings are **LF**. 
 
-Warning: this WILL take a little while to run, so please be patient. 
+*Note: this WILL take a little while to run, so please be patient.*
 
 ```dockerfile
 # Use the SDK image to build and publish the website
@@ -81,6 +81,10 @@ Finally we can compile a docker image for the Umbraco site.
 ***Action:*** Run the following command to build the image.
 
 ```bash
+# This will pre-cache the images used to build the Umbraco container. This step is optional
+docker pull mcr.microsoft.com/dotnet/sdk:8.0
+docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+
 docker build --tag=umbweb ./UmbWeb
 ```
 

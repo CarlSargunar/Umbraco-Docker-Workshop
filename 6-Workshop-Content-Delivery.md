@@ -37,6 +37,8 @@ You will also need to start that CORS Policy in the Startup.cs Configure method
 app.UseCors("AllowAll");
 ```
 
+
+
 ## 6.3 - Rebuild the image and run it
 
 You will need to rebuild the umbWeb docker image and run it again to see the changes. You can use the following to do that
