@@ -22,7 +22,7 @@ This will folder and the associated Dockerfile will define the database containe
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
 ENV ACCEPT_EULA=Y
-ENV MSSQL_SA_PASSWORD=SQL_PassW0rd!!
+ENV MSSQL_SA_PASSWORD=SQL_PassW0rd@1234
 
 USER root
  
@@ -56,7 +56,7 @@ Dockerfiles do not specify the platform they are built for, so by default they w
 
 These two script files will be used to create a new database if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
 
-***Action:*** Once all these files exist in the Workshop/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See [1-Workshop-Intro](1-Workshop-Intro.md) for details).
+***Action:*** Once all these files exist in the Workshop/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See [1-Workshop-Intro](1-Workshop-Intro.md) for details). This is particularly important on Windows.
 
 ## 3.2 Build the database image and run the database container
 
@@ -117,7 +117,7 @@ You can use any SQL client tool you prefer, such as:
 - **Server/Host:** `localhost`
 - **Port:** `1433`
 - **Username:** `sa`
-- **Password:** `SQL_PassW0rd!!`
+- **Password:** `SQL_PassW0rd@1234`
 
 > If you are using Visual Studio Code, you can install the "SQL Server (mssql)" extension and use the above credentials to connect.
 
@@ -157,7 +157,7 @@ To test that your container is running Ok, you may want to test connecting to th
 
 - Host : Localhost
 - Username : sa
-- Password : SQL_PassW0rd!!
+- Password : SQL_PassW0rd@1234
 - Port : 1433
 
 ## Next Steps

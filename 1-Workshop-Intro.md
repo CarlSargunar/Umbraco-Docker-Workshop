@@ -36,7 +36,7 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 - **Container fails to start:** Check Docker Desktop for error messages. Ensure you have enough memory allocated to Docker (at least 4GB recommended).
 - **Platform errors on ARM/M1/M2:** Always use `--platform=linux/amd64` when building/running SQL Server containers on ARM-based machines.
 - **Line endings issues:** Ensure all scripts and Dockerfiles use LF line endings, not CRLF.
-- **Cannot connect to database:** Double-check the username (`sa`), password (`SQL_PassW0rd!!`), and port (`1433`). Make sure the container is running.
+- **Cannot connect to database:** Double-check the username (`sa`), password (`SQL_PassW0rd@1234`), and port (`1433`). Make sure the container is running.
 
 ## How to Reset
 

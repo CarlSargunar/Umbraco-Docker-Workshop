@@ -24,7 +24,7 @@ dotnet sln SimpleContainer.sln add "SimpleContainer"
 dotnet add SimpleContainer package Umbraco.TheStarterKit --version 13.0.0
 ```
 
-This will create a new Umbraco site in a folder called `SimpleContainer`, with the administrator user set up and the Starter Kit installed.
+This will create a new Umbraco site in a folder called `SimpleContainer`, with the administrator user set up and the Starter Kit installed. It's using the SQLite database for simplicity.
 
 ## Run the Umbraco Site Locally
 
