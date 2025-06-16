@@ -10,6 +10,9 @@ RUN dotnet publish "UmbWeb.csproj" -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final 
 WORKDIR /app
 
+# Expose the port that Umbraco will run on
+ENV ASPNETCORE_URLS=http://+:8081
+
 # Copy the published output to the final running image
 COPY --from=build /app/publish .
 
