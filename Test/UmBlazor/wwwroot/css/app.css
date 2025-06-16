@@ -112,3 +112,46 @@ code {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.product-details { 
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+    .product-details .price {
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .product-details .category {
+        font-size: 0.85rem;
+        color: #666;
+    }
+

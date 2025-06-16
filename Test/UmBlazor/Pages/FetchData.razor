@@ -4,7 +4,7 @@
 @using Microsoft.Extensions.Configuration
 @using UmBlazor.Services
 @inject IConfiguration Configuration
-@inject CDApiService cdApiservice;
+@inject CDApiService cdApiservice
 
 <PageTitle>Umbraco Blog Summary</PageTitle>
 
@@ -27,11 +27,13 @@ else
         {
             <div class="product-card">
                 <img src="@product.Image" alt="@product.Name" class="product-image" />
-                <h4>@product.Name</h4>
-                <p><strong>@product.FormattedPrice</strong></p>
-                <p>@product.Description</p>
-                <p><em>SKU: @product.Sku</em></p>
-                <p>Categories: @string.Join(", ", product.Category)</p>
+                <div class="product-details">
+                    <h4>@product.Name</h4>
+                    <p class="price">@product.FormattedPrice</p>
+                    <p>@product.Description</p>
+                    <p><em>SKU: @product.Sku</em></p>
+                    <p class="category">Categories: @string.Join(", ", product.Category)</p>
+                </div>
             </div>
         }
     </div>
@@ -41,13 +43,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        products = new List<Product>();
         try
         {
             products = await cdApiservice.GetProducts();
         }
         catch (Exception ex)
         {
-            var s = ex.Message;
+            Debug.WriteLine($"Error fetching products: {ex.Message}");
         }
     }
 

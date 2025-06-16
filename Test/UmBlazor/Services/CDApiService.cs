@@ -6,12 +6,12 @@ namespace UmBlazor.Services
     public class CDApiService
     {
 
-        private IConfiguration _configuration { get; }
+        private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
-        HttpClient httpClient;
-        public CDApiService(IConfiguration configuration)
+        public CDApiService(HttpClient httpClient, IConfiguration configuration)
         {
-            this.httpClient = new HttpClient();
+            _httpClient = httpClient;
             _configuration = configuration;
         }
 
@@ -27,7 +27,8 @@ namespace UmBlazor.Services
         private async Task<List<Product>> FetchProductsFromContentDeliveryApi()
         {
             var products = new List<Product>();
-            var apiResponse = await httpClient.GetAsync(_configuration["UmbracoURL"]);
+            var apiResponse = await _httpClient.GetAsync(_configuration["UmbracoURL"]);
+            var imageBaseUrl = _configuration["ImageBaseURL"];
             if (apiResponse.IsSuccessStatusCode)
             {
                 var contentDeliveryResponse = await apiResponse.Content.ReadFromJsonAsync<ContentDeliveryResponse>();
@@ -41,7 +42,7 @@ namespace UmBlazor.Services
                         Sku = item.properties.sku,
                         Description = item.properties.description,
                         Category = item.properties.category,
-                        //Image = DemoHelpers.ImagePath(item.properties.photos[0].url)
+                        Image = $"{imageBaseUrl}{item.properties.photos[0].url}?width=200" 
                     };
                     products.Add(product);
                 }
