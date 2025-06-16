@@ -8,6 +8,9 @@ We will now create a final container which will be used to run a blazor app, con
 
 ```bash
 dotnet new blazorwasm --name UmBlazor
+
+## Add the project to the solution file
+dotnet sln Umbraco-Docker-Workshop.sln add "UmBlazor/UmBlazor.csproj"
 ```
 
 ***Action:*** Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
@@ -30,6 +33,19 @@ Ignoring any warnings, you should be able to browse the WASM site using the rele
 In my case I can use https://localhost:7025. This will bring up a site, and the Fetch Data page should show the blog summaries from the Umbraco site.
 
 ![Blazor Fetch Data](media/5_BlazorWasm2.png)
+
+
+## 7.2 Genrate the HttpClient Code
+
+```bash
+
+dotnet tool install --global NSwag.ConsoleCore --version 13.20.0
+
+nswag openapi2csclient /input:http://localhost:8000/umbraco/swagger/delivery/swagger.json /output:ApiClient.cs /namespace:UmBlazor.Clients
+```
+
+
+
 
 ## 7.2 Create the Blazor Container
 
