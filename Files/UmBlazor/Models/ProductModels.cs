@@ -7,17 +7,6 @@ using System.Threading.Tasks;
 namespace UmBlazor.Models
 {
 
-    public class BlogSummary
-    {
-        public string Name { get; set; }
-        public DateTime PublishDate { get; set; }
-        public string Title { get; set; }
-        public string Summary { get; set; }
-        public int AuthorId { get; set; }
-        public string AuthorName { get; set; }
-        public string ImageURL { get; set; }
-    }
-
     public class BodyText
     {
         public int gridColumns { get; set; }

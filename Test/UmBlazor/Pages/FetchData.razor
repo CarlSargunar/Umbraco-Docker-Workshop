@@ -1,0 +1,54 @@
+﻿@page "/fetchdata"
+@using System.Net.Http.Json
+@using System.Diagnostics
+@using Microsoft.Extensions.Configuration
+@using UmBlazor.Services
+@inject IConfiguration Configuration
+@inject CDApiService cdApiservice;
+
+<PageTitle>Umbraco Blog Summary</PageTitle>
+
+<h1>Blog Summaries</h1>
+
+<p>These are the currently published blogs on the site!</p>
+
+@if (products == null || products.Any() == false)
+{
+    string umbracoURL = Configuration["UmbracoURL"];
+    <p>
+        <em>Loading blog pages from @umbracoURL ...</em>
+    </p>
+}
+else
+{
+
+    <div class="product-grid">
+        @foreach (var product in products)
+        {
+            <div class="product-card">
+                <img src="@product.Image" alt="@product.Name" class="product-image" />
+                <h4>@product.Name</h4>
+                <p><strong>@product.FormattedPrice</strong></p>
+                <p>@product.Description</p>
+                <p><em>SKU: @product.Sku</em></p>
+                <p>Categories: @string.Join(", ", product.Category)</p>
+            </div>
+        }
+    </div>
+}
+@code {
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            products = await cdApiservice.GetProducts();
+        }
+        catch (Exception ex)
+        {
+            var s = ex.Message;
+        }
+    }
+
+}
