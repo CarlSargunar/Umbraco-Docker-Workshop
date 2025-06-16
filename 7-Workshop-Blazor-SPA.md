@@ -7,13 +7,14 @@ We will now create a final container which will be used to run a blazor app, con
 ***Action:*** Start a new Blazor WASM project by running the following:
 
 ```bash
-    dotnet new blazorwasm --name UmBlazor
+dotnet new blazorwasm --name UmBlazor
 ```
 
 ***Action:*** Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
 
 - **/Files/UmBlazor/Models** to **/Workshop/UmBlazor/Models**
 - **/Files/UmBlazor/Pages/FetchData.razor** to **/Workshop/UmBlazor/Pages/FetchData.razor**
+- **/Files/UmBlazor/Layout/NavMenu.razor** to **/Workshop/UmBlazor/Layout/NavMenu.razor**
 - **/Files/UmBlazor/wwwroot/appsettings.json** to **/Workshop/UmBlazor/wwwroot/appsettings.json**
 
 ***Action:*** Test that the application works by running the following command in your terminal:
