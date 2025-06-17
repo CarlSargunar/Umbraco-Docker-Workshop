@@ -22,6 +22,8 @@ I've prepared a single docker compose file to complete this application To prepa
 - Copy **/Files/UmbWeb/appsettings.Production.json** to **/Workshop/UmbWeb/appsettings.Production.json**
 - Copy **/Files/UmBlazor/wwwroot/appsettings.Production.json** to **/Workshop/UmBlazor/wwwroot/appsettings.Production.json**
 
+These will configure the application to use the production profiles, and will also configure the connection strings for the databases, which will be used when we run the application as single distributed application.
+
 ## 8.2 Run the Docker Compose file
 
 Finally before we run, we need to delete all existing running containers. 
