@@ -1,0 +1,108 @@
+﻿@page "/fetchdata"
+@using System.Net.Http.Json
+@using System.Diagnostics
+@using Microsoft.Extensions.Configuration
+@using UmBlazor.Services
+@inject IConfiguration Configuration
+@inject CDApiService cdApiservice
+
+<PageTitle>Umbraco Products</PageTitle>
+
+<h1>Products</h1>
+
+<p>These are the currently published products on the site!</p>
+
+@if (products == null || products.Any() == false)
+{
+    string umbracoURL = Configuration["UmbracoURL"];
+    <p>
+        <em>Loading pages from @umbracoURL ...</em>
+    </p>
+}
+else
+{
+
+    <div class="product-grid">
+        @foreach (var product in products)
+        {
+            <div class="product-card">
+                <img src="@product.Image" alt="@product.Name" class="product-image" />
+                <div class="product-details">
+                    <h4>@product.Name</h4>
+                    <p class="price">@product.FormattedPrice</p>
+                    <p>@product.Description</p>
+                    <p><em>SKU: @product.Sku</em></p>
+                    <p class="category">Categories: @string.Join(", ", product.Category)</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+@code {
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = new List<Product>();
+        try
+        {
+            products = await cdApiservice.GetProducts();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error fetching products: {ex.Message}");
+        }
+    }
+
+}
+
+<style>
+    
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+    .product-details .price {
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .product-details .category {
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+
+.product-card:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
+
+</style>
