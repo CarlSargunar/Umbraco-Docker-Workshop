@@ -1,18 +1,24 @@
 # Umbraco-Docker-Workshop
 
-This repository contains all the notes and worksheets for the Docker Workshop being given at Codegarden 2022.
+This repository contains all the notes and worksheets for the Docker Workshop being given at Umbraco Codegarden. It will be based on the latest LTS version of Umbraco, which is currently Umbraco 13. 
+ 
+*Please make sure you have gone through the prerequisites for this workshop in the [0-Prerequisites.md](/0-Prerequisites.md) file prior to starting.*
 
-## Workshop
+## Table of Contents
 
-The main workshop is in the [Workshop.md](Workshop.md) file. Follow the instructions in there to get started.
+//TODO: Add links to the files in the repository
+0. [Prerequisites](0-Prerequisites.md)
+1. [Workshop Introduction](1-Workshop-Intro.md)
 
-*Please make sure you have gone through the prerequisites for this workshop in the [Prerequisites.md](Prerequisites.md) file prior to starting.*
+
 
 
 # References and Resources
 Slides - https://docs.google.com/presentation/d/1Nn1hfFkZp8QWpCsnIAGMH6IdBk0R551CiuU3IiJpBdk/
 
 ## Documentation for Docker
+
+The following are suggested reading materials for Docker.
 
 - Main Page : https://docs.docker.com/
 - Networking : https://docs.docker.com/network/
@@ -37,7 +43,15 @@ Slides - https://docs.google.com/presentation/d/1Nn1hfFkZp8QWpCsnIAGMH6IdBk0R551
 ## Notes
 
 The following are notes for myself, but may be useful for others.
-
+- HTTP Setting for openiddict
+    - https://github.com/umbraco/Umbraco-CMS/pull/16614
 - https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api#swagger
-- https://carole.dev/blog/whats-new-in-umbraco-12-content-delivery-api/
 - https://emmti.com/headless-content-delivery-api-in-umbraco-12-rc-1#heading-installing-12rc1-on-your-local-machine
+- SQL on M1
+    - https://devblogs.microsoft.com/azure-sql/development-with-sql-in-containers-on-macos/
+- SQL Edge Retirement : https://azure.microsoft.com/en-us/updates/v2/azure-sql-edge-retirement
+
+
+
+global json force .net 8 for website
+spaces!!
