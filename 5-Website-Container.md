@@ -85,7 +85,7 @@ Finally we can compile a docker image for the Umbraco site.
 docker pull mcr.microsoft.com/dotnet/sdk:8.0
 docker pull mcr.microsoft.com/dotnet/aspnet:8.0
 
-docker build --tag=umbweb ./UmbWeb
+docker build -t umbweb:latest ./UmbWeb
 ```
 
 This will download the required components and compile a final image ready to run the site in a container, and may take some time. 

@@ -44,7 +44,7 @@ app.UseCors("AllowAll");
 You will need to rebuild the umbWeb docker image and run it again to see the changes. You can use the following to do that
 
 ```bash
-docker build --tag=umbweb ./UmbWeb
+docker build -t umbweb:latest ./UmbWeb
 ```
 
 Stop and remove the previous running umbweb container. You can also do this in the Docker Desktop app by right-clicking the container and selecting "Stop" and then "Remove".

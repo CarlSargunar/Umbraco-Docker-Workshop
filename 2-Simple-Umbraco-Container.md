@@ -43,7 +43,7 @@ You should see the familiar Umbraco Sample Site running with the starter kit ins
 
 Next, we will create a `Dockerfile` in the `SimpleContainer` folder. This file will contain the instructions to build the Docker image for our Umbraco site.
 
-Create a file called `Dockerfile` in the `SimpleContainer` folder and add the following content. The case of the file name is important, it must be `Dockerfile` with a capital "D".
+Create a file called `Dockerfile` in the `SimpleContainer` folder and add the following content. The case of the file name is important, it must be `Dockerfile` with a capital "D". You also need to ensure that the line endings are set to Unix style (LF) if you are on Windows, as Docker requires this for the file to be read correctly.
 
 ```dockerfile
 # Use the SDK image to build and publish the website
@@ -74,13 +74,50 @@ COPY ./wwwroot/media ./wwwroot/media
 ENTRYPOINT ["dotnet", "SimpleContainer.dll"]
 ```
 
-TODO : Desribe what each line of this file does. 
+Each line of the Dockerfile explained (with Docker cache notes):
+
+- `FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build`  
+  Uses the official .NET 8 SDK image as the build environment. (Cached if the base image hasn't changed.)
+- `WORKDIR /src`  
+  Sets the working directory inside the build image to `/src`. (Cached unless the previous layer changes.)
+- `COPY ["SimpleContainer.csproj", "."]`  
+  Copies the project file into the container. (Cached unless the csproj file changes.)
+- `RUN dotnet restore "SimpleContainer.csproj"`  
+  Restores NuGet packages. (Cached unless the csproj or referenced packages change.)
+- `COPY . .`  
+  Copies the rest of the source code into the container. (Cached unless any source file changes.)
+- `RUN dotnet publish "SimpleContainer.csproj" -c Release -o /app/publish`  
+  Builds and publishes the app to `/app/publish`. (Cached unless code or dependencies change.)
+
+- `FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final`  
+  Uses the smaller ASP.NET runtime image for the final container. (Cached if the base image hasn't changed.)
+- `WORKDIR /app`  
+  Sets the working directory in the runtime image. (Cached unless previous layer changes.)
+- `ENV ASPNETCORE_ENVIRONMENT=Development`  
+  Sets the environment variable so Umbraco uses the development config. (Cached unless this line changes.)
+- `ENV ASPNETCORE_URLS=http://+:8081`  
+  Sets the app to listen on port 8081. (Cached unless this line changes.)
+- `EXPOSE 8081`  
+  Documents that the container will listen on port 8081. (Does not affect cache or runtime, just metadata.)
+- `COPY --from=build /app/publish .`  
+  Copies the published app from the build image. (Cached unless the published output changes.)
+- `COPY ./wwwroot/media ./wwwroot/media`  
+  Copies media files into the image. (Cached unless media files change.)
+- `ENTRYPOINT ["dotnet", "SimpleContainer.dll"]`  
+  Sets the default command to run the app. (Cached unless this line changes.)
+
+**Docker cache notes:**
+- Docker caches each instruction as a layer. If nothing relevant has changed, Docker reuses the cached layer, making builds faster.
+- COPY and RUN instructions are only cached if the files they depend on haven't changed.
+- Changing a file or instruction invalidates the cache for that and all following layers.
+
+This breakdown helps you understand both what each line does and how Docker optimizes builds using its cache.
 
 ## Build the Docker Image
-Now that we have the Dockerfile set up, we can build the Docker image. Make sure you are in the `SimpleContainer` folder and run the following command:
+Now that we have the Dockerfile set up, we can build the Docker image. Make sure you are in the `SimpleContainer` folder and run the following command. The latest tag is optional, but it's good practice to use it for clarity.
 
 ```bash
-docker build -t simplecontainer ./SimpleContainer
+docker build -t simplecontainer:latest ./SimpleContainer
 ```
 
 This command will build the Docker image using the Dockerfile in the `SimpleContainer` folder and tag it as `simplecontainer`. The build process will take a few moments as it downloads the necessary base images and builds the Umbraco site.
@@ -108,6 +145,7 @@ docker run -d -p 8081:8081 --name simplecontainer2 simplecontainer
 
 Now, you can access the new instance at `http://localhost:8082`. 
 
+**Note: Becuase this container manages its own data, it will not share any content or media with the first container.**
 
 ### Stop and Remove the Running Container
 

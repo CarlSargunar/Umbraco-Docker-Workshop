@@ -88,7 +88,7 @@ Next we can build the Blazor Image using the following command:
 ***Action:*** Run the following command to build the image.
 
 ```bash
-docker build --tag=umblazor .\UmBlazor    
+docker build -t umblazor:latest .\UmBlazor    
 ```
 
 Once that's done, we can run the Container
