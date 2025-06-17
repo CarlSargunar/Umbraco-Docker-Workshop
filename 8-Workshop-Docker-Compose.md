@@ -26,14 +26,6 @@ These will configure the application to use the production profiles, and will al
 
 ## 8.2 Run the Docker Compose file
 
-Finally before we run, we need to delete all existing running containers. 
-
-**Action :** Run the following command in your terminal:
-
-    docker rm -f umblazor umbweb umbweb2 umbdata
-
-Verify that none are running by looking at the Docker Desktop app, or by running the 'docker ps' command. Once all running containers have been deleted, we can run the Docker Compose file.
-
 **Action :** Start all containers using the following command:
 
 ```bash
@@ -56,9 +48,4 @@ To stop and remove the containers, run the following command:
 docker-compose down 
 ```
 
-# References
-
-## Umbraco
-
-There is a great tool to help you configure the the unattended installation options for umbraco at [https://psw.codeshare.co.uk/](https://psw.codeshare.co.uk/)
 

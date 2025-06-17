@@ -29,10 +29,6 @@ ENV ASPNETCORE_URLS=http://+:8081
 # Copy the published output to the final running image
 COPY --from=build /app/publish .
 
-# Copy the media items to the final running image
-# THIS IS NOT WHAT YOU WANT TO DO IN PRODUCTION, but for the sake of this workshop we will copy the media items into the container. In Production you would use a volume to store the media items, or a shared storage solution.
-COPY ./wwwroot/media ./wwwroot/media
-
 # Set the entrypoint to the web application
 ENTRYPOINT ["dotnet", "UmbWeb.dll"]
 ```

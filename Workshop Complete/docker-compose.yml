@@ -3,26 +3,26 @@ services:
   # This is the database container. The exposed volume means that the SQL DATA and LOG files
   # are stored off the container, in case the container is restarted.
   umbdata:
-    container_name: umbdata
+    container_name: app_umbdata
     build:
       context: ./UmbData
     ports:
      - "1433:1433"
      - "1434:1434"
     volumes:
-     - umb_database:/var/opt/mssql
+     - app_umb_database:/var/opt/mssql
     networks:
       - umbnet
 
   # This is the web container. It exposes the port 80, and stored media and Umbraco logs on
   # a volume so they are accessable outside the container.
   umbweb_backend:
-    container_name: umbweb_backend
+    container_name: app_umbweb_backend
     build:
       context: ./UmbWeb
     volumes:
-      - umb_media:/app/wwwroot/media
-      - umb_logs:/app/umbraco/Logs
+      - app_umb_media:/app/wwwroot/media
+      - app_umb_logs:/app/umbraco/Logs
     restart: always
     environment:
      - ASPNETCORE_ENVIRONMENT=Production
@@ -39,13 +39,13 @@ services:
   # This is the 2nd web container. It exposes the port 80, and stored media and Umbraco logs on
   # a volume so they are accessable outside the container.
   umbweb_frontend:
-    container_name: umbweb_frontend
+    container_name: app_umbweb_frontend
     build:
       context: ./UmbWeb
       dockerfile: Dockerfile
     volumes:
-      - umb_media:/app/wwwroot/media
-      - umb_logs:/app/umbraco/Logs
+      - app_umb_media:/app/wwwroot/media
+      - app_umb_logs:/app/umbraco/Logs
     restart: always
     environment:
      - ASPNETCORE_ENVIRONMENT=Production
@@ -62,7 +62,7 @@ services:
   # This is the blazor container. It exposes the port 80 and accesses the umbweb_frontend container
   # to load the blog summary content.
   umblazor:
-    container_name: umblazor
+    container_name: app_umblazor
     build:
       context: ./UmBlazor
       dockerfile: Dockerfile
@@ -77,9 +77,9 @@ services:
       - umbnet    
 
 volumes:
-  umb_media:
-  umb_logs:
-  umb_database:
+  app_umb_media:
+  app_umb_logs:
+  app_umb_database:
 
 # This is the network that the containers will be on, and will ONLY contain the containers from the application
 networks:
