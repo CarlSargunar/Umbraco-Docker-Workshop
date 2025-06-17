@@ -30,7 +30,9 @@ Before we run the application, we need to delete all existing running containers
 
 **Action :** Run the following command in your terminal:
 
-    docker stop umblazor umbweb umbweb2 umbdata
+```bash
+docker stop umblazor umbweb umbweb2 umbdata
+```
 
 Verify that none are running by looking at the Docker Desktop app, or by running the 'docker ps' command. Once all running containers have been deleted, we can run the Docker Compose file.
 
