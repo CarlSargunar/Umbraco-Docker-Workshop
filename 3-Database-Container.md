@@ -49,22 +49,20 @@ This file will instruct Docker to create a SQL server running SQL Server 2022, w
 
 Dockerfiles do not specify the platform they are built for, so by default they will be built for the platform of the machine you are running on. If you are running on an ARM64 machine (e.g. Mac M1 or M2), you will need to specify the platform when building the image, as we will do later.
 
-***Action:*** : Copy the database setup scripts and databases
+***Action:*** : Copy the database setup scripts and databases.
 
 - From **/Files/UmbData/setup.sql** to **/Workshop/UmbData/setup.sql**
 - From **/Files/UmbData/startup.sh** to **/Workshop/UmbData/startup.sh**
 
 These two script files will be used to create a new database if none already exists when the database container starts. That way when the website starts it will already have a database ready to use, but if the database already exists it won't restore it.
 
-***Action:*** Once all these files exist in the Workshop/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF) (See [1-Workshop-Intro](1-Workshop-Intro.md) for details). This is particularly important on Windows.
+***Action:*** Once all these files exist in the Workshop/UmbData folder, make sure the **Dockerfile, setup.sql and startup.sh** have the correct line-endings, that they are terminated with Line Feed (LF) and NOT Carriage Return Line Feed (CRLF).
 
 ## 3.2 Build the database image and run the database container
 
 All our files are ready to build the database image and run the database container, so that's the next step.
 
 *Note : If you are running a local SQL Server on your machine, or any other process listening on port 1433, you will need to stop that process before you can run the database container, or the container will not be able to start.*
-
-*Note : You need to ensure that you don't have a running SQL server on your host machine, as the port used will clash with your container. Stop any servers to ensure port 1433 is not in use.*
 
 ***Action:*** 
 
@@ -82,7 +80,7 @@ docker build -t umbdata:latest ./UmbData --platform=linux/amd64
 Once the image is built, run it with the following command.
 
 ```bash
-docker run --name umbdata -p 1433:1433 --volume umbsqlFiles:/var/opt/mssql --platform=linux/amd64 -d umbdata
+docker run --name umbdata -p 1433:1433 --volume umbSqlFiles:/var/opt/mssql --platform=linux/amd64 -d umbdata
 ```
 
 Ignore the warning about the platform if you are on an ARM64 based CPU, as this image is not available on ARM64.
@@ -91,25 +89,33 @@ This should give you a container ID back if the container was started successful
 
 ![Docker desktop with the datbase container running.](media/1_1_database-container.png)
 
+
+
 ## Understanding Docker Volumes
 
-When running the database container, we used the `--volume umbsqlFiles:/var/opt/mssql` option. This creates a **named volume** called `umbsqlFiles` and mounts it to the `/var/opt/mssql` directory inside the container.
+When running the database container, we used the `--volume umbSqlFiles:/var/opt/mssql` option. This creates a **named volume** called `umbSqlFiles` and mounts it to the `/var/opt/mssql` directory inside the container.
 
 **What does this mean?**
+
 - A Docker volume is a persistent storage mechanism managed by Docker.
-- Data written to `/var/opt/mssql` inside the container (where SQL Server stores its databases) is actually stored in the `umbsqlFiles` volume on your host machine.
+- Data written to `/var/opt/mssql` inside the container (where SQL Server stores its databases) is actually stored in the `umbSqlFiles` volume on your host machine.
 - This means your database data will **persist** even if you stop, remove, or recreate the container.
-- If you delete the volume (`docker volume rm umbsqlFiles`), all data in the database will be lost.
+- If you delete the volume (`docker volume rm umbSqlFiles`), all data in the database will be lost.
 
 **Why use volumes?**
-- Volumes allow you to keep your data safe and persistent, separate from the lifecycle of your containers.
-- You can easily back up, restore, or share data between containers using volumes.
+
+- Volumes allow you to keep any data that is likely to change, and whose changes need to be persistant outside the scope of the container image.
+- You can easily back up, restore, or share data between containers using volumes or bind mounts.
+- A bind mount links a specific directory on your host machine to a directory in the container, but volumes are managed by Docker which takes care of paths and permissions for you, and are generally more portable and easier to manage.
+    - Bind mounts are useful for development scenarios where you want to edit files and build artifacts on your host machine and see changes reflected in the container immediately
+    - Bind mounts aren't explored in this workshop, but you can read more about them in the [Docker documentation](https://docs.docker.com/engine/storage/bind-mounts/).
 
 ## 3.3 Connect to the Running SQL Server
 
 Now that your SQL Server container is running, let's connect to it to verify that everything is working correctly.
 
 You can use any SQL client tool you prefer, such as:
+
 - **SQL Server Management Studio (SSMS)**
 - **Azure Data Studio**
 - **Visual Studio Code** with the SQL Server extension
@@ -126,13 +132,15 @@ You can use any SQL client tool you prefer, such as:
 
 Once connected, you should be able to see the SQL Server instance and any databases that are present. This confirms that your containerized SQL Server is running and accessible.
 
+At this point you can test the persistence of the databases by adding some data, or creating a new database or table. If you delete and recreate the container, the data will still be there as long as you are using the same named volume (`umbSqlFiles`).
+
 ---
 
 ## 3.4 Creating the network for our containers
 
-Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address. 
+Before we create website containers, we need to create a network to allow our containers to communicate. We will be using a [User Defined Bridge Network](https://docs.docker.com/network/bridge/) to let our containers communicate using container names. Without this, they would only be able to communicate with IP address.
 
-***Action:*** Run the following command in the terminal window to create a new Bridge network for our containers to use. 
+***Action:*** Run the following command in the terminal window to create a new Bridge network for our containers to use.
 
 ```bash
 docker network create -d bridge umbNet    
@@ -152,16 +160,9 @@ docker network inspect umbNet
 
 In the output you should see the umbdata container listed in the containers section.
 
-![Docker network inspect showing the umbdata container attached to the network.](media/docker-network.png)
+![Docker network inspect showing the umbdata container attached to the network.](media/docker-network.png).
 
-### Connecting to the database container
-
-To test that your container is running Ok, you may want to test connecting to the server. You can connect with any number of tools, e.g.Sql Server Management Studio, LinqPad, or the Visual Studio Code SQL Server extension using the following credentials : 
-
-- Host : Localhost
-- Username : sa
-- Password : SQL_PassW0rd@1234
-- Port : 1433
+We will add subsequent containers to this network as we create them, so they can communicate with each other using their container names.
 
 ## Next Steps
 

@@ -67,9 +67,6 @@ EXPOSE 8081
 # Copy the published output to the final running image
 COPY --from=build /app/publish .
 
-# Copy the media items to the final running image
-COPY ./wwwroot/media ./wwwroot/media
-
 # Set the entrypoint to the web application
 ENTRYPOINT ["dotnet", "SimpleContainer.dll"]
 ```
@@ -101,8 +98,6 @@ Each line of the Dockerfile explained (with Docker cache notes):
   Documents that the container will listen on port 8081. (Does not affect cache or runtime, just metadata.)
 - `COPY --from=build /app/publish .`  
   Copies the published app from the build image. (Cached unless the published output changes.)
-- `COPY ./wwwroot/media ./wwwroot/media`  
-  Copies media files into the image. (Cached unless media files change.)
 - `ENTRYPOINT ["dotnet", "SimpleContainer.dll"]`  
   Sets the default command to run the app. (Cached unless this line changes.)
 
@@ -114,10 +109,10 @@ Each line of the Dockerfile explained (with Docker cache notes):
 This breakdown helps you understand both what each line does and how Docker optimizes builds using its cache.
 
 ## Build the Docker Image
-Now that we have the Dockerfile set up, we can build the Docker image. Make sure you are in the `SimpleContainer` folder and run the following command. The latest tag is optional, but it's good practice to use it for clarity.
+Now that we have the Dockerfile set up, we can build the Docker image. Make sure you are in the `SimpleContainer` folder and run the following command. The latest tag is optional, but it's good practice to use it for clarity. Here we ar tagging the image with both `1.0.1` and `latest` versions:
 
 ```bash
-docker build -t simplecontainer:latest ./SimpleContainer
+docker build -t simplecontainer:1.0.1 -t simplecontainer:latest ./SimpleContainer
 ```
 
 This command will build the Docker image using the Dockerfile in the `SimpleContainer` folder and tag it as `simplecontainer`. The build process will take a few moments as it downloads the necessary base images and builds the Umbraco site.
@@ -127,12 +122,36 @@ This command will build the Docker image using the Dockerfile in the `SimpleCont
 Once the image is built, you can run the Docker container using the following command:
 
 ```bash
-docker run -d -p 8080:8081 --name simplecontainer simplecontainer
+docker run -d -p 8080:8081 --name simplecontainer simplecontainer:latest
 ```
 
 Once the container has started up, you should be able to access the Umbraco site by navigating to `http://localhost:8080` in your web browser. It will take a few moments for the container to start up and for Umbraco to initialize.
 
 ![Umbraco Starter Kit](media/1_umbraco_sample_site.png)
+
+## Build a new version of the Umbraco site image
+
+//TODO HERE!!!!
+
+Now we need to rebuild the Docker image to see the changes. Run the following command again in the terminal:
+
+```bash
+docker build --no-cache -t simplecontainer:1.0.2 -t simplecontainer:latest ./SimpleContainer
+```
+
+This will rebuild the Docker image with the updated content. This build command uses the `--no-cache` option to ensure that all layers are rebuilt, including the one that contains your modified view, and will take a bit longer than the previous build since it will not use any cached layers.
+
+After the build is complete, you need to stop and remove the existing container before running the new one:
+
+```bash
+docker stop simplecontainer
+docker rm simplecontainer
+```
+Now, run the new container with the updated image:
+
+```bash
+docker run -d -p 8080:8081 --name simplecontainer simplecontainer:latest
+```
 
 
 ### Run a New Instance on a Different Port

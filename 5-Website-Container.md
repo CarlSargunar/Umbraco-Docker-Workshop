@@ -37,16 +37,7 @@ COPY ./wwwroot/media ./wwwroot/media
 ENTRYPOINT ["dotnet", "UmbWeb.dll"]
 ```
 
-This Dockerfile starts with a build image which contains the SDK to actually compile the project, and one with ASP.NET runtimes to actually host the running application. The running application doesn't need any build tools, so we don't include them. From the above Dockerfile we can see the stages of the build process.
-
-1. Starting on the main image, we will use the SDK image to compile the project.
-2. Copying the working project folder to the build image
-3. Run the restore command to download the dependencies
-4. Compile and publish the output of the project
-5. Switch to the hosting image 
-6. Copy the published output to the final image - DO NOT DO THIS IN PRODUCTION!
-7. Copy the media files to the final image
-8. Set the entrypoint to the binary output of the main project
+This Dockerfile starts with a build image which contains the SDK to actually compile the project, and one with ASP.NET runtimes to actually host the running application. The running application doesn't need any build tools, so we don't include them. The steps used in this Dockerfile are similar to those used in Exercise 2.
 
 ## 5.2 Add a Network
 
@@ -85,10 +76,11 @@ Finally we can compile a docker image for the Umbraco site.
 docker pull mcr.microsoft.com/dotnet/sdk:8.0
 docker pull mcr.microsoft.com/dotnet/aspnet:8.0
 
-docker build -t umbweb:latest ./UmbWeb
+# This will build the Umbraco site image using the Dockerfile we created earlier
+docker build -t umbweb:1.0.0 -t umbweb:latest ./UmbWeb
 ```
 
-This will download the required components and compile a final image ready to run the site in a container, and may take some time. 
+This will download the required components and compile a final image ready to run the site in a container, and may take some time.
 
 At this point we can see all the images we have created by using the following command
 
@@ -110,7 +102,7 @@ In the above command you can also see the volumes we use with the application co
 
 Similarly with media, we want all website containers to be able to share the same media library, so we can use a volume for this so the images are stored on the docker host and not in the container.
 
-One other thing we set is the Environment variable we are passing the container with the -e flag, which sets our ASPNETCORE_ENVIRONMENT to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database running in the container.
+One other thing we set is the Environment variable we are passing the container with the `-e` flag, which sets our ASPNETCORE_ENVIRONMENT to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database running in the container.
 
 You can now see the website running by visiting: [http://localhost:8000](http://localhost:8000)
 
@@ -123,9 +115,6 @@ docker ps
 ![Running Containers](media/3_DockerPS.png)
 
 You can also see the status of running containers and logs by running the Docker Desktop application.
-
-
-
 
 
 ## Additional Reading - Networks and Volumes

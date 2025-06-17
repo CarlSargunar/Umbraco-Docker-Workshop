@@ -14,13 +14,9 @@ dotnet new install Umbraco.Templates::13.8.1 --force
 
 ***Action:*** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
 
-Here we will be using SQL LocalDB as the database so that in later steps it can be imported directly into the production database server. 
-
 ```bash
 dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_PassW0rd@1234;TrustServerCertificate=true"
 ```
-
-If you are running this exercise on a Mac or Linux, you won't be able to run this site locally as it uses LocalDB, but instead will need to create your database container in step 4.3 and then run the site connecting to that image.
 
 ## 4.3 Create the SLN file and Starter Kit
 

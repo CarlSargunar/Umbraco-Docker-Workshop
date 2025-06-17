@@ -37,6 +37,7 @@ You will also need to start that CORS Policy in the Startup.cs Configure method
 app.UseCors("AllowAll");
 ```
 
+You can also copy these changes from : **/Files/UmbWeb/Program.cs** to **/Workshop/UmbWeb/Program.cs**
 
 
 ## 6.3 - Rebuild the image and run it
@@ -44,7 +45,7 @@ app.UseCors("AllowAll");
 You will need to rebuild the umbWeb docker image and run it again to see the changes. You can use the following to do that
 
 ```bash
-docker build -t umbweb:latest ./UmbWeb
+docker build -t umbweb:1.0.1 -t umbweb:latest ./UmbWeb
 ```
 
 Stop and remove the previous running umbweb container. You can also do this in the Docker Desktop app by right-clicking the container and selecting "Stop" and then "Remove".
@@ -59,7 +60,7 @@ docker rm umbweb
 Run the new version of the umbweb image
 
 ```bash
-docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
+docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb:latest
 ```    
 
 
@@ -93,12 +94,12 @@ This should return a JSON collection of Post Summaries in a collection, which we
 
 While the website container has the API running, we want to spin up a 2nd instance of the website container. This will simulate a load-balanced environment. 
 
-*Note : By using the same volumes for media and logs, both containers will share the storage on the docker host, and thus the media library and logs will be shared between the containers. However this is NOT enough to run a load balanced container in production - this is to separate the content entry and content delivery nodes in this demo.*
+*Note : By using the same volumes for media and logs, both containers will share the storage on the docker host, and thus the media library and logs will be shared between the containers. However this is NOT enough to run a load balanced container in production - this is to separate the content entry and content delivery nodes in this demo. For full details on running a load balanced Umbraco container in production, please refer to the official documentation.*
 
 ***Action:*** Run the following command to start the 2nd container.
 
 ```bash
-    docker run --name umbweb2 -p 8001:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb 
+    docker run --name umbweb2 -p 8001:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb:latest
 ```
 
 You can browse this container by visiting the following URL: [http://localhost:8001/](http://localhost:8001/).

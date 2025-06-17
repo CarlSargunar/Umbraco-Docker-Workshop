@@ -13,9 +13,10 @@ dotnet new blazorwasm --name UmBlazor
 dotnet sln Umbraco-Docker-Workshop.sln add "UmBlazor/UmBlazor.csproj"
 ```
 
-***Action:*** Copy the following whole folders from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
+***Action:*** Copy the following from the /Files/UmbWeb folder to the /Workshop/UmbWeb folder.
 
-- **/Files/UmBlazor/Models** to **/Workshop/UmBlazor/Models**
+- Everything from **/Files/UmBlazor/Models** to **/Workshop/UmBlazor/Models**
+- Everything from **/Files/UmBlazor/Services** to **/Workshop/UmBlazor/Services**
 - **/Files/UmBlazor/Pages/FetchData.razor** to **/Workshop/UmBlazor/Pages/FetchData.razor**
 - **/Files/UmBlazor/Layout/NavMenu.razor** to **/Workshop/UmBlazor/Layout/NavMenu.razor**
 - **/Files/UmBlazor/wwwroot/appsettings.json** to **/Workshop/UmBlazor/wwwroot/appsettings.json**
@@ -43,8 +44,6 @@ dotnet tool install --global NSwag.ConsoleCore --version 13.20.0
 
 nswag openapi2csclient /input:http://localhost:8000/umbraco/swagger/delivery/swagger.json /output:ApiClient.cs /namespace:UmBlazor.Clients
 ```
-
-
 
 
 ## 7.2 Create the Blazor Container

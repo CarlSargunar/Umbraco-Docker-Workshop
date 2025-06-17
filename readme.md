@@ -6,20 +6,9 @@ This repository contains all the notes and worksheets for the Docker Workshop be
 
 ## Table of Contents
 
+//TODO: Add links to the files in the repository
 0. [Prerequisites](0-Prerequisites.md)
 1. [Workshop Introduction](1-Workshop-Intro.md)
-
-
-
-
-TODO: Volumes vs Bind Mounts
- - bind database with a bind mount to the folder inside th repo
-    - bind mounts for templates, js, css in dev container? Front end builds?
- - Amend the sql script to attach the database from the bind mount?
-    - Changes in the MDF/LDF file will show as repo changes - add a note about that
- - Create a path somehow (maybe a .env file) and use that in the docker-compose file to set the volume path
-    - Add a note about the volume path being different on Windows and Linux
- - Is there a way to tell if your host machine is windows, mac or linux? 
 
 
 
