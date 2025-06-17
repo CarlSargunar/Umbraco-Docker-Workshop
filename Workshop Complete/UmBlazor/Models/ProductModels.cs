@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace UmBlazor.Models
 {
+
     public class BodyText
     {
         public int gridColumns { get; set; }

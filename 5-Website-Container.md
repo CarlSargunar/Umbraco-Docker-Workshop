@@ -29,29 +29,14 @@ ENV ASPNETCORE_URLS=http://+:8081
 # Copy the published output to the final running image
 COPY --from=build /app/publish .
 
-# Copy the media items to the final running image
-# THIS IS NOT WHAT YOU WANT TO DO IN PRODUCTION, but for the sake of this workshop we will copy the media items into the container. In Production you would use a volume to store the media items, or a shared storage solution.
-COPY ./wwwroot/media ./wwwroot/media
-
 # Set the entrypoint to the web application
 ENTRYPOINT ["dotnet", "UmbWeb.dll"]
 ```
 
 This Dockerfile starts with a build image which contains the SDK to actually compile the project, and one with ASP.NET runtimes to actually host the running application. The running application doesn't need any build tools, so we don't include them. The steps used in this Dockerfile are similar to those used in Exercise 2.
 
-## 5.2 Add a Network
 
-In order to run the website and database containers together, we need to create a Docker network that allows them to communicate with each other.
-
-***Action:*** Create a Docker network called **umbNet** by running the following command in your terminal:
-
-```bash     
-docker network create umbNet
-```
-
-A network will allow the containers to communicate with each other using their container names as hostnames, otherwise they would only be able to communicate using IP addresses, which can change each time the container is restarted.
-
-## 5.3 Building the Umbraco Site image, setting a network and running it
+## 5.2 Building the Umbraco Site image, setting a network and running it
 
 Once the Dockerfile exists, we need to create a configuration which lets the website contianer connect to the database container. 
 
@@ -72,10 +57,6 @@ Finally we can compile a docker image for the Umbraco site.
 ***Action:*** Run the following command to build the image.
 
 ```bash
-# This will pre-cache the images used to build the Umbraco container. This step is optional
-docker pull mcr.microsoft.com/dotnet/sdk:8.0
-docker pull mcr.microsoft.com/dotnet/aspnet:8.0
-
 # This will build the Umbraco site image using the Dockerfile we created earlier
 docker build -t umbweb:1.0.0 -t umbweb:latest ./UmbWeb
 ```
@@ -88,14 +69,14 @@ At this point we can see all the images we have created by using the following c
 docker images
 ```
 
-## 5.4 Running the website container in the same network
+## 5.3 Running the website container in the same network
 
 We can then run the website container. *Notice in the command below there is an argument to let the container know which network to connect to - the same **umbNet** network*. Here we are doing this using the **docker run --network** flag instead of using an explicit command.
 
 ***Action:*** Run the following command to run the website container.
 
 ```bash
-docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
+docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb:latest
 ```
 
 In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. We use volumes for these folders so that we can persist the data outside of the container, and share it between containers if needed.

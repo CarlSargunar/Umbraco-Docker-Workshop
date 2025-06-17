@@ -43,7 +43,9 @@ You should see the familiar Umbraco Sample Site running with the starter kit ins
 
 Next, we will create a `Dockerfile` in the `SimpleContainer` folder. This file will contain the instructions to build the Docker image for our Umbraco site.
 
-Create a file called `Dockerfile` in the `SimpleContainer` folder and add the following content. The case of the file name is important, it must be `Dockerfile` with a capital "D". You also need to ensure that the line endings are set to Unix style (LF) if you are on Windows, as Docker requires this for the file to be read correctly.
+Create a file called `Dockerfile` in the `SimpleContainer` folder and add the following content. The case of the file name is important, it must be `Dockerfile` with a capital "D". You also need to ensure that the line endings are set to Unix style (LF) if you are on Windows, as Docker requires this for the file to be read correctly.#
+
+*Note: It's possible to get the Umbraco Template to generate you a dockerfile in later versions of Umbraco using the `--add-docker` option. We are going to write our own to understand how it works.*
 
 ```dockerfile
 # Use the SDK image to build and publish the website
@@ -159,7 +161,7 @@ docker run -d -p 8080:8081 --name simplecontainer simplecontainer:latest
 You can start another instance of the container on a different port by changing the left side of the port mapping. For example, to run on port 8082:
 
 ```bash
-docker run -d -p 8081:8081 --name simplecontainer2 simplecontainer
+docker run -d -p 8081:8081 --name simplecontainer2 simplecontainer:latest
 ```
 
 Now, you can access the new instance at `http://localhost:8082`. 

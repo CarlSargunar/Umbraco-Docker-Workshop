@@ -4,21 +4,13 @@ We are going to create our Umbraco website running locally on your machine nativ
 
 ## 4.1 Installing Umbraco Template and start Website
 
-***Action:*** Install the Umbraco .NET Template.
-
-```bash
-dotnet new install Umbraco.Templates::13.8.1 --force
-```
-
-## 4.2 Create a new Umbraco site
-
 ***Action:*** Create a new Umbraco site using the following command. This will define the name of the site and the default database, as well as the default admin user and password. 
 
 ```bash
 dotnet new umbraco -n UmbWeb --friendly-name "Admin User" --email "admin@admin.com" --password "1234567890" --connection-string "Server=localhost;Database=UmbracoDb;User Id=sa;Password=SQL_PassW0rd@1234;TrustServerCertificate=true"
 ```
 
-## 4.3 Create the SLN file and Starter Kit
+### Create the SLN file and Starter Kit
 
 Run the follwowing command to create the solution file for the Umbraco site. Run the following command in the **/Workshop** folder. This will create a new solution file and add the Umbraco project starter kit template.
 
@@ -31,7 +23,7 @@ dotnet sln Umbraco-Docker-Workshop.sln add "UmbWeb/UmbWeb.csproj"
 dotnet add UmbWeb package Umbraco.TheStarterKit --version 13.0.0
 ```
 
-## 4.4 Start the Umbraco Website
+## 4.2 Start the Umbraco Website
 
 ***Action:*** Run the website by issuing the following command. This will start the website using Kestrel, and connect to the database server in the container.
 
