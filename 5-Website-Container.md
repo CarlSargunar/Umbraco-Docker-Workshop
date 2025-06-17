@@ -91,7 +91,7 @@ We can then run the website container. *Notice in the command below there is an 
 ***Action:*** Run the following command to run the website container.
 
 ```bash
-docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb
+docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_logs:/app/umbraco/Logs -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umbweb:latest
 ```
 
 In the above command you can also see the volumes we use with the application container - specifically the log and the media folders. We use volumes for these folders so that we can persist the data outside of the container, and share it between containers if needed.

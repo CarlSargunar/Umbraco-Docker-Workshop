@@ -26,6 +26,15 @@ These will configure the application to use the production profiles, and will al
 
 ## 8.2 Run the Docker Compose file
 
+Before we run the application, we need to delete all existing running containers so that any ports they are using are freed up. This is important as we will be using the same ports for the new containers we will create with Docker Compose.
+
+**Action :** Run the following command in your terminal:
+
+    docker stop umblazor umbweb umbweb2 umbdata
+
+Verify that none are running by looking at the Docker Desktop app, or by running the 'docker ps' command. Once all running containers have been deleted, we can run the Docker Compose file.
+
+
 **Action :** Start all containers using the following command:
 
 ```bash

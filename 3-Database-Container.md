@@ -74,13 +74,13 @@ Note: The `--platform` option tells Docker to build the image for the specified 
 # This will pre-cache the images used to build the Umbraco container. This step is optional
 docker pull mcr.microsoft.com/mssql/server:2022-latest
 # Build the database image
-docker build -t umbdata:latest ./UmbData --platform=linux/amd64
+docker build -t umbdata:1.0.0 -t umbdata:latest ./UmbData --platform=linux/amd64
 ```
 
 Once the image is built, run it with the following command.
 
 ```bash
-docker run --name umbdata -p 1433:1433 --volume umbSqlFiles:/var/opt/mssql --platform=linux/amd64 -d umbdata
+docker run --name umbdata -p 1433:1433 --volume umbSqlFiles:/var/opt/mssql --platform=linux/amd64 -d umbdata:latest
 ```
 
 Ignore the warning about the platform if you are on an ARM64 based CPU, as this image is not available on ARM64.
