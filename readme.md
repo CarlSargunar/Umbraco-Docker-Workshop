@@ -6,12 +6,17 @@ This repository contains all the notes and worksheets for the Docker Workshop be
 
 ## Table of Contents
 
-//TODO: Add links to the files in the repository
 0. [Prerequisites](0-Prerequisites.md)
 1. [Workshop Introduction](1-Workshop-Intro.md)
-
-
-
+2. [Simple Umbraco Container](2-Simple-Umbraco-Container.md)
+3. [Database Container](3-Database-Container.md)
+4. [Umbraco Website](4-Umbraco-Webite.md)
+5. [Website Container](5-Website-Container.md)
+6. [Content Delivery Api](6-Content-Delivery-Api.md)
+7. [Blazor SPA](7-Blazor-SPA.md)
+8. [Docker Compose](8-Docker-Compose.md)
+9. [Conclusion](9-Conclusion.md)
+10. [Docker CLI Quick Start](10-Docker-CLI-Quick-Start.md)
 
 # References and Resources
 Slides - https://docs.google.com/presentation/d/1Nn1hfFkZp8QWpCsnIAGMH6IdBk0R551CiuU3IiJpBdk/

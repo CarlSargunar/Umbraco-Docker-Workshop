@@ -38,6 +38,19 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 - **Line endings issues:** Ensure all scripts and Dockerfiles use LF line endings, not CRLF.
 - **Cannot connect to database:** Double-check the username (`sa`), password (`SQL_PassW0rd@1234`), and port (`1433`). Make sure the container is running.
 
+## Build timeout fails
+
+Sometimes when building images, if you can't download the base images, you may get a timeout error. If this happens, you can try the following:
+
+```bash
+# This will pre-cache the images used to build the database container.
+docker pull mcr.microsoft.com/mssql/server:2022-latest
+# This will pre-cache the images used to build the Umbraco container. 
+docker pull mcr.microsoft.com/dotnet/sdk:8.0
+docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+
+```
+
 ## How to Reset
 
 If you need to completely reset your workshop environment (including all files and changes in the `Workshop` folder), you can delete the entire `Workshop` folder and remove any related Docker resources.

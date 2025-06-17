@@ -17,9 +17,9 @@ dotnet sln Umbraco-Docker-Workshop.sln add "UmBlazor/UmBlazor.csproj"
 
 - Everything from **/Files/UmBlazor/Models** to **/Workshop/UmBlazor/Models**
 - Everything from **/Files/UmBlazor/Services** to **/Workshop/UmBlazor/Services**
-- **/Files/UmBlazor/Pages/FetchData.razor** to **/Workshop/UmBlazor/Pages/FetchData.razor**
-- **/Files/UmBlazor/Layout/NavMenu.razor** to **/Workshop/UmBlazor/Layout/NavMenu.razor**
-- **/Files/UmBlazor/wwwroot/appsettings.json** to **/Workshop/UmBlazor/wwwroot/appsettings.json**
+- Everything from **/Files/UmBlazor/Pages/FetchData.razor** to **/Workshop/UmBlazor/Pages/FetchData.razor**
+- Everything from **/Files/UmBlazor/Layout/NavMenu.razor** to **/Workshop/UmBlazor/Layout/NavMenu.razor**
+- Everything from **/Files/UmBlazor/wwwroot/appsettings.json** to **/Workshop/UmBlazor/wwwroot/appsettings.json**
 
 ***Action:*** Test that the application works by running the following command in your terminal:
 
@@ -85,7 +85,7 @@ Once that's done, we can run the Container
 ***Action:*** Run the following command to start the container.
 
 ```bash
-docker run --name umblazor -p 8002:80 --network=umbNet -d umblazor:latest
+docker run --name umblazor -p 8002:80 -e ASPNETCORE_ENVIRONMENT='Staging' --network=umbNet -d umblazor:latest
 ```
 
 Now the site could be browsed using the containter using the url [http://localhost:8002/](http://localhost:8002/).

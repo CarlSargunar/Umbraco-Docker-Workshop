@@ -71,8 +71,6 @@ Ensure you are in the **/Workshop** folder in your terminal window and build the
 Note: The `--platform` option tells Docker to build the image for the specified platform. If you are running on an ARM64 machine (e.g. Mac M1 or M2), you will need to specify `linux/amd64` to ensure compatibility with the SQL Server image, but if you are running on an x86 machine, you can omit this option. Docker Desktop will use emulation if you are on an ARM64 machine.
 
 ```bash
-# This will pre-cache the images used to build the Umbraco container. This step is optional
-docker pull mcr.microsoft.com/mssql/server:2022-latest
 # Build the database image
 docker build -t umbdata:1.0.0 -t umbdata:latest ./UmbData --platform=linux/amd64
 ```
