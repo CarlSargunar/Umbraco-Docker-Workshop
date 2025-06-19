@@ -44,6 +44,5 @@ This will illustrate that developing with Umbraco in a container is very similar
 
 ## Next Steps
 
-Open the next file to continue with the workshop: [5-Website-Container](5-Website-Container.md).
-
+Let's put that website in a container - open [5. Website Container](5-Website-Container.md) to do this.
 

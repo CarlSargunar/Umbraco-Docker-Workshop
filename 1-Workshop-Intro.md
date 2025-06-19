@@ -16,7 +16,7 @@ The folders which are in this workshop are:
 
 Note: This folder is deliberately ignored in the .gitignore file, and will not be committed to the repository. This is to ensure that you can run the workshop multiple times without having to delete files or folders. If you want to track files as you do the workshop, you can modify the .gitignore file to remove the Workshop folder from being ignored.
 
-Open a new terminal window in Visual Studio Code, and ensure you are in the **Workshop** folder. All the commands you run in this workshop will be run from this folder. 
+Open a new terminal window in Visual Studio Code, and ensure you are in the **Workshop** folder. All the commands you run in this workshop will be run from this folder.
 
 
 ## A Note on Windows vs Linux Line Endings
@@ -53,7 +53,7 @@ docker pull mcr.microsoft.com/dotnet/aspnet:8.0
 
 ## How to Reset
 
-If you need to completely reset your workshop environment (including all files and changes in the `Workshop` folder), you can delete the entire `Workshop` folder and remove any related Docker resources.
+If you ever need to completely reset your workshop environment, you can delete the entire `Workshop` folder (or whichever folder you used). I encourage you to keep all your changes to this single folder so you can quickly and easily clean things up if needed.
 
 > **Warning:** This will permanently delete all files, projects, and changes you have made in the `Workshop` folder. Make sure to back up anything you want to keep before proceeding.
 
@@ -81,6 +81,6 @@ docker rm -f <container_name_or_id>
 If you get stuck or have any questions, **please raise your hand and get my attention**. I'm here to help!
 
 
-## Next Steps
+## Next Step
 
-The first task we will do is to create a database container. To do this, please continue on the [2-Simple-Umbraco-Container](2-Simple-Umbraco-Container.md) file.
+You are now ready to start! The first task we will do is to create a simple website container. To do this, please continue on the [2. Simple Umbraco Container](2-Simple-Umbraco-Container.md) file and continue your journey.

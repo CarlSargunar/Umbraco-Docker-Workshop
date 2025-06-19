@@ -98,3 +98,7 @@ If you need to update WSL, you can do so with the following command:
 ```bash 
 wsl --update
 ```
+
+## Next Step
+
+When you have confirmed you have all the prerequisites and are ready, please continue onto the next step - [1. Workshop Intro](1-Workshop-Intro.md).

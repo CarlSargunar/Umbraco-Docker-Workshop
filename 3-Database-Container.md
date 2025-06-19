@@ -164,5 +164,4 @@ We will add subsequent containers to this network as we create them, so they can
 
 ## Next Steps
 
-The first task we will do is to create the umbraco website container. To do this, please open the [3-Workshop-Website.md](/3-Workshop-Website.md) file.
-
+Now that we have a containerised database server, let's create a website to go along with it. When you're ready, move to [4. Umbraco Website](4-Umbraco-Webite.md).

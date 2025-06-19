@@ -92,3 +92,6 @@ Now the site could be browsed using the containter using the url [http://localho
    
 Upon running the site we should see the same Blazor app from the earlier example, but this time running from the container instance, and when it queries the rest API to load blog content, it is doing so from the content delivery container.
 
+## Next Steps
+
+We're going tie it all together with a Docker Compose file, which will let us orchestrate, start and stop our multi-continer application - [8. Docker Compose](8-Docker-Compose.md).

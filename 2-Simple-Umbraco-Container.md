@@ -186,6 +186,8 @@ One thing to note is that these two containers are completely independent of eac
 
 ## Summary
 
+Congratulations! You've successfully created a simple contianer, built it's image and run the website from that image which should hopefully give you a taster of how Umbraco can be run in a containerized environment.
+
 **Key things we did in this exercise:**
 
 - Created a new Umbraco site using the .NET CLI and installed the Starter Kit.
@@ -198,4 +200,4 @@ One thing to note is that these two containers are completely independent of eac
 
 ### Next Step
 
-Now that we have a simple Umbraco container running, the next step is to set up a database container that our Umbraco site can connect to. This will allow us to store content and media in a more robust way than using SQLite. Open [3-Database-Container](3-Database-Container.md) to continue.
+Now that we have a simple Umbraco container running, the next step is to set up a database container that our Umbraco site can connect to. This will allow us to store content and media in a more robust way than using SQLite. Open [3. Database Container](3-Database-Container.md) to continue.

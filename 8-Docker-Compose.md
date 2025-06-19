@@ -59,4 +59,6 @@ To stop and remove the containers, run the following command:
 docker-compose down 
 ```
 
+## Next Steps 
 
+Now we've gone through the exercise, let's draw our conclusions [9. Conclusion](9-Conclusion.md). There's also a guide for the Docker CLI [10. Docker CLI Quick Start](10-Docker-CLI-Quick-Start.md).

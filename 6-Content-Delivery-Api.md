@@ -109,3 +109,6 @@ With multiple website containers running, your Docker Desktop instance will look
 
 ![Docker Desktop](media/4_DockerDesktop_2.png)
 
+## Next Steps
+
+Now that we've enable the API, let's build a Blazor App - open [7. Blazor SPA](7-Blazor-SPA.md).
