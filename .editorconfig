@@ -1,0 +1,18 @@
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Files that should use LF line endings
+[*.{sql,sh}]
+end_of_line = lf
+
+[Dockerfile]
+end_of_line = lf
+
+# Files that should not have a final newline
+[*.md]
+insert_final_newline = false

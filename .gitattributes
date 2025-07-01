@@ -1,0 +1,12 @@
+# Let git handle line endings automatically
+* text=auto
+
+# normalize these line endings to LF
+*.sql text eol=lf
+Dockerfile text eol=lf
+*.sh text eol=lf
+
+# ensure these files are always treated as binary
+*.png binary
+*.jpg binary
+*.ico binary
