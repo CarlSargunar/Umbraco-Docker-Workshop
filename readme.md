@@ -1,7 +1,7 @@
 # Umbraco-Docker-Workshop
 
-This repository contains all the notes and worksheets for the Docker Workshop being given at Umbraco Codegarden. It will be based on the latest LTS version of Umbraco, which is currently Umbraco 13. 
- 
+This repository contains all the notes and worksheets for the Docker Workshop being given at Umbraco Codegarden. It will be based on the latest LTS version of Umbraco, which is currently Umbraco 13.
+
 *Please make sure you have gone through the prerequisites for this workshop in the [0-Prerequisites.md](/0-Prerequisites.md) file prior to starting.*
 
 ## Table of Contents
@@ -36,11 +36,11 @@ The following are suggested reading materials for Docker.
 
 - Load Balancing
     - https://docs.umbraco.com/umbraco-cms/fundamentals/setup/server-setup/load-balancing/azure-web-apps
-- Azure Blob Storage 
+- Azure Blob Storage
     - https://docs.umbraco.com/umbraco-cloud/set-up/media#about-azure-blob-storage
 - Community Articles
     - https://swimburger.net/blog/umbraco/how-to-run-umbraco-9-as-a-linux-docker-container
-    - https://codeshare.co.uk/blog/umbraco-9-useful-snippets/    
+    - https://codeshare.co.uk/blog/umbraco-9-useful-snippets/
     - https://www.tutorialworks.com/container-networking/
     - https://github.com/dotnet/dotnet-docker/tree/main/samples/aspnetapp
 
@@ -55,8 +55,4 @@ The following are notes for myself, but may be useful for others.
 - SQL on M1
     - https://devblogs.microsoft.com/azure-sql/development-with-sql-in-containers-on-macos/
 - SQL Edge Retirement : https://azure.microsoft.com/en-us/updates/v2/azure-sql-edge-retirement
-
-
-
-global json force .net 8 for website
-spaces!!
+- Umbraco Settings : https://docs.umbraco.com/umbraco-cms/13.latest/fundamentals/setup/server-setup/running-umbraco-in-docker
