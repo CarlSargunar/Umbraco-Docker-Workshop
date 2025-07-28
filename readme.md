@@ -56,3 +56,8 @@ The following are notes for myself, but may be useful for others.
     - https://devblogs.microsoft.com/azure-sql/development-with-sql-in-containers-on-macos/
 - SQL Edge Retirement : https://azure.microsoft.com/en-us/updates/v2/azure-sql-edge-retirement
 - Umbraco Settings : https://docs.umbraco.com/umbraco-cms/13.latest/fundamentals/setup/server-setup/running-umbraco-in-docker
+
+### Load Balancing
+
+- Cross-region Load Balancing with Docker & Umbraco Cloud
+    - https://skrift.io/issues/cross-region-load-balancing-with-docker-umbraco-cloud/
