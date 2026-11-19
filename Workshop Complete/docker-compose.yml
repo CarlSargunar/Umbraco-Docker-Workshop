@@ -3,7 +3,7 @@ services:
   # This is the database container. The exposed volume means that the SQL DATA and LOG files
   # are stored off the container, in case the container is restarted.
   umbdata:
-    container_name: umbdata
+    container_name: app_umbdata
     build:
       context: ./Umbdata
     ports:
@@ -12,12 +12,12 @@ services:
     volumes:
      - umb_database:/var/opt/mssql
     networks:
-      - umbnet
+      - app_umbnet
 
   # This is the web container. It exposes the port 80, and stored media and Umbraco logs on
   # a volume so they are accessable outside the container.
   umbweb_backend:
-    container_name: umbweb_backend
+    container_name: app_umbweb_backend
     build:
       context: ./UmbWeb
     volumes:
@@ -29,17 +29,17 @@ services:
     # This is the external port the website will be visible from : http://localhost:5080/
     # The Umbraco URL is : http://localhost:5080/umbraco
     ports:
-      - "5080:80"
+      - "5080:8081"
     depends_on:
       - umbdata
     networks:
-      - umbnet        
+      - app_umbnet        
 
 
   # This is the 2nd web container. It exposes the port 80, and stored media and Umbraco logs on
   # a volume so they are accessable outside the container.
   umbweb_frontend:
-    container_name: umbweb_frontend
+    container_name: app_umbweb_frontend
     build:
       context: ./UmbWeb
       dockerfile: Dockerfile
@@ -52,17 +52,17 @@ services:
     # This is the external port the website will be visible from : http://localhost:5081/
     # The Umbraco URL is : http://localhost:5081/umbraco
     ports:
-      - "5081:80"
+      - "5081:8081"
     depends_on:
       - umbdata
     networks:
-      - umbnet        
+      - app_umbnet        
 
 
   # This is the blazor container. It exposes the port 80 and accesses the umbweb_frontend container
   # to load the blog summary content.
   umblazor:
-    container_name: umblazor
+    container_name: app_umblazor
     build:
       context: ./UmBlazor
       dockerfile: Dockerfile
@@ -74,7 +74,7 @@ services:
     depends_on:
       - umbweb_frontend
     networks:
-      - umbnet    
+      - app_umbnet    
 
 volumes:
   umb_media:
@@ -83,5 +83,5 @@ volumes:
 
 # This is the network that the containers will be on, and will ONLY contain the containers from the application
 networks:
-  umbnet:
+  app_umbnet:
     driver: bridge
