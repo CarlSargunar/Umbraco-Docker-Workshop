@@ -44,7 +44,9 @@ namespace UmBlazor.Services
                         Sku = item.properties.sku,
                         Description = item.properties.description,
                         Category = item.properties.category,
-                        Image = $"{imageBaseUrl}{item.properties.photos[0].url}?width=200" 
+                        // Umbraco 17 requires image processing URLs (e.g. ?width=200) to be signed, which
+                        // the Delivery API URLs are not, so we load the original image and size it with CSS
+                        Image = $"{imageBaseUrl}{item.properties.photos[0].url}"
                     };
                     products.Add(product);
                 }
