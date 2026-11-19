@@ -1,0 +1,4 @@
+bin/
+obj/
+umbraco/Data/
+umbraco/Logs/

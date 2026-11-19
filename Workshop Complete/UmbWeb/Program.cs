@@ -1,29 +1,21 @@
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-    // Add CORS policy for workshop/demo (allow all)
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("AllowAll", policy =>
-        {
-            policy.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-    });
+#if DEBUG
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+#endif
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()
-    .AddDeliveryApi()
     .AddComposers()
     .Build();
 
 WebApplication app = builder.Build();
 
+
 await app.BootUmbracoAsync();
 
-// Use the CORS policy defined above
-app.UseCors("AllowAll");
 
 app.UseUmbraco()
     .WithMiddleware(u =>
@@ -33,7 +25,6 @@ app.UseUmbraco()
     })
     .WithEndpoints(u =>
     {
-        u.UseInstallerEndpoints();
         u.UseBackOfficeEndpoints();
         u.UseWebsiteEndpoints();
     });

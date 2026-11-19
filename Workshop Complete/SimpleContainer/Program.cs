@@ -1,13 +1,18 @@
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+#if DEBUG
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+#endif
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()
-    .AddDeliveryApi()
     .AddComposers()
     .Build();
 
 WebApplication app = builder.Build();
+
 
 await app.BootUmbracoAsync();
 
@@ -20,7 +25,6 @@ app.UseUmbraco()
     })
     .WithEndpoints(u =>
     {
-        u.UseInstallerEndpoints();
         u.UseBackOfficeEndpoints();
         u.UseWebsiteEndpoints();
     });

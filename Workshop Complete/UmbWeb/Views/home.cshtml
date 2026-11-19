@@ -1,9 +1,6 @@
-﻿
-@using Umbraco.Extensions
-@using Umbraco.Cms.Web.Common.PublishedModels;
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
 @{
-    Layout = "master.cshtml";
+    Layout = "_Master.cshtml";
     var backgroundImage = Model.HeroBackgroundImage != null ? Model.HeroBackgroundImage.Url() : String.Empty;
 }
 <section class="section section--full-height background-image-full overlay overlay--dark section--content-center section--thick-border"
@@ -21,7 +18,7 @@
 </section>
 
 <section class="section section">
-    @await Html.GetBlockGridHtmlAsync(Model, "bodyText")
+    @await Html.GetBlockGridHtmlAsync(Model.BodyText)
 </section>
 
 <section class="section section--themed">
@@ -36,7 +33,6 @@
                 <a class="button button--border--light_solid" href="@Model.FooterCtalink.Url()">
                     @Model.FooterCtacaption
                 </a>
-
             </div>
 
         </div>

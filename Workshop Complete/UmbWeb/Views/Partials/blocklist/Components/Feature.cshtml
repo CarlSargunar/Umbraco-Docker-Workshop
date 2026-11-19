@@ -1,7 +1,7 @@
-﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>;
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<Feature>>;
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-    var feature = (Feature)Model.Content;
+    var feature = Model.Content;
 }
 
 <div class="product-advantage">
