@@ -29,6 +29,8 @@ namespace UmBlazor.Services
             var products = new List<Product>();
             var apiResponse = await _httpClient.GetAsync(_configuration["UmbracoURL"]);
             var imageBaseUrl = _configuration["ImageBaseURL"];
+            // Throw if the API returns an error (e.g. 404 or 500), so the page can show it
+            apiResponse.EnsureSuccessStatusCode();
             if (apiResponse.IsSuccessStatusCode)
             {
                 var contentDeliveryResponse = await apiResponse.Content.ReadFromJsonAsync<ContentDeliveryResponse>();

@@ -12,11 +12,22 @@
 
 <p>These are the currently published products on the site!</p>
 
-@if (products == null || products.Any() == false)
+@if (error != null)
 {
-    string umbracoURL = Configuration["UmbracoURL"];
     <p>
-        <em>Loading pages from @umbracoURL ...</em>
+        <em>Couldn't load products from @Configuration["UmbracoURL"] : @error</em>
+    </p>
+}
+else if (products == null)
+{
+    <p>
+        <em>Loading products from @Configuration["UmbracoURL"] ...</em>
+    </p>
+}
+else if (products.Any() == false)
+{
+    <p>
+        <em>No published products were returned by @Configuration["UmbracoURL"]. If the Umbraco site has just started, the Delivery API index may still be building - refresh this page in a minute.</em>
     </p>
 }
 else
@@ -39,17 +50,19 @@ else
     </div>
 }
 @code {
-    private List<Product> products;
+    private List<Product>? products;
+    private string? error;
 
     protected override async Task OnInitializedAsync()
     {
-        products = new List<Product>();
         try
         {
             products = await cdApiservice.GetProducts();
         }
         catch (Exception ex)
         {
+            // Show the error on the page, as Debug output isn't visible in the browser
+            error = ex.Message;
             Debug.WriteLine($"Error fetching products: {ex.Message}");
         }
     }
