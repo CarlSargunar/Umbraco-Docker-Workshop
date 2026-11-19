@@ -6,7 +6,7 @@ The folders which are in this workshop are:
 
 - **Files** - This folder contains pre-created files which will be used in this workshop to save you typing everything out manually
 - **Media** - The images used in this workshop are stored in there
-- **Workshop Complete** - This folder contains a fully complete version of the workshop which can be used for reference in case you run into problems, in a zipped up file. No cheating - you won't learn if you do, but it's a useful guide for reference if you get stuck 🙂
+- **Workshop Complete** - This folder contains a fully complete version of the workshop which can be used for reference in case you run into problems. No cheating - you won't learn if you do, but it's a useful guide for reference if you get stuck 🙂
 - **Workshop** - This will be the active folder where the workshop is being run from, and all files you create and edit will be in this folder. This will be created in the next step.
 
 
@@ -37,6 +37,9 @@ If it shows CRLF, click on the label and at the top you can change it to LF.
 - **Platform errors on ARM/M1/M2:** Always use `--platform=linux/amd64` when building/running SQL Server containers on ARM-based machines.
 - **Line endings issues:** Ensure all scripts and Dockerfiles use LF line endings, not CRLF.
 - **Cannot connect to database:** Double-check the username (`sa`), password (`SQL_PassW0rd@1234`), and port (`1433`). Make sure the container is running.
+- **"This server only accepts HTTPS requests" when logging in to Umbraco:** Umbraco 17 requires HTTPS for backoffice logins unless `Umbraco:CMS:Global:UseHttps` is set to `false`. When running locally with `dotnet run`, use the **https://** URL shown in the terminal. The container configurations in this workshop already set `UseHttps` to `false`, as the containers only serve HTTP.
+- **Site shows "Page Not Found" after install:** The Starter Kit content is imported but not published on a fresh install. Log in to the backoffice and publish the **Home** node with its descendants (see exercise 4).
+- **Umbraco returns a 503 error:** If the database is empty and Umbraco hasn't been configured for an unattended install, it shows the installer page with a 503 status code. Check the connection string and that the database container is running.
 
 ## WSL Troubleshooting
 
@@ -51,8 +54,8 @@ Sometimes when building images, if you can't download the base images, you may g
 # This will pre-cache the images used to build the database container.
 docker pull mcr.microsoft.com/mssql/server:2022-latest
 # This will pre-cache the images used to build the Umbraco container.
-docker pull mcr.microsoft.com/dotnet/sdk:8.0
-docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+docker pull mcr.microsoft.com/dotnet/sdk:10.0
+docker pull mcr.microsoft.com/dotnet/aspnet:10.0
 
 ```
 

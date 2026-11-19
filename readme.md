@@ -1,6 +1,6 @@
 # Umbraco-Docker-Workshop
 
-This repository contains all the notes and worksheets for the Docker Workshop being given at Umbraco Codegarden. It will be based on the latest LTS version of Umbraco, which is currently Umbraco 13.
+This repository contains all the notes and worksheets for the Docker Workshop being given at Umbraco Codegarden. It will be based on the latest LTS version of Umbraco, which is currently Umbraco 17, running on .NET 10.
 
 *Please make sure you have gone through the prerequisites for this workshop in the [0-Prerequisites.md](/0-Prerequisites.md) file prior to starting.*
 
@@ -50,12 +50,12 @@ The following are suggested reading materials for Docker.
 The following are notes for myself, but may be useful for others.
 - HTTP Setting for openiddict
     - https://github.com/umbraco/Umbraco-CMS/pull/16614
-- https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api#swagger
+- https://docs.umbraco.com/umbraco-cms/reference/content-delivery-api
 - https://emmti.com/headless-content-delivery-api-in-umbraco-12-rc-1#heading-installing-12rc1-on-your-local-machine
 - SQL on M1
     - https://devblogs.microsoft.com/azure-sql/development-with-sql-in-containers-on-macos/
 - SQL Edge Retirement : https://azure.microsoft.com/en-us/updates/v2/azure-sql-edge-retirement
-- Umbraco Settings : https://docs.umbraco.com/umbraco-cms/13.latest/fundamentals/setup/server-setup/running-umbraco-in-docker
+- Umbraco Settings : https://docs.umbraco.com/umbraco-cms/fundamentals/setup/server-setup/running-umbraco-in-docker
 
 ### Load Balancing
 

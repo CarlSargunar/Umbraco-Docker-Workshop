@@ -1,0 +1,16 @@
+﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Blog>
+@{
+    Layout = "_Master.cshtml";
+}
+
+<partial name="Partials/SectionHeader"/>
+
+<section class="section">
+
+    <div class="container">
+        @await Component.InvokeAsync("LatestBlogPosts",
+            new { numberOfPosts = Model.HowManyPostsShouldBeShown, startNodeKey = Model.Key })
+    </div>
+
+</section>

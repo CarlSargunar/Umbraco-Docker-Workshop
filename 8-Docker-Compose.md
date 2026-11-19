@@ -24,17 +24,20 @@ I've prepared a single docker compose file to complete this application To prepa
 
 These will configure the application to use the production profiles, and will also configure the connection strings for the databases, which will be used when we run the application as single distributed application.
 
+Note that in the Production profile the database server is called **app_umbdata**, as that's the name of the database container in the Docker Compose file. The Docker Compose file also uses the same named volumes you created in the earlier exercises (`umbSqlFiles`, `umb_media` and `umb_logs`), so the application will use the same database and media - including the content you published.
+
 ## 8.2 Run the Docker Compose file
 
-Before we run the application, we need to delete all existing running containers so that any ports they are using are freed up. This is important as we will be using the same ports for the new containers we will create with Docker Compose.
+Before we run the application, we need to stop and remove all the containers we created manually, so that any ports and volumes they are using are freed up. This is important as the database container created by Docker Compose will use the same port (1433) and the same database volume.
 
-**Action :** Run the following command in your terminal:
+**Action :** Run the following commands in your terminal:
 
 ```bash
 docker stop umblazor umbweb umbweb2 umbdata
+docker rm umblazor umbweb umbweb2 umbdata
 ```
 
-Verify that none are running by looking at the Docker Desktop app, or by running the 'docker ps' command. Once all running containers have been deleted, we can run the Docker Compose file.
+Verify that none are running by looking at the Docker Desktop app, or by running the `docker ps` command. Once all the containers have been removed, we can run the Docker Compose file.
 
 
 **Action :** Start all containers using the following command:
@@ -43,7 +46,7 @@ Verify that none are running by looking at the Docker Desktop app, or by running
 docker compose up -d
 ```
 
-This will first buuld and then start all the containers from the images we have just built, and if you open Docker Desktop, you should see all the containers running.
+This will first build the images and then start all the containers, and if you open Docker Desktop, you should see all the containers running.
 
 ![Alt text](media/9_DockerCompose.png)
 
@@ -53,11 +56,15 @@ Once these are up, we can browse the umbraco websites using the following URLs
 - Umbraco 2 : http://localhost:5081/
 - Blazor : http://localhost:5082/
 
+It may take a minute for the Umbraco sites to start, and for the Delivery API index to be built before the Blazor app shows any products.
+
 To stop and remove the containers, run the following command:
 
 ```bash
-docker-compose down 
+docker compose down
 ```
+
+This removes the containers and the network, but leaves the volumes - and therefore your database and media - in place.
 
 ## Next Steps 
 

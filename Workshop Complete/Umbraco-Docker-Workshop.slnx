@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="UmBlazor/UmBlazor.csproj" />
   <Project Path="UmbWeb/UmbWeb.csproj" />
 </Solution>

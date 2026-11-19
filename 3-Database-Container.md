@@ -1,8 +1,6 @@
 # Exercise 3 - Create a Database Container
 
-The first task we will do is to create a database container, using Sql Server 2022. This will be used to store the Umbraco database, and will be used by the Umbraco website container we will create later. 
-
-In production 
+The first task we will do is to create a database container, using Sql Server 2022. This will be used to store the Umbraco database, and will be used by the Umbraco website container we will create later.
 
 
 ## 3.1 Create a container for the database server

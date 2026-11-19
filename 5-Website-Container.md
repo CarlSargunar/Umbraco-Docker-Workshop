@@ -12,7 +12,7 @@ If the site is still running, stop it by running by pressing **Ctrl + c** in the
 
 ```dockerfile
 # Use the SDK image to build and publish the website
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 COPY ["UmbWeb.csproj", "."]
 RUN dotnet restore "UmbWeb.csproj"
@@ -20,11 +20,12 @@ COPY . .
 RUN dotnet publish "UmbWeb.csproj" -c Release -o /app/publish
 
 # Copy the published output to the final running image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final 
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
-# Expose the port that Umbraco will run on
-ENV ASPNETCORE_URLS=http://+:8081
+# Set the port that Umbraco will listen on inside the container
+ENV ASPNETCORE_HTTP_PORTS=8081
+EXPOSE 8081
 
 # Copy the published output to the final running image
 COPY --from=build /app/publish .
@@ -44,18 +45,25 @@ This Dockerfile starts with a build image which contains the SDK to actually com
 3. Run the restore command to download the dependencies
 4. Compile and publish the output of the project
 5. Switch to the hosting image 
-6. Copy the published output to the final image - DO NOT DO THIS IN PRODUCTION!
-7. Copy the media files to the final image
+6. Copy the published output to the final image
+7. Copy the media files to the final image - DO NOT DO THIS IN PRODUCTION!
 8. Set the entrypoint to the binary output of the main project
 
-## 5.2 Add a Network
+***Action:*** As with the first exercise, create a `.dockerignore` file in the **UmbWeb** folder so your local build output isn't copied into the build. You can copy it from **/Files/UmbWeb/.dockerignore**, or create it with the following content:
 
-In order to run the website and database containers together, we need to create a Docker network that allows them to communicate with each other.
+```
+bin/
+obj/
+umbraco/Data/
+umbraco/Logs/
+```
 
-***Action:*** Create a Docker network called **umbNet** by running the following command in your terminal:
+## 5.2 The Network
 
-```bash     
-docker network create umbNet
+In order to run the website and database containers together, they need to be on the same Docker network so they can communicate with each other. We already created the **umbNet** network and connected the database container to it in exercise 3.4, so there's nothing to do here - but you can check it exists by running:
+
+```bash
+docker network ls
 ```
 
 A network will allow the containers to communicate with each other using their container names as hostnames, otherwise they would only be able to communicate using IP addresses, which can change each time the container is restarted.
@@ -66,15 +74,24 @@ Once the Dockerfile exists, we need to create a configuration which lets the web
 
 ***Action:*** Create a copy of the **appsettings.Development.json** called **appsettings.Staging.json**. 
 
-We will use the **appsettings.Development.json** when working locally, and **appsettings.Staging.json** when running in a container. You will need to add the following connectionstring section to the **appsettings.Staging.json** file as a sibling of the Umbraco node. 
+We will use the **appsettings.Development.json** when working locally, and **appsettings.Staging.json** when running in a container. You will need to add the following connectionstring section to the **appsettings.Staging.json** file as a sibling of the Umbraco node. Notice that the server is **umbdata** - the name of the database container - rather than localhost.
 
 ```json
     "ConnectionStrings": {
-        "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_PassW0rd@1234;TrustServerCertificate=true",     "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
-    }
+        "umbracoDbDSN": "Server=umbdata;Database=UmbracoDb;User Id=sa;Password=SQL_PassW0rd@1234;TrustServerCertificate=true",
+        "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
+    },
 ```
 
-You could altenatively copy the already edited from from the **/Files/UmbWeb/appsettings.Staging.json** file in the repository.
+The container only serves plain HTTP, and Umbraco 17 only allows backoffice logins over HTTPS unless told otherwise, so you also need to add the following inside the **Umbraco > CMS** section of **appsettings.Staging.json**:
+
+```json
+      "Global": {
+        "UseHttps": false
+      },
+```
+
+You could alternatively copy the already edited file from **/Files/UmbWeb/appsettings.Staging.json** in the repository.
 
 Finally we can compile a docker image for the Umbraco site. 
 
@@ -82,8 +99,8 @@ Finally we can compile a docker image for the Umbraco site.
 
 ```bash
 # This will pre-cache the images used to build the Umbraco container. This step is optional
-docker pull mcr.microsoft.com/dotnet/sdk:8.0
-docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+docker pull mcr.microsoft.com/dotnet/sdk:10.0
+docker pull mcr.microsoft.com/dotnet/aspnet:10.0
 
 docker build --tag=umbweb ./UmbWeb
 ```
@@ -112,7 +129,7 @@ Similarly with media, we want all website containers to be able to share the sam
 
 One other thing we set is the Environment variable we are passing the container with the -e flag, which sets our ASPNETCORE_ENVIRONMENT to staging, and thus causes the container to run with the appsettings.staging.json file and allow us to connect to the database running in the container.
 
-You can now see the website running by visiting: [http://localhost:8000](http://localhost:8000)
+You can now see the website running by visiting: [http://localhost:8000](http://localhost:8000). As it uses the same database you published the content in during exercise 4, the site content is already there. You can also log in to the backoffice at [http://localhost:8000/umbraco](http://localhost:8000/umbraco).
 
 Once the container is running, if you run a docker ps command, you'll see both the database and website containers running.
 

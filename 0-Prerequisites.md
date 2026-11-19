@@ -13,8 +13,7 @@ To attend this workshop you will need the following:
         - If you are using Docker Desktop, this will be installed for you automatically as part of installing Docker Desktop.
         - If you are using a different installation of Docker, you can install WSL2 by following the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install).
 - you will need to have the following installed:
-    - .NET 8.0 SDK
-        - It's also worth installing the .NET 9 SDK for some of the bonus content
+    - .NET 10.0 SDK
     - Visual Studio Code or Visual Studio 2022
     - Git
 
@@ -28,9 +27,7 @@ Check the version of the .NET SDK you have installed using the following command
 dotnet sdk check
 ```
 
-This workshop will require version 8.0 of the SDK, preferably the latest version available. If you need to download the SDK, you can do so from [https://aka.ms/dotnet-core-download](https://aka.ms/dotnet-core-download).
-
-It's also useful to have the .NET 9 SDK installed for some of the bonus content, but this is not required for the main workshop.
+This workshop will require version 10.0 of the SDK, preferably the latest version available. If you need to download the SDK, you can do so from [https://aka.ms/dotnet-core-download](https://aka.ms/dotnet-core-download).
 
 In the example below, there are updates available to the SDK, which I wull then update prior to the workshop. If you see this, please update your SDK to the latest version.
 
@@ -47,7 +44,7 @@ It's important that your docker installation is working before you attend the wo
 docker run --platform linux/amd64 --name test_sql_server_2022 -m 2g -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=SQL_PassW0rd@1234' -p 14330:1433 mcr.microsoft.com/mssql/server:2022-latest
 ```
 
-This command will run a SQL Server 2022 container in interactive mode, with the name `test_sql_server_2022`. It sets the memory limit to 2GB (`-m 2g`), accepts the EULA, sets the SA password, and mounts two volumes for system and user data.
+This command will run a SQL Server 2022 container in interactive mode, with the name `test_sql_server_2022`. It sets the memory limit to 2GB (`-m 2g`), accepts the EULA and sets the SA password.
 
 It also maps port 14330 on your host to port 1433 in the container. Don't worry too much about the details of this command, we will go through it in more detail during the workshop.
 

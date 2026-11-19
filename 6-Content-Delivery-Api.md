@@ -4,18 +4,29 @@ We will use the Umbraco Content Delivery API to add an API to the site.
 
 ## 6.1 - Build Index for Content API
 
-Now that there is a site and database running, we will use the new content delivery API. First we need to enable the API by adding the following to appsettings.json under Umbraco > CMS
+Now that there is a site and database running, we will use the Content Delivery API. First we need to enable the API by adding the following to **UmbWeb/appsettings.json** under Umbraco > CMS
 
 ```json
-    "DeliveryApi": {
-            "Enabled": true,
-            "RichTextOutputAsJson": false
-    }
+      "DeliveryApi": {
+        "Enabled": true,
+        "RichTextOutputAsJson": false
+      },
+```
+
+We also need to register the Delivery API services with Umbraco. In **UmbWeb/Program.cs**, add `.AddDeliveryApi()` to the Umbraco builder:
+
+```csharp
+builder.CreateUmbracoBuilder()
+    .AddBackOffice()
+    .AddWebsite()
+    .AddDeliveryApi()
+    .AddComposers()
+    .Build();
 ```
 
 ## 6.2 - Enable CORS Policy to allow access to the API
 
-We will also need to enable CORS to allow access to the API. To do this, we will add the following to the start of the services in Program.cs
+We will also need to enable CORS to allow access to the API from the Blazor app, which will run on a different port. To do this, we will add the following to **Program.cs**, before the `builder.CreateUmbracoBuilder()` line
 
 ```csharp
     // Add CORS policy for workshop/demo (allow all)
@@ -30,7 +41,7 @@ We will also need to enable CORS to allow access to the API. To do this, we will
     });
 ```
 
-You will also need to start that CORS Policy in the Startup.cs Configure method
+You will also need to use that CORS Policy, also in **Program.cs**, after the `await app.BootUmbracoAsync();` line and before `app.UseUmbraco()`:
 
 ```csharp
 // Use CORS before Umbraco middleware
@@ -66,14 +77,14 @@ docker run --name umbweb -p 8000:8081 -v umb_media:/app/wwwroot/media -v umb_log
 
 ## 6.4 - Rebuild the Index and test the API
 
-You will need to log in to Umbraco and rebuild the index to ensure the API is working. You can do this by going to the following url: [http://localhost:8000/umbraco](http://localhost:8000/umbraco)
+When the site starts with the Delivery API enabled for the first time, Umbraco builds the Delivery API index in the background, which may take a minute or so. If the API doesn't return any content, you can log in to Umbraco and rebuild the index manually. You can do this by going to the following url: [http://localhost:8000/umbraco](http://localhost:8000/umbraco)
 
 Use the credentials below :
 
 - Username : admin@admin.com
 - Password : 1234567890
 
-You can then navitage to Settings > Examine Management > DeliveryApiContentIndex and rebuild that index.
+You can then navigate to **Settings > Examine Management > DeliveryApiContentIndex** and rebuild that index.
 
 ![Alt text](media/3_3_Index.png)
 
@@ -82,13 +93,15 @@ Open the site at the url http://localhost:8000/umbraco/swagger/index.html and in
 ![Alt text](media/3_2_Swagger.png)
 
 
-If you'd like to see more info about the Content delivery API, please read the docs : [https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api](https://docs.umbraco.com/umbraco-cms/v/12.latest/reference/content-delivery-api)
+If you'd like to see more info about the Content delivery API, please read the docs : [https://docs.umbraco.com/umbraco-cms/reference/content-delivery-api](https://docs.umbraco.com/umbraco-cms/reference/content-delivery-api)
 
 ## 6.5 Testing the Product API
 
-To test the API, you can simply call a url like the following url, which returns all documents of type "Product": [http://localhost:8000/umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct](http://localhost:8000/umbraco/delivery/api/v1/content?filter=contenttype%3Aproduct)
+To test the API, you can simply call a url like the following url, which returns all documents of type "Product": [http://localhost:8000/umbraco/delivery/api/v2/content?filter=contenttype%3Aproduct](http://localhost:8000/umbraco/delivery/api/v2/content?filter=contenttype%3Aproduct)
 
-This should return a JSON collection of Post Summaries in a collection, which we will use with the Blazor App. If you would like to know more about the API, you can read the documentation here: [https://docs.umbraco.com/umbraco-cms/13.latest/reference/content-delivery-api](https://docs.umbraco.com/umbraco-cms/13.latest/reference/content-delivery-api)
+*Note : Umbraco 17 uses version 2 of the Delivery API. The version 1 endpoints (`/umbraco/delivery/api/v1/...`) used in older versions of Umbraco no longer exist.*
+
+This should return a JSON collection of the 8 Starter Kit products, which we will use with the Blazor App.
 
 ## 6.6 Running a 2nd instance of the website container
 
